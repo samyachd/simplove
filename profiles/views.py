@@ -2,5 +2,6 @@ from django.shortcuts import render
 
 
 # Create your views here.
-def index(request):
-    return render(request, "profiles/index.html")
+def profile_views(request):
+    context = {"nom": "Ayoub"}
+    return render(request, "profiles/index.html", context)
