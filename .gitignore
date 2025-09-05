@@ -1,0 +1,30 @@
+# Environnement virtuel
+.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Django
+db.sqlite3
+*.log
+*.pot
+
+# Environnements / secrets
+.env
+.env.*
+
+# VS Code / PyCharm
+.vscode/
+.idea/
+
+# Tests / couverture
+htmlcov/
+.coverage
+coverage.xml
+
+# Node (si front intégré)
+node_modules/
+dist/
