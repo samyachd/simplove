@@ -1,5 +1,5 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-def matches_view(request):
-     return HttpResponse("Matches.")
+def core_view(request):
+     return HttpResponse("Home.")

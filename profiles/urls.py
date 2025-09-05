@@ -1,2 +1,6 @@
 from django.urls import path
-from . import views
+from .views import profiles_view
+
+urlpatterns = [
+    path('', profiles_view, name='profiles'),
+]

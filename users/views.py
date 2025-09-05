@@ -2,8 +2,9 @@ from django.shortcuts import render, redirect
 from .forms import RegisterForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login
+from django.contrib.auth import logout
 
-def register(request):
+def register_view(request):
     if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
@@ -16,15 +17,14 @@ def register(request):
             return redirect("/")  # redirection après inscription
     else:
         form = RegisterForm()
-    return render(request, "accounts/register.html", {"form": form})
+    return render(request, "registration/register.html", {"form": form})
 
-def login(request):
-    if request.method == "POST":
-        if 
+def account_view(request):
+    if not request.user.is_authenticated:
+        return render(request, "registration/login_error.html")
+    else:
+        return render(request, "registration/account.html", {"User": User.username} )
 
-def logout(logout):
-
-
-def delete_account(delete_account):
-
-
+def logout_view(request):
+    logout(request)
+    return redirect("/")
