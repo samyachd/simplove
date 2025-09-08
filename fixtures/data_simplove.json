@@ -4,7 +4,7 @@
     "pk": 1,
     "fields": {
       "username": "charlie66",
-      "password": "pbkdf2_sha256$260000$dummy$hash",  
+      "password": "pbkdf2_sha256$1000000$a7QvTyFK8D1FlRF7fs7nLq$6WsZvvkXn2rQYEFctXVoDTFVb2Ohh76XVH21c+WKjpE=",  
       "email": "charlie66@example.com",
       "first_name": "Charlie",
       "last_name": "Durand",
@@ -43,7 +43,7 @@
     "pk": 2,
     "fields": {
       "username": "jack112",
-      "password": "pbkdf2_sha256$260000$dummy$hash",  
+      "password": "pbkdf2_sha256$1000000$a7QvTyFK8D1FlRF7fs7nLq$6WsZvvkXn2rQYEFctXVoDTFVb2Ohh76XVH21c+WKjpE=",  
       "email": "jack112@example.com",
       "first_name": "Jack",
       "last_name": "Mbappé",
