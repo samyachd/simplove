@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 # Create your models here.
@@ -36,6 +37,7 @@ class MemberProfil(models.Model):
     age = models.PositiveBigIntegerField(
         null=True,
         blank=True,
+        validators=[MinValueValidator(18), MaxValueValidator(120)],
         help_text="Âge temporaire, à synchroniser avec users plus tard",
     )
 
@@ -72,3 +74,22 @@ class MemberProfil(models.Model):
 
     def __str__(self):
         return f"Profil de {self.user.username}"
+
+    def interests_list(self):
+        if self.interest:
+            return [i.strip() for i in self.interest.split(",") if i.strip()]
+        return []
+
+    def full_description(self):
+        desc = f"{self.user.username}, {self.age} ans, {self.get_gender_display()}, orientation {self.get_orientation_display()}"
+        if self.location:
+            desc += f", habite à {self.location}"
+        return desc
+
+    def has_common_interests(self, other_profile):
+        return bool(set(self.interests_list()) & set(other_profile.interest_list()))
+
+    # def photo_url(self):
+    #     if self.photo:
+    #         return self.photo_url
+    #     return "/static/img/default-profile.png"
