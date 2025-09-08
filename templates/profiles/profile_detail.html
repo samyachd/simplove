@@ -8,13 +8,14 @@
         </div>
         <div class="col-md-8">
             <div class="card-body">
-                <h5 class="card-title"> {{profile.full_description }}</h5>
-                <p class="card-text">{{ profile.bio}}</p>
-                <p class="card-text"><strong>Centre d'intérêts :</strong> {{ profile.interests_list|join:", "}} </p>
-                <p class="card-text"><strong>Pour :</strong> {{ profile.get_looking_for_display}}</p>
+                <h5 class="card-title"> {{ profile.full_description }}</h5>
+                <p class="card-text">{{ profile.bio }}</p>
+                <p class="card-text"><strong>Centre d'intérêts :</strong> {{ profile.interests_list|join:", " }} </p>
+                <p class="card-text"><strong>Pour :</strong> {{ profile.get_looking_for_display }}</p>
                 <a href="{% url 'matches:like' profile.id %}" class="btn btn-outline-primary w-100">Liker</a>
             </div>
 
         </div>
     </div>
 </div>
+{% endblock %}
