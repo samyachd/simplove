@@ -1,11 +1,3 @@
-{% if next %}
-  {% if user.is_authenticated %}
-    <p>Votre compte n’a pas accès à cette page. Pour continuer, connectez-vous avec un compte qui y a accès.</p>
-  {% else %}
-    <p>Veuillez vous connecter pour voir cette page.</p>
-  {% endif %}
-{% endif %}
-
 <form method="post" action="{% url 'account' %}">
   {% csrf_token %}
   <table>
