@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Liste des membres{% endblock %}
+
+{% block content %}
+<h1>Liste des profils</h1>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for profile in profiles %}
+        <div class="col">
+            <div class="card h-100">
+                <img src="{{ profile.photo_url }}" class="card-img-top" alt="Profil">
+                <div class="card-body">
+                    <h5 class="card-title">{{ profile.user.username }}</h5>
+                    <p class="card-text">
+                        {{ profile.bio|truncatewords:15}}
+                    </p>
+                </div>
+                <div class="card-footer d-flex justify-content-between">
+                    <a href="{% url 'profiles:detail%' profile.id %}" class="btn btn-sm btn-primary">Voir</a>
+                    <a href="{% url 'matches:like' profile.ide %}" class="btn btn-sm btn-outline-succes">Liker</a>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <p>Aucun profil trouvé.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}

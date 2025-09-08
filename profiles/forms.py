@@ -1,10 +1,10 @@
 from django import forms
-from .models import MemberProfil
+from .models import MemberProfile
 
 
-class MemberProfilForm(forms.ModelForm):
+class MemberProfileForm(forms.ModelForm):
     class Meta:
-        model = MemberProfil
+        model = MemberProfile
         fields = [
             "gender",
             "orientation",
