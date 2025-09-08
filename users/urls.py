@@ -5,5 +5,5 @@ urlpatterns = [
     path('', account_view, name='users'),
     path('register/', register_view, name='register'),
     path('logout/', logout_view, name='logout'),
-    path("", include("django.contrib.auth.urls")),
+    path('account/', include("django.contrib.auth.urls")),
 ]

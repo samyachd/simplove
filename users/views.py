@@ -23,7 +23,7 @@ def account_view(request):
     if not request.user.is_authenticated:
         return render(request, "registration/login_error.html")
     else:
-        return render(request, "registration/account.html", {"User": User.username} )
+        return render(request, "registration/account.html", {"User": User.username})
 
 def logout_view(request):
     logout(request)
