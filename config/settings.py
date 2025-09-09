@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     "users",
     "matches",
     "profiles",
-    "messages",
+    "messaging",
     "django_bootstrap5",
 ]
 

@@ -102,6 +102,14 @@ h4, .h4 { font-size: 1.25rem; font-weight: 500; }
 }
 
 /* ======================= */
+/* Grille et Cards          */
+/* ======================= */
+.row-cols-1.row-cols-md-3.g-4 {
+    margin-top: 1rem;
+}
+
+
+/* ======================= */
 /* Cards                  */
 /* ======================= */
 .card {
@@ -110,12 +118,20 @@ h4, .h4 { font-size: 1.25rem; font-weight: 500; }
   border: 1px solid var(--bs-border-color);
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+  overflow: hidden;
 }
 
 .card:hover {
     box-shadow: 0 6px 15px rgba(0,0,0,0.15);
     transform: translateY(-2px);
     transition: all 0.3s ease;
+}
+
+/* Card image */
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
 }
 
 .card img {
@@ -126,6 +142,42 @@ h4, .h4 { font-size: 1.25rem; font-weight: 500; }
 /* Card body */
 .card-body {
   padding: 1rem;
+}
+
+/* Card title */
+.card-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Card text */
+.card-text {
+    font-size: 0.95rem;
+    color: #555;
+}
+
+/* Badges pour les centres d'intérêts */
+.card .badge {
+    border-radius: 1rem;
+    font-weight: 500;
+    padding: 0.35em 0.65em;
+    background-color: #ff4d6d;
+    color: #fff;
+    margin-top: 0.25rem;
+}
+
+/* Card footer */
+.card-footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid #e5e5e5;
+    padding: 0.75rem 1rem;
+}
+
+/* Boutons dans card footer */
+.card-footer .btn {
+    width: 48%;
+    font-size: 0.875rem;
 }
 
 /* ======================= */
@@ -193,6 +245,7 @@ hr {
   border-top: 1px solid var(--bs-border-color);
 }
 
+/* Input recherche */
 .input-group .form-control {
     border-radius: var(--bs-border-radius) 0 0 var(--bs-border-radius);
 }
@@ -200,3 +253,9 @@ hr {
     border-radius: 0 var(--bs-border-radius) var(--bs-border-radius) 0;
 }
 
+/* Responsive adjustments */
+@media (max-width: 767px) {
+    .card-img-top {
+        height: 180px;
+    }
+}

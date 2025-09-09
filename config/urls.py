@@ -28,7 +28,7 @@ urlpatterns = [
     path("users/", include("users.urls")),
     path("matches/", include("matches.urls")),
     path("profiles/", include("profiles.urls")),
-    path("messages/", include("messages.urls")),
+    path("messages/", include("messaging.urls")),
 ]
 
 if settings.DEBUG:
