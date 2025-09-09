@@ -1,11 +1,14 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 
 
-class Profile(models.Model):
+class AccountUser(models.Model):
 
-    username = models.OneToOneField(
-        User, on_delete=models.CASCADE, related_name="user_profile"
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="user_account",
+        null=True
     )
 
     LANGUAGE_CHOICES = [

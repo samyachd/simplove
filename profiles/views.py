@@ -14,7 +14,7 @@ def profile_edit(request, pk):
             return redirect("profiles:detail", profile.id)
     else:
         form = MemberProfileForm(instance=profile)
-    return render(request, "profiles/profile_edit.html", {"form": form})
+    return render(request, "profile_edit.html", {"form": form})
 
 
 def profile_list(request):
@@ -24,10 +24,10 @@ def profile_list(request):
     else:
         profiles = MemberProfile.objects.all()
     return render(
-        request, "profiles/profile_list.html", {"profiles": profiles, "query": query}
+        request, "profile_list.html", {"profiles": profiles, "query": query}
     )
 
 
 def profile_detail(request, pk):
     profile = get_object_or_404(MemberProfile, pk=pk)
-    return render(request, "profiles/profile_detail.html", {"profile": profile})
+    return render(request, "profile_detail.html", {"profile": profile})
