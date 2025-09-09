@@ -5,13 +5,13 @@ from django.contrib.auth.decorators import login_required
 
 
 @login_required
-def profile_edit(request, pk):
-    profile = get_object_or_404(MemberProfile, pk=pk)
+def profile_edit(request):
+    profile, created = MemberProfile.objects.get_or_create(user=request.user)
     if request.method == "POST":
         form = MemberProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
-            return redirect("profiles:detail", profile.id)
+            return redirect("profiles:detail", pk=profile.id)
     else:
         form = MemberProfileForm(instance=profile)
     return render(request, "profile_edit.html", {"form": form})

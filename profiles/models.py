@@ -1,7 +1,5 @@
 from django.db import models
 from django.conf import settings
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 
 
 class MemberProfile(models.Model):
@@ -46,12 +44,12 @@ class MemberProfile(models.Model):
 
     bio = models.TextField(max_length=500, blank=True, help_text="Bio de l'utilisateur")
 
-    # photo = models.ImageField(
-    #     upload_to="profiles/photos",
-    #     null=True,
-    #     blank=True,
-    #     help_text="Photo de profil de l'utilisateur",
-    # )
+    photo = models.ImageField(
+        upload_to="media/photos",
+        null=True,
+        blank=True,
+        help_text="Photo de profil de l'utilisateur",
+    )
 
     location = models.CharField(
         max_length=100, blank=True, help_text="Ville de l'utilisateur"
@@ -84,9 +82,12 @@ class MemberProfile(models.Model):
         return []
 
     def full_description(self):
-        desc = f"{self.user.username}<br>{self.get_gender_display()}, {self.age} ans<br>{self.get_orientation_display()}"
-        if self.location:
-            desc += f", habite à {self.location}"
+        if self.user:
+            desc = f"{self.user.username}<br>{self.get_gender_display()}, {self.age} ans<br>{self.get_orientation_display()}"
+            if self.location:
+                desc += f", habite à {self.location}"
+        else:
+            desc = f"Utilisateur inconnu<br>{self.get_gender_display()}, {self.age} ans<br>{self.get_orientation_display()}"
         return desc
 
     def has_common_interests(self, other_profile):
@@ -96,8 +97,3 @@ class MemberProfile(models.Model):
     #     if self.photo:
     #         return self.photo_url
     #     return "/static/img/default-profile.png"
-
-    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
-    def create_member_profile(sender, instance, created, **kwargs):
-        if created:
-            MemberProfile.objects.create(user=instance)

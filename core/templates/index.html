@@ -8,8 +8,13 @@
             <h1>Bienvenue sur Simplove, le cupidon du code !</h1>
             <p>Découvrez de nouvelles connexions à travers vos personnalités.</p>
             <div class="mt-4">
-                <a href="{% url 'users:register' %}" class="btn btn-primary btn-lg me-3">S'inscrire</a>
-                <a href="{% url 'users:login' %}" class="btn btn-outline-light btn-lg">Connexion</a>
+                {% if request.user.is_authenticated and request.user.member_profile %}
+                    <a href="{% url 'profiles:list' %}" class="btn btn-primary btn-lg me-3">Voir les profils</a>
+                    <a href="{% url 'profiles:edit' %}" class="btn btn-outline-light btn-lg">Mon profil</a>
+                {% else %}
+                    <a href="{% url 'users:register' %}" class="btn btn-primary btn-lg me-3">S'inscrire</a>
+                    <a href="{% url 'users:login' %}" class="btn btn-outline-light btn-lg">Connexion</a>
+                {% endif %}
             </div>
         </div>
     </div>

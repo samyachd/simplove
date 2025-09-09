@@ -20,11 +20,15 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'core:core' %}">Accueil</a>
                     </li>
-                    <li class="nav-item">
-                        {% if request.user.is_authenticated and request.user.member_profile %}
-                            <a class="nav-link" href="{% url 'profiles:edit' request.user.member_profile.id %}">Profil</a>
-                        {% endif %}
-                    </li>
+                    {% if request.user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'profiles:edit' %}">Profil</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'users:login' %}">Connexion</a>
+                        </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'profiles:list' %}">Membres</a>
                     </li>
@@ -34,12 +38,14 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Message</a>
                     </li>
-                    <li class="nav-item">
-                        {% if request.user.is_authenticated and request.user.member_profile %}
-                            <a class="nav-link" href="{% url 'users:logout' %}">Déconnexion</a>
-                        {% else %}
-                            <a class="nav-link" href="{% url 'users:login' %}">Connexion</a>
-                        {% endif %}
+                    {% if request.user.is_authenticated %}
+                        <li class="nav-item">
+                            <form action="{% url 'users:logout' %}" method="post" class="d-inline">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-link nav-link p-0">Déconnexion</button>
+                            </form>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>

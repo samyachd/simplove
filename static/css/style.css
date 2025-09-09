@@ -69,6 +69,19 @@ h4, .h4 { font-size: 1.25rem; font-weight: 500; }
   color: var(--bs-body-color);
   font-weight: 500;
 }
+
+.navbar .nav-item form {
+    display: inline;          /* pour que le form soit comme un inline element */
+    margin: 0;                /* supprime toute marge */
+}
+
+.navbar .nav-item form button.nav-link {
+    padding: 0;               /* supprime padding */
+    height: 100%;             /* prend toute la hauteur du li */
+    line-height: inherit;     /* aligne verticalement avec les autres liens */
+    display: inline;           /* inline pour ne pas casser le flow */
+}
+
 .nav-link:hover,
 .nav-link:focus { color: var(--bs-primary); }
 
