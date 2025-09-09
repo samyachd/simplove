@@ -342,6 +342,16 @@ h4, .h4{ font-size:1.25rem; font-weight:500; }
   color:#fff !important;
 }
 
+form.mb-3 {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 20px;
+}
+
+form.mb-3 .input-group {
+    width: 400px;
+}
+
 /* ======================= */
 /* Profile forms / login / edit (inputs) */
 /* ======================= */
