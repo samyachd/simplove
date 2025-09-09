@@ -44,11 +44,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'core',
-    'users',
-    'matches',
-    'profiles',
-    'messages',
+    "core",
+    "users",
+    "matches",
+    "profiles",
+    "messages",
     "django_bootstrap5",
 ]
 
