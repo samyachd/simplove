@@ -1,0 +1,11 @@
+<h1>My matches</h1>
+<ul>
+{% for m in matches %}
+    <li>{{ m.user1 }} ↔ {{ m.user2 }}</li>
+{% empty %}
+    <li>No matches yet.</li>
+{% endfor %}
+</ul>
+<p>
+  (Use /matches/like/&lt;user_id&gt; and /matches/unlike/&lt;user_id&gt; to try it.)
+</p>

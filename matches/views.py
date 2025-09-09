@@ -13,6 +13,8 @@ from .models import Evaluation, Match
 
 User = get_user_model()
 
+User = get_user_model()
+
 
 def _ensure_match_state(a, b):
     a_likes_b = Evaluation.objects.filter(
