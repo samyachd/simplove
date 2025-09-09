@@ -1,11 +1,11 @@
 from django.urls import path
 from . import views
-from django.http import HttpResponse
 
-app_name = "matches"
+from django.urls import path
+from . import views
 
 urlpatterns = [
-    path(
-        "like/<int:pk>/", lambda request, pk: HttpResponse("Temporaire"), name="like"
-    ),  # TODO Chemin URL à corriger une fois matches prêt
+    path("like/<int:user_id>/", views.like_user, name="like_user"),
+    path("unlike/<int:user_id>/", views.unlike_user, name="unlike_user"),
+    path("", views.my_matches, name="my_matches"),
 ]
