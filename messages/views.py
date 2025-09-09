@@ -1,13 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-<<<<<<< HEAD
 
 # Create your views here.
 def index(request):
     return render(request, "messages/index.html")
-=======
+
+
 def messages_view(request):
-     return HttpResponse("Messages.")
-    
->>>>>>> users
+    return HttpResponse("Messages.")
