@@ -28,3 +28,4 @@ coverage.xml
 # Node (si front intégré)
 node_modules/
 dist/
+Makefile
