@@ -199,6 +199,16 @@ h4, .h4 { font-size: 1.25rem; font-weight: 500; }
   border-radius: 0.25rem;
 }
 
+form.mb-3 {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 20px;
+}
+
+form.mb-3 .input-group {
+    width: 400px;
+}
+
 /* ======================= */
 /* Liens                  */
 a {
@@ -257,5 +267,9 @@ hr {
 @media (max-width: 767px) {
     .card-img-top {
         height: 180px;
+    }
+
+    form.mb-3 .input-group {
+        width: 100%;
     }
 }

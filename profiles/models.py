@@ -85,7 +85,7 @@ class MemberProfile(models.Model):
         return []
 
     def full_description(self):
-        desc = f"{self.user.username}, {self.age} ans, {self.get_gender_display()}, orientation {self.get_orientation_display()}"
+        desc = f"{self.user.username}<br>{self.get_gender_display()}, {self.age} ans<br>{self.get_orientation_display()}"
         if self.location:
             desc += f", habite à {self.location}"
         return desc
