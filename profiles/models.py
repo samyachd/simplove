@@ -1,6 +1,8 @@
 from django.db import models
 from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 # Create your models here.
@@ -95,3 +97,8 @@ class MemberProfile(models.Model):
     #     if self.photo:
     #         return self.photo_url
     #     return "/static/img/default-profile.png"
+
+    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
+    def create_member_profile(sender, instance, created, **kwargs):
+        if created:
+            MemberProfile.objects.create(user=instance)
