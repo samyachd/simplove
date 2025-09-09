@@ -1,16 +1,14 @@
 from django.db import models
 from django.conf import settings
-from django.core.validators import MinValueValidator, MaxValueValidator
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 
 
-# Create your models here.
 class MemberProfile(models.Model):
+
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="member_profile",
+        null=True,
     )
 
     GENDER_CHOICES = [("H", "Homme"), ("F", "Femme"), ("A", "Autre")]
@@ -41,7 +39,6 @@ class MemberProfile(models.Model):
     age = models.PositiveBigIntegerField(
         null=True,
         blank=True,
-        validators=[MinValueValidator(18), MaxValueValidator(120)],
         help_text="Âge temporaire, à synchroniser avec users plus tard",
     )
 

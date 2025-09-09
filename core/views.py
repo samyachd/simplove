@@ -1,12 +1,5 @@
 from django.shortcuts import render
 
 
-def home(request):
-    return render(request, "core/index.html")
-
-
-from django.http import HttpResponse
-
-
-def core_view(request):
-    return render(request, "core/index.html")
+def core(request):
+    return render(request, "index.html")
