@@ -19,9 +19,12 @@
                 <img src="{{ profile.photo_url }}" class="card-img-top" alt="Profil">
                 <div class="card-body">
                     <h5 class="card-title">{{ profile.user.username }}</h5>
-                    <p class="card-text">
+                    <p class="card-text" title="{{ profile.bio }}">
                         {{ profile.bio|truncatewords:15}}
                     </p>
+                    {% for interest in profile.interests_list %}
+                        <span class="badge bg-primary me-1">{{ interest }}</span>
+                    {% endfor %}
                 </div>
                 <div class="card-footer d-flex justify-content-between">
                     <a href="{% url 'profiles:detail' profile.id %}" class="btn btn-sm btn-primary">Voir</a>

@@ -1,0 +1,202 @@
+/* static/css/style.css */
+
+/* ======================= */
+/* Variables globales      */
+/* ======================= */
+:root {
+  --bs-font-sans-serif: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --bs-body-bg: #fdf6f8;
+  --bs-body-color: #1a1a1a;
+  --bs-primary: #ff4d6d;  /* rose vif pour le thème amour */
+  --bs-secondary: #ffe4e9; /* rose pâle pour contrastes */
+  --bs-success: #1cbfa9;
+  --bs-danger: #d4183d;
+  --bs-border-radius: 0.75rem;
+  --bs-border-color: rgba(0,0,0,0.1);
+}
+
+/* ======================= */
+/* Body & Typographie      */
+/* ======================= */
+body {
+  font-family: var(--bs-font-sans-serif);
+  font-size: 1rem;
+  line-height: 1.5;
+  background-color: var(--bs-body-bg);
+  color: var(--bs-body-color);
+}
+
+/* Titres */
+h1, .h1 { font-size: 2rem; font-weight: 600; }
+h2, .h2 { font-size: 1.75rem; font-weight: 600; }
+h3, .h3 { font-size: 1.5rem; font-weight: 500; }
+h4, .h4 { font-size: 1.25rem; font-weight: 500; }
+
+/* ======================= */
+/* Navbar                 */
+/* ======================= */
+.navbar {
+  background-color: var(--bs-secondary);
+  border-bottom: 1px solid var(--bs-border-color);
+}
+
+.navbar-brand {
+  color: var(--bs-primary);
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.navbar-brand:hover {
+  color: #ff2a50;
+}
+
+.nav-link {
+  color: var(--bs-body-color);
+  font-weight: 500;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  color: var(--bs-primary);
+}
+
+/* Navbar toggler */
+.navbar-toggler {
+  border-color: var(--bs-border-color);
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(26,26,26,0.75)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* ======================= */
+/* Boutons                */
+/* ======================= */
+.btn {
+  font-weight: 500;
+  border-radius: var(--bs-border-radius);
+  padding: 0.5rem 1.25rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-primary {
+  background-color: var(--bs-primary);
+  border-color: var(--bs-primary);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: #ff2a50;
+  border-color: #ff2a50;
+}
+
+.btn-secondary {
+  background-color: var(--bs-secondary);
+  border-color: var(--bs-secondary);
+  color: var(--bs-body-color);
+}
+
+.btn-secondary:hover {
+  background-color: #ffd9e2;
+  border-color: #ffd9e2;
+}
+
+/* ======================= */
+/* Cards                  */
+/* ======================= */
+.card {
+  background-color: #fff;
+  border-radius: var(--bs-border-radius);
+  border: 1px solid var(--bs-border-color);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  margin-bottom: 1.5rem;
+}
+
+.card:hover {
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+
+.card img {
+  border-top-left-radius: var(--bs-border-radius);
+  border-top-right-radius: var(--bs-border-radius);
+}
+
+/* Card body */
+.card-body {
+  padding: 1rem;
+}
+
+/* ======================= */
+/* Formulaires            */
+/* ======================= */
+.form-control {
+  border-radius: var(--bs-border-radius);
+  border: 1px solid var(--bs-border-color);
+  padding: 0.5rem 0.75rem;
+}
+
+.form-control:focus {
+  border-color: var(--bs-primary);
+  box-shadow: 0 0 0 0.2rem rgba(255,77,109,0.25);
+}
+
+/* Form-check / checkbox */
+.form-check-input {
+  border-radius: 0.25rem;
+}
+
+/* ======================= */
+/* Liens                  */
+a {
+  color: var(--bs-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  color: #ff2a50;
+  text-decoration: underline;
+}
+
+/* ======================= */
+/* Badges & Alerts        */
+.badge {
+  border-radius: var(--bs-border-radius);
+  font-weight: 500;
+}
+
+.alert {
+  border-radius: var(--bs-border-radius);
+  padding: 0.75rem 1rem;
+}
+
+/* ======================= */
+/* Tables / Pagination     */
+.table {
+  background-color: #fff;
+  border-radius: var(--bs-border-radius);
+}
+
+.pagination .page-link {
+  border-radius: var(--bs-border-radius);
+  color: var(--bs-primary);
+}
+
+.pagination .page-link:hover {
+  background-color: #ffe4e9;
+}
+
+/* ======================= */
+/* Petits détails visuels */
+hr {
+  border-top: 1px solid var(--bs-border-color);
+}
+
+.input-group .form-control {
+    border-radius: var(--bs-border-radius) 0 0 var(--bs-border-radius);
+}
+.input-group .btn {
+    border-radius: 0 var(--bs-border-radius) var(--bs-border-radius) 0;
+}
+
