@@ -246,8 +246,8 @@ h4, .h4{ font-size:1.25rem; font-weight:500; }
   font-size: 1.8rem;
   color: var(--bs-primary);
   margin-bottom: 1.5rem;
-  transition: all 0.3s ease;
   overflow: hidden;
+  transition: all 0.3s ease;
 }
 
 .simplove-form-group label {
@@ -272,6 +272,7 @@ h4, .h4{ font-size:1.25rem; font-weight:500; }
   box-shadow: 0 0 0 0.2rem rgba(255,77,109,0.25);
   outline: none;
 }
+.form-check-input { border-radius: 0.25rem; }
 
 /* Bouton Login */
 .simplove-btn-account {
