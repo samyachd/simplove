@@ -24,3 +24,5 @@ urlpatterns = [
     path('', include('profiles.urls')),
     path('', include('messages.urls')),
 ]
+
+
