@@ -141,4 +141,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGIN_REDIRECT_URL = "/accueil"
 
+LOGOUT_REDIRECT_URL = "/accueil"
+
 CSRF_TRUSTED_ORIGINS = ["https://*.onrender.com"]
