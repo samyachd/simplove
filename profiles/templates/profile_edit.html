@@ -3,12 +3,17 @@
 {% block title %}Modifier mon profil{% endblock %}
 
 {% block content %}
-<div class="simplove-profile-edit-container">
+<div class="simplove-account-form-container">
   <h2>Modifier mon profil</h2>
+
+  {% if form.errors %}
+    <div class="alert alert-danger simplove-alert-danger">
+      Une erreur est survenue dans le formulaire. Merci de vérifier les champs.
+    </div>
+  {% endif %}
 
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-
     {% for field in form %}
       <div class="simplove-form-group">
         {{ field.label_tag }}
@@ -18,8 +23,9 @@
         {% endif %}
       </div>
     {% endfor %}
-
-    <button type="submit" class="btn btn-primary w-100 mt-3 simplove-btn-save">Enregistrer</button>
+    <div class="simplove-form-buttons form-buttons">
+      <button type="submit" class="btn btn-primary simplove-btn-account w-100">Enregistrer</button>
+    </div>
   </form>
 </div>
 {% endblock %}

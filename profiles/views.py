@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import MemberProfile
 from .forms import MemberProfileForm
 from django.contrib.auth.decorators import login_required
+from .forms import ProfileFilterForm
 
 
 @login_required
@@ -28,17 +29,38 @@ def profile_edit(request):
 
 @login_required
 def profile_list(request):
-    query = request.GET.get("q", "")
-    if query:
-        # filtre par nom + exclut les superusers
-        profiles = MemberProfile.objects.filter(
-            user__username__icontains=query, user__is_superuser=False
-        )
-    else:
-        # récupère tous les profils sauf ceux des superusers
-        profiles = MemberProfile.objects.filter(user__is_superuser=False)
+    form = ProfileFilterForm(request.GET or None)
+    profiles = MemberProfile.objects.filter(user__is_superuser=False)
 
-    return render(request, "profile_list.html", {"profiles": profiles, "query": query})
+    if form.is_valid():
+        q = form.cleaned_data.get("q")
+        age_min = form.cleaned_data.get("age_min")
+        age_max = form.cleaned_data.get("age_max")
+        gender = form.cleaned_data.get("gender")
+        orientation = form.cleaned_data.get("orientation")
+        location = form.cleaned_data.get("location")
+        looking_for = form.cleaned_data.get("looking_for")
+        interests = form.cleaned_data.get("interests")
+
+        if q:
+            profiles = profiles.filter(user__username__icontains=q)
+        if age_min:
+            profiles = profiles.filter(age__gte=age_min)
+        if age_max:
+            profiles = profiles.filter(age__lte=age_max)
+        if gender:
+            profiles = profiles.filter(gender=gender)
+        if orientation:
+            profiles = profiles.filter(orientation=orientation)
+        if location:
+            profiles = profiles.filter(location__icontains=location)
+        if looking_for:
+            profiles = profiles.filter(looking_for=looking_for)
+        if interests:
+            for interest in [i.strip() for i in interests.split(",") if i.strip()]:
+                profiles = profiles.filter(interest__icontains=interest)
+
+    return render(request, "profile_list.html", {"profiles": profiles, "form": form})
 
 
 @login_required

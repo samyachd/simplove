@@ -218,7 +218,7 @@ h4, .h4{ font-size:1.25rem; font-weight:500; }
 /* Page Account (Connexion/Register) */
 /* ======================= */
 .simplove-account-form-container {
-  max-width: 450px;
+  max-width: 600px;
   margin: 3rem auto;
   padding: 2rem;
   text-align: center;
@@ -414,7 +414,7 @@ h4, .h4{ font-size:1.25rem; font-weight:500; }
 /* Links, hr, small utilities */
 /* ======================= */
 a { color: var(--bs-primary); text-decoration:none; }
-a:hover { color: var(--bs-primary-dark); text-decoration:underline; }
+a:hover { color: var(--bs-primary-dark); text-decoration:none; }
 
 hr{ border-top:1px solid var(--bs-border-color); }
 
