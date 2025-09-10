@@ -477,3 +477,126 @@ section .bi:hover, .simplove-section .bi:hover {
   .profile-card, .simplove-profile-card { max-width:95%; }
   .profile-card img, .simplove-profile-card img { height:120px; }
 }
+
+/* ======================= */
+/* Section Hero romantique */
+/* ======================= */
+.hero {
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+              url('/media/img/accueil.jpg') no-repeat center center;
+  background-size: cover;
+  color: #fff;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  text-shadow: 0 3px 8px rgba(0,0,0,0.4);
+}
+
+.hero p {
+  font-size: 1.25rem;
+  margin-top: 1rem;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+/* ======================= */
+/* Sections générales      */
+/* ======================= */
+section {
+  padding: 4rem 0;
+}
+
+section h2 {
+  color: var(--bs-primary);
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+section h2::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: var(--bs-primary);
+  margin: 0.5rem auto;
+  border-radius: 2px;
+}
+
+/* ======================= */
+/* Avantages (icônes)      */
+/* ======================= */
+section .bi {
+  display: inline-block;
+  background: var(--bs-secondary);
+  color: var(--bs-primary);
+  padding: 1rem;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+section .bi:hover {
+  background: var(--bs-primary);
+  color: #fff;
+  transform: scale(1.1);
+}
+
+/* ======================= */
+/* Témoignages             */
+/* ======================= */
+.card {
+  border-radius: var(--bs-border-radius);
+  border: none;
+  background: #fff;
+}
+
+.card p {
+  font-style: italic;
+  color: #444;
+}
+
+.card small {
+  font-weight: 600;
+  color: var(--bs-primary);
+}
+
+/* ======================= */
+/* Call to Action final    */
+/* ======================= */
+section.bg-cta {
+  background: linear-gradient(135deg, #ff4d6d, #ff8095);
+  color: #fff;
+  text-align: center;
+  padding: 5rem 2rem;
+}
+
+.bg-cta h2 {
+  color: #fff;
+  font-size: 2.25rem;
+  margin-bottom: 1rem;
+}
+
+.bg-cta p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+/* ======================= */
+/* Boutons CTA             */
+/* ======================= */
+.bg-cta .btn-light {
+  background: #fff;
+  color: var(--bs-primary);
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.bg-cta .btn-light:hover {
+  background: #ffe4e9;
+  color: #d4183d;
+}
