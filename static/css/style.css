@@ -665,7 +665,7 @@ section .bi:hover, .simplove-section .bi:hover {
 /* Page Account (Connexion/Register) */
 /* ======================= */
 .simplove-account-form-container {
-  max-width: 450px;
+  max-width: 600px;
   margin: 3rem auto;
   padding: 2rem;
   text-align: center;
@@ -861,7 +861,7 @@ section .bi:hover, .simplove-section .bi:hover {
 /* Links, hr, small utilities */
 /* ======================= */
 a { color: var(--bs-primary); text-decoration:none; }
-a:hover { color: var(--bs-primary-dark); text-decoration:underline; }
+a:hover { color: var(--bs-primary-dark); text-decoration:none; }
 
 hr{ border-top:1px solid var(--bs-border-color); }
 
