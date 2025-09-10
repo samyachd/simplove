@@ -32,9 +32,14 @@ def profile_edit(request):
 def profile_list(request):
     query = request.GET.get("q", "")
     if query:
-        profiles = MemberProfile.objects.filter(user__username__icontains=query)
+        # filtre par nom + exclut les superusers
+        profiles = MemberProfile.objects.filter(
+            user__username__icontains=query, user__is_superuser=False
+        )
     else:
-        profiles = MemberProfile.objects.all()
+        # récupère tous les profils sauf ceux des superusers
+        profiles = MemberProfile.objects.filter(user__is_superuser=False)
+
     return render(request, "profile_list.html", {"profiles": profiles, "query": query})
 
 
