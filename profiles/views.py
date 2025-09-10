@@ -17,6 +17,7 @@ def profile_edit(request):
     return render(request, "profile_edit.html", {"form": form})
 
 
+@login_required
 def profile_list(request):
     query = request.GET.get("q", "")
     if query:
@@ -26,6 +27,7 @@ def profile_list(request):
     return render(request, "profile_list.html", {"profiles": profiles, "query": query})
 
 
+@login_required
 def profile_detail(request, pk):
     profile = get_object_or_404(MemberProfile, pk=pk)
     return render(request, "profile_detail.html", {"profile": profile})
