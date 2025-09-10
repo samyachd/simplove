@@ -1,17 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="login-form-container">
+<div class="simplove-account-form-container">
   <h2>Connexion</h2>
 
   {% if form.errors %}
-    <div class="alert alert-danger">
+    <div class="alert alert-danger simplove-alert-danger">
       Votre identifiant et votre mot de passe ne correspondent pas. Merci de réessayer.
     </div>
   {% endif %}
 
   {% if next %}
-    <div class="alert alert-warning">
+    <div class="alert alert-warning simplove-alert-warning">
       {% if user.is_authenticated %}
         Votre compte n’a pas accès à cette page. Pour continuer, connectez-vous avec un compte qui y a accès.
       {% else %}
@@ -22,19 +22,16 @@
 
   <form method="post" action="{% url 'users:login' %}">
     {% csrf_token %}
-
-    <div class="form-group">
+    <div class="simplove-form-group">
       {{ form.username.label_tag }}
       {{ form.username }}
     </div>
-
-    <div class="form-group">
+    <div class="simplove-form-group">
       {{ form.password.label_tag }}
       {{ form.password }}
     </div>
-
-    <div class="form-buttons">
-      <input type="submit" value="Se connecter" class="btn btn-primary">
+    <div class="simplove-form-buttons form-buttons">
+      <input type="submit" value="Se connecter" class="btn btn-primary simplove-btn-account">
       <input type="hidden" name="next" value="{{ next }}">
     </div>
   </form>

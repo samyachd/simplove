@@ -5,15 +5,24 @@ from django.contrib.auth.decorators import login_required
 
 
 @login_required
+def profile_view(request):
+    """Affiche le profil de l'utilisateur connecté"""
+    profile, created = MemberProfile.objects.get_or_create(user=request.user)
+    return render(request, "profile.html", {"user": request.user, "profile": profile})
+
+
+@login_required
 def profile_edit(request):
+    """Modification du profil"""
     profile, created = MemberProfile.objects.get_or_create(user=request.user)
     if request.method == "POST":
         form = MemberProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
-            return redirect("profiles:detail", pk=profile.id)
+            return redirect("profiles:profile")
     else:
         form = MemberProfileForm(instance=profile)
+
     return render(request, "profile_edit.html", {"form": form})
 
 
