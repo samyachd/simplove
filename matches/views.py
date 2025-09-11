@@ -1,35 +1,95 @@
 from django.shortcuts import render
+from django.http import HttpResponse
+
 
 # Create your views here.
+
+# matches/views.py
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, redirect, render
+from django.http import HttpResponseBadRequest
 from django.contrib.auth import get_user_model
 from django.db.models import Q
-from django.http import HttpResponseBadRequest
-from django.shortcuts import redirect, render
 
-from .models import Like, Match
-
+from .models import Evaluation, Match
 User = get_user_model()
+
+def _ensure_match_state(a, b):
+    a_likes_b = Evaluation.objects.filter(evaluator=a, target=b, status=Evaluation.LIKE).exists()
+    b_likes_a = Evaluation.objects.filter(evaluator=b, target=a, status=Evaluation.LIKE).exists()
+    if a_likes_b and b_likes_a:
+        match, _ = Match.objects.get_or_create(
+            **({"user1": a, "user2": b} if a.id < b.id else {"user1": b, "user2": a})
+        )
+        if not match.is_active:
+            match.is_active = True
+            match.save()
+    else:
+        Match.objects.filter(Match.pair_q(a, b), is_active=True).update(is_active=False)
 
 @login_required
 def like_user(request, user_id):
-    if request.user.id == user_id:
-        return HttpResponseBadRequest("Cannot like yourself.")
-    target = User.objects.get(pk=user_id)
-    Like.objects.get_or_create(user=request.user, target=target)
+    if request.method != "POST":
+        return HttpResponseBadRequest("POST required")
+    target = get_object_or_404(User, id=user_id)
+    if target == request.user:
+        messages.error(request, "You cannot like yourself.")
+        return redirect("browse_profiles")
+    obj, _ = Evaluation.objects.get_or_create(
+        evaluator=request.user, target=target, defaults={"status": Evaluation.LIKE}
+    )
+    if obj.status != Evaluation.LIKE:
+        obj.status = Evaluation.LIKE
+        obj.save()
+    _ensure_match_state(request.user, target)
+    messages.success(request, f"You liked @{target.username}.")
     return redirect("my_matches")
 
 @login_required
-def unlike_user(request, user_id):
-    Like.objects.filter(user=request.user, target_id=user_id).delete()
+def pass_user(request, user_id):
+    if request.method != "POST":
+        return HttpResponseBadRequest("POST required")
+    target = get_object_or_404(User, id=user_id)
+    obj, _ = Evaluation.objects.get_or_create(
+        evaluator=request.user, target=target, defaults={"status": Evaluation.UNLIKE}
+    )
+    if obj.status != Evaluation.UNLIKE:
+        obj.status = Evaluation.UNLIKE
+        obj.save()
+    _ensure_match_state(request.user, target)
+    messages.info(request, f"You passed on @{target.username}.")
+    return redirect("browse_profiles")
+
+@login_required
+def remove_like(request, user_id):
+    if request.method != "POST":
+        return HttpResponseBadRequest("POST required")
+    target = get_object_or_404(User, id=user_id)
+    obj, _ = Evaluation.objects.get_or_create(
+        evaluator=request.user, target=target, defaults={"status": Evaluation.UNLIKE}
+    )
+    if obj.status != Evaluation.UNLIKE:
+        obj.status = Evaluation.UNLIKE
+        obj.save()
+    _ensure_match_state(request.user, target)
+    messages.warning(request, f"You removed your like for @{target.username}.")
     return redirect("my_matches")
 
 @login_required
 def my_matches(request):
-    me = request.user.id
     matches = (
-        Match.objects
-        .filter(Q(user1_id=me) | Q(user2_id=me), is_active=True)
+        Match.objects.filter(Q(user1=request.user) | Q(user2=request.user), is_active=True)
         .select_related("user1", "user2")
+        .order_by("-created_at")
     )
     return render(request, "matches/matches_list.html", {"matches": matches})
+
+@login_required
+def browse_profiles(request):
+    """Super basic browse page: show everyone except me."""
+    evaluated_ids = Evaluation.objects.filter(evaluator=request.user).values_list("target_id", flat=True)
+    users = User.objects.exclude(id=request.user.id).exclude(id__in=evaluated_ids)[:20]
+    return render(request, "matches/browse.html", {"users": users})
+
+

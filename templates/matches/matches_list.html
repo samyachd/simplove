@@ -1,11 +1,46 @@
-<h1>My matches</h1>
-<ul>
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>My Matches</title>
+    <style>
+      body { font-family: system-ui, sans-serif; max-width: 720px; margin: 2rem auto; }
+      .card { border:1px solid #ddd; border-radius:10px; padding:1rem; margin:.5rem 0; }
+    </style>
+  </head>
+  <body>
+    <h1>My Matches</h1>
+
 {% for m in matches %}
-    <li>{{ m.user1 }} ↔ {{ m.user2 }}</li>
+  {% if m.user1_id == request.user.id %}
+    {% with other=m.user2 %}
+      <div class="card">
+        <strong>@{{ other.username }}</strong>
+        <form method="post" action="{% url 'remove_like' user_id=other.pk %}" style="display:inline">
+          {% csrf_token %}
+          <button type="submit">Remove Like</button>
+        </form>
+      </div>
+    {% endwith %}
+  {% else %}
+    {% with other=m.user1 %}
+      <div class="card">
+        <strong>@{{ other.username }}</strong>
+        <form method="post" action="{% url 'remove_like' user_id=other.pk %}" style="display:inline">
+          {% csrf_token %}
+          <button type="submit">Remove Like</button>
+        </form>
+      </div>
+    {% endwith %}
+  {% endif %}
 {% empty %}
-    <li>No matches yet.</li>
+  <p>No active matches yet.</p>
 {% endfor %}
-</ul>
-<p>
-  (Use /matches/like/&lt;user_id&gt; and /matches/unlike/&lt;user_id&gt; to try it.)
-</p>
+
+
+    <p><a href="{% url 'matches:browse_profiles' %}">→ Browse profiles</a></p>
+  </body>
+</html>
+
+
