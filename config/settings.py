@@ -14,6 +14,7 @@ import environ
 import os
 from pathlib import Path
 from decouple import config
+import dj_database_url
 
 env = environ.Env(DEBUG=(bool, False))
 
@@ -67,7 +68,6 @@ TEMPLATES = [
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
             BASE_DIR / "templates",
-            BASE_DIR / "profiles" / "templates",
         ],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -87,6 +87,7 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+
 
 DATABASES = {
     "default": {
@@ -131,6 +132,7 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -138,3 +140,7 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGIN_REDIRECT_URL = "/accueil"
+
+LOGOUT_REDIRECT_URL = "/accueil"
+
+CSRF_TRUSTED_ORIGINS = ["https://*.onrender.com"]
