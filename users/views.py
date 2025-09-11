@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import RegisterForm
 from django.contrib.auth.models import User
-from django.contrib.auth import get_user_model, login
+from django.contrib.auth import get_user_model, login, logout
 from profiles.models import MemberProfile
 
 
@@ -29,3 +29,9 @@ def account_view(request):
         return render(request, "registration/login_error.html")
     else:
         return render(request, "registration/account.html", {"User": request.user})
+        return render(request, "registration/account.html", {"User": User.username})
+
+
+def logout_view(request):
+    logout(request)
+    return redirect("/")

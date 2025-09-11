@@ -39,6 +39,7 @@ class MemberProfile(models.Model):
     age = models.PositiveSmallIntegerField(
         null=True,
         blank=True,
+        validators=[MinValueValidator(18), MaxValueValidator(120)],
         help_text="Âge temporaire, à synchroniser avec users plus tard",
     )
 
@@ -97,3 +98,13 @@ class MemberProfile(models.Model):
         if self.photo:
             return self.photo_url
         return "/media/img/default-profile.png"
+
+    # def photo_url(self):
+    #     if self.photo:
+    #         return self.photo_url
+    #     return "/static/img/default-profile.png"
+
+    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
+    def create_member_profile(sender, instance, created, **kwargs):
+        if created:
+            MemberProfile.objects.create(user=instance)
