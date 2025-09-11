@@ -1,4 +1,12 @@
+<<<<<<< HEAD
 {% extends 'base.html' %}
+=======
+{% extends "base.html" %}
+{% block content %}
+{% if form.errors %}
+  <p>Votre identifiant et votre mot de passe ne correspondent pas. Merci de réessayer.</p>
+{% endif %}
+>>>>>>> integration
 
 {% block content %}
 <div class="simplove-account-form-container">
@@ -10,6 +18,7 @@
     </div>
   {% endif %}
 
+<<<<<<< HEAD
   {% if next %}
     <div class="alert alert-warning simplove-alert-warning">
       {% if user.is_authenticated %}
@@ -19,6 +28,20 @@
       {% endif %}
     </div>
   {% endif %}
+=======
+<form method="post" action="{% url 'users:login' %}">
+  {% csrf_token %}
+  <table>
+    <tr>
+      <td>{{ form.username.label_tag }}</td>
+      <td>{{ form.username }}</td>
+    </tr>
+    <tr>
+      <td>{{ form.password.label_tag }}</td>
+      <td>{{ form.password }}</td>
+    </tr>
+  </table>
+>>>>>>> integration
 
   <form method="post" action="{% url 'users:login' %}">
     {% csrf_token %}
@@ -36,6 +59,11 @@
     </div>
   </form>
 
+<<<<<<< HEAD
   <p class="text-center mt-3"><a href="{% url 'users:password_reset' %}">Mot de passe oublié ?</a></p>
 </div>
 {% endblock %}
+=======
+<p><a href="{% url 'users:password_reset' %}">Mot de passe oublié ?</a></p>
+{% endblock %}
+>>>>>>> integration

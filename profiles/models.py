@@ -41,8 +41,7 @@ class MemberProfile(models.Model):
 
     age = models.PositiveSmallIntegerField(
         null=True,
-        blank=True,
-        validators=[MinValueValidator(18), MaxValueValidator(120)],
+        blank=False,
         help_text="Âge temporaire, à synchroniser avec users plus tard",
     )
 

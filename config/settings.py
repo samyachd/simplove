@@ -18,8 +18,6 @@ import dj_database_url
 
 env = environ.Env(DEBUG=(bool, False))
 
-env = environ.Env(DEBUG=(bool, False))
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -145,5 +143,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGIN_REDIRECT_URL = "/accueil"
 
 LOGOUT_REDIRECT_URL = "/accueil"
+<<<<<<< HEAD
 
 CSRF_TRUSTED_ORIGINS = ["https://*.onrender.com"]
+=======
+>>>>>>> integration
