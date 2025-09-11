@@ -187,9 +187,9 @@ h4, .h4{ font-size:1.25rem; font-weight:500; }
   object-fit:cover;
 }
 
-/* ======================= */
-/* Card / Card body / footer (fallback on .card and .simplove-*) */
-/* ======================= */
+/* ========================= */
+/* Card / Card body / footer */
+/* ========================= */
 .card, .simplove-card, .simplove-profile-card, .simplove-profile-detail-card {
   border-radius: var(--bs-border-radius);
   border: none;
@@ -198,11 +198,15 @@ h4, .h4{ font-size:1.25rem; font-weight:500; }
   overflow: hidden;
 }
 
-.card p, .card small {
-  /* preserve testimonial look */
+.card p { 
+  font-style: italic; 
+  color:#444; 
 }
-.card p { font-style: italic; color:#444; }
-.card small { font-weight:600; color:var(--bs-primary); }
+
+.card small {
+  font-weight:600; 
+  color:var(--bs-primary); 
+}
 
 .card-body, .simplove-card-body {
   padding: 1rem;
@@ -214,9 +218,9 @@ h4, .h4{ font-size:1.25rem; font-weight:500; }
   text-align:center;
 }
 
-/* ======================= */
+/* ================================= */
 /* Page Account (Connexion/Register) */
-/* ======================= */
+/* ================================= */
 .simplove-account-form-container {
   max-width: 600px;
   margin: 3rem auto;
@@ -450,8 +454,3 @@ section .bi:hover, .simplove-section .bi:hover {
   .profile-card, .simplove-profile-card { max-width:95%; }
   .profile-card img, .simplove-profile-card img { height:120px; }
 }
-
-/* ======================= */
-/* Cleanups: ensure no conflicting duplicates remain */
-/* ======================= */
-/* keep minimal custom overrides rather than duplicating bootstrap rules */
