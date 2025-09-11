@@ -42,4 +42,4 @@ class Profile(models.Model):
         blank=True, null=True, help_text="Numéro de téléphone"
     )
 
-    birth_date = models.DateField()
+    birth_date = models.DateField(null=True)
