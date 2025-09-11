@@ -3,35 +3,50 @@
 {% block title %}Liste des membres{% endblock %}
 
 {% block content %}
-<h1>Liste des profils</h1>
+<div class="container py-4 simplove-profile-list-container">
+    <h1 class="mb-4 text-center">Découvrez nos membres</h1>
 
-<form method="get" class="mb-3">
-    <div class="input-group">
-        <input type="text" name="q" class="form-control" placeholder="Rechercher un membre" value="{{ query }}">
-        <button class="btn btn-primary" type="submit">Rechercher</button>
-    </div>
-</form>
-
-<div class="row row-cols-1 row-cols-md-3 g-4">
-    {% for profile in profiles %}
-        <div class="col">
-            <div class="card h-100">
-                <img src="{{ profile.photo_url }}" class="card-img-top" alt="Profil">
-                <div class="card-body">
-                    <h5 class="card-title">{{ profile.user.username }}</h5>
-                    <p class="card-text">
-                        {{ profile.bio|truncatewords:15}}
-                    </p>
-                </div>
-                <div class="card-footer d-flex justify-content-between">
-                    <a href="{% url 'profiles:detail' profile.id %}" class="btn btn-sm btn-primary">Voir</a>
-                    <!-- <a href="{% url 'matches:like' profile.id %}" class="btn btn-sm btn-outline-success">Liker</a> -->
-                </div>
+    <form method="get" class="mb-4 simplove-search-form">
+        <div class="row g-3">
+            {% for field in form %}
+            <div class="col-md-3">
+                <label class="form-label">{{ field.label }}</label>
+                {{ field }}
+            </div>
+            {% endfor %}
+            <div class="col-md-12 text-center">
+                <button class="btn btn-primary" type="submit">Rechercher</button>
+                <a href="{% url 'profiles:list' %}" class="btn btn-secondary">Réinitialiser</a>
             </div>
         </div>
-    {% empty %}
-        <p>Aucun profil trouvé.</p>
-    {% endfor %}
-</div>
+    </form>
 
+    <div class="row g-4">
+        {% for profile in profiles %}
+            <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm simplove-profile-card">
+                    <div class="card-img-container">
+                        <img src="{{ profile.photo_url }}" class="card-img-top" alt="Profil de {{ profile.user.username }}">
+                    </div>
+                    <div class="card-body text-center simplove-card-body">
+                        <h5 class="card-title simplove-card-title">{{ profile.user.username }}</h5>
+                        <p class="card-text simplove-card-text" title="{{ profile.bio }}">
+                            {{ profile.bio|truncatewords:15 }}
+                        </p>
+                        <div class="mb-2 simplove-badges-container">
+                            {% for interest in profile.interests_list %}
+                                <span class="simplove-badge badge bg-primary me-1">{{ interest }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="card-footer text-center simplove-card-footer">
+                        <a href="{% url 'profiles:detail' profile.id %}" class="btn btn-sm btn-primary simplove-btn-view">Voir le profil</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-center simplove-no-profiles">Aucun profil trouvé pour le moment.</p>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

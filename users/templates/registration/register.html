@@ -2,18 +2,26 @@
 {% block title %}Inscription{% endblock %}
 
 {% block content %}
-<h2 class="mb-4">Créer un compte</h2>
-<form method="post" class="card p-4 shadow-sm">
+<div class="simplove-account-form-container">
+  <h2>Créer un compte</h2>
+
+  {% if form.errors %}
+    <div class="alert alert-danger simplove-alert-danger">
+      Une erreur est survenue dans le formulaire. Merci de vérifier les champs.
+    </div>
+  {% endif %}
+
+  <form method="post" action="">
     {% csrf_token %}
     {% for field in form %}
-        <div class="mb-3">
-            <label class="form-label">{{ field.label }}</label>
-            {{ field }}
-            {% if field.errors %}
-                <div class="text-danger small">{{ field.errors }}</div>
-            {% endif %}
-        </div>
+      <div class="simplove-form-group">
+        {{ field.label_tag }}
+        {{ field }}
+      </div>
     {% endfor %}
-    <button type="submit" class="btn btn-primary">S’inscrire</button>
-</form>
+    <div class="simplove-form-buttons form-buttons">
+      <input type="submit" value="S’inscrire" class="btn btn-primary simplove-btn-account">
+    </div>
+  </form>
+</div>
 {% endblock %}

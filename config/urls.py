@@ -28,7 +28,8 @@ urlpatterns = [
     path("users/", include("users.urls")),
     path("matches/", include("matches.urls")),
     path("profiles/", include("profiles.urls")),
-    path("messages/", include("messages.urls")),
+    path("messaging/", include("messaging.urls")),
+    path("accounts/", include("django.contrib.auth.urls")),
 ]
 
 if settings.DEBUG:
