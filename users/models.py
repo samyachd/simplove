@@ -10,12 +10,6 @@ class AccountUser(models.Model):
         related_name="user_account",
         null=True,
     )
-    
-class Profile(models.Model):
-
-    username = models.OneToOneField(
-        User, on_delete=models.CASCADE, related_name="user_profile"
-    )
 
     LANGUAGE_CHOICES = [
         ("FR", "French"),
@@ -37,4 +31,4 @@ class Profile(models.Model):
         blank=True, null=True, help_text="Numéro de téléphone"
     )
 
-    birth_date = models.DateField()
+    birth_date = models.DateField(null=True)
