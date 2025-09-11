@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from .forms import RegisterForm
 from django.contrib.auth.models import User
-from django.contrib.auth import login
-from django.contrib.auth import logout
+from django.contrib.auth import get_user_model, login, logout
+from profiles.models import MemberProfile
 
 
 def register_view(request):
@@ -14,6 +14,9 @@ def register_view(request):
                 email=form.cleaned_data["email"],
                 password=form.cleaned_data["password"],
             )
+
+            MemberProfile.objects.create(user=user)
+
             login(request, user)
             return redirect("/")  # redirection après inscription
     else:
@@ -25,6 +28,7 @@ def account_view(request):
     if not request.user.is_authenticated:
         return render(request, "registration/login_error.html")
     else:
+        return render(request, "registration/account.html", {"User": request.user})
         return render(request, "registration/account.html", {"User": User.username})
 
 

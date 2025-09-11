@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg">
+<body class="simplove-body">
+    <nav class="navbar navbar-expand-lg sticky-top simplove-navbar">
         <div class="container">
             <a class="navbar-brand" href="/">Simplove</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Navigation">
@@ -18,31 +18,43 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'core:home' %}">Accueil</a>
+                        <a class="nav-link" href="{% url 'core:core' %}">Accueil</a>
                     </li>
-                    <li class="nav-item">
-                        {% if request.user.is_authenticated and request.user.member_profile %}
-                            <a class="nav-link" href="{% url 'profiles:edit' request.user.member_profile.id %}">Profil</a>
-                        {% else %}
-                            <!-- <a class="nav-link" href="{% url 'login' %}">Connexion</a> -->
-                            <a class="nav-link" href="#">Connexion</a> <!-- TODO: remplacer '#' par {% url 'login' %} quand la vue login sera prête -->
-                        {% endif %}
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'profiles:list' %}">Membres</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'matches:my_matches' %}">Match</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Message</a>
-                    </li>
+                    {% if request.user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'profiles:profile' %}">Profil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'profiles:list' %}">Membres</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'matches:browse_profiles' %}">Match</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Message</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'users:register' %}">Inscription</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'users:login' %}">Connexion</a>
+                        </li>
+                    {% endif %}
+                    {% if request.user.is_authenticated %}
+                        <li class="nav-item">
+                            <form action="{% url 'users:logout' %}" method="post" class="d-inline">
+                                {% csrf_token %}
+                                <button type="submit" class="btn simplove-logout-btn">Déconnexion</button>
+                            </form>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
     </nav>
     {% block content %} {% endblock %}
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'js/script.js ' %}"></script>
+    <script src="{% static 'js/script.js' %}"></script>
 </body>
 </html>

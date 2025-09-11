@@ -1,10 +1,10 @@
 [
-    {
+  {
     "model": "auth.user",
     "pk": 1,
     "fields": {
       "username": "charlie66",
-      "password": "pbkdf2_sha256$1000000$a7QvTyFK8D1FlRF7fs7nLq$6WsZvvkXn2rQYEFctXVoDTFVb2Ohh76XVH21c+WKjpE=",  
+      "password": "pbkdf2_sha256$1000000$wXsgSZnU7SCbaSFuwQ49gK$xMxBs7uXVgXMMW9W7tLCNyA/vBdRmmvoxnrdC/6U82g=",
       "email": "charlie66@example.com",
       "first_name": "Charlie",
       "last_name": "Durand",
@@ -16,19 +16,20 @@
     }
   },
   {
-    "model": "users.profile",
+    "model": "users.accountuser",
     "pk": 1,
     "fields": {
-      "username": 1,
+      "user": 1,
       "language": "EN",
       "phone_number": "01 00 00 00 00",
       "birth_date": "1980-09-08"
     }
   },
   {
-    "model": "profiles.memberprofil",
+    "model": "profiles.memberprofile",
     "pk": 1,
     "fields": {
+      "user": 1,
       "gender": "H",
       "orientation": "HET",
       "age": 31,
@@ -43,7 +44,7 @@
     "pk": 2,
     "fields": {
       "username": "jack112",
-      "password": "pbkdf2_sha256$1000000$a7QvTyFK8D1FlRF7fs7nLq$6WsZvvkXn2rQYEFctXVoDTFVb2Ohh76XVH21c+WKjpE=",  
+      "password": "pbkdf2_sha256$1000000$wXsgSZnU7SCbaSFuwQ49gK$xMxBs7uXVgXMMW9W7tLCNyA/vBdRmmvoxnrdC/6U82g=",
       "email": "jack112@example.com",
       "first_name": "Jack",
       "last_name": "Mbappé",
@@ -55,19 +56,20 @@
     }
   },
   {
-    "model": "users.profile",
+    "model": "users.accountuser",
     "pk": 2,
     "fields": {
-      "username": 2,
+      "user": 2,
       "language": "FR",
       "phone_number": "02 00 00 00 00",
       "birth_date": "1997-09-08"
     }
   },
   {
-    "model": "profiles.memberprofil",
+    "model": "profiles.memberprofile",
     "pk": 2,
     "fields": {
+      "user": 2,
       "gender": "H",
       "orientation": "HOM",
       "age": 21,
@@ -78,4 +80,3 @@
     }
   }
 ]
-

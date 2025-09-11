@@ -1,32 +1,30 @@
 {% extends 'base.html' %}
 {% block title %}Profil de {{ profile.user.username }} {% endblock %}
+
 {% block content %}
-<div class="card mb-3" style="max-width: 540px;">
+<div class="card mb-3 simplove-profile-detail-card">
     <div class="row g-0">
         <div class="col-md-4">
             <img src="{{ profile.photo_url }}" class="img-fluid rounded-start" alt="Profil">
         </div>
         <div class="col-md-8">
-            <div class="card-body">
-                <h5 class="card-title">{{ profile.full_description|safe }}</h5>
-                <p class="card-text">{{ profile.bio }}</p>
+            <div class="simplove-card-body card-body">
+                <h5 class="simplove-card-title card-title">{{ profile.full_description|safe }}</h5>
+                <p class="simplove-card-text card-text">{{ profile.bio }}</p>
 
-                <!-- Centres d'intérêts -->
-                <p class="card-text"><strong>Centre d'intérêts :</strong> 
+                <p class="simplove-card-text card-text"><strong>Centre d'intérêts :</strong> 
                     {% for interest in profile.interests_list %}
-                        <span class="badge bg-primary me-1">{{ interest }}</span>
+                        <span class="simplove-badge badge bg-primary me-1">{{ interest }}</span>
                     {% endfor %}
                 </p>
 
-                <!-- Looking for -->
-                <p class="card-text">
+                <p class="simplove-card-text card-text">
                     <strong>Pour :</strong> 
-                    <span class="badge bg-success">{{ profile.get_looking_for_display }}</span>
+                    <span class="simplove-badge badge bg-success">{{ profile.get_looking_for_display }}</span>
                 </p>
 
-                <a href="{% url 'matches:like' profile.id %}" class="btn btn-primary w-100 mt-2">🤍 Liker</a>
+                <a href="{% url 'matches:like' profile.id %}" class="btn btn-primary w-100 mt-2 simplove-btn-like">🤍 Liker</a>
             </div>
-
         </div>
     </div>
 </div>

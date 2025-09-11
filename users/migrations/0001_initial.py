@@ -15,13 +15,20 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
+            name='AccountUser',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('user', models.OneToOneField(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='user_account', to=settings.AUTH_USER_MODEL)),
+            ],
+        ),
+        migrations.CreateModel(
             name='Profile',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('language', models.CharField(choices=[('FR', 'French'), ('EN', 'English'), ('ES', 'Spanish'), ('DE', 'German')], default='FR', help_text='Language', max_length=10)),
                 ('phone_number', models.CharField(blank=True, help_text='Numéro de téléphone', null=True)),
                 ('birth_date', models.DateField()),
-                ('username', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('username', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='user_profile', to=settings.AUTH_USER_MODEL)),
             ],
         ),
     ]

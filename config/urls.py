@@ -22,18 +22,12 @@ from django.urls import path, include
 from django.views.generic import RedirectView
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("", RedirectView.as_view(url="/accueil/")),
-    path("accueil/", include("core.urls")),
-    path("users/", include("users.urls")),
-    path("matches/", include("matches.urls")),
-    path("profiles/", include("profiles.urls")),
-    path("messaging/", include("messaging.urls")),
-
-    path("accounts/", include("django.contrib.auth.urls")),
+    path('admin/', admin.site.urls),
+    path('', include('users.urls')),
+    path('', include('matches.urls')),
+    path('', include('profiles.urls')),
+    path('', include('messages.urls')),
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-

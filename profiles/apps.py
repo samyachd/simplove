@@ -6,4 +6,4 @@ class ProfilesConfig(AppConfig):
     name = "profiles"
 
     def ready(self):
-        import profiles.signals  # <-- ici
+        import profiles.signals  # <- import ici, après que models.py soit chargé
