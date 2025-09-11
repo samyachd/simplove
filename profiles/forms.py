@@ -17,6 +17,6 @@ class MemberProfileForm(forms.ModelForm):
         widgets = {
             "bio": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
             "interest": forms.TextInput(attrs={"class": "form-control"}),
-            "age": forms.NumberInput(attrs={"class": "form-control"}),
-            "location": forms.TextInput(attrs={"class": "form-control"}),
+            "age": forms.NumberInput(attrs={"class": "form-control", 'required':True}),
+            "location": forms.TextInput(attrs={"class": "form-control", 'required':True}),
         }

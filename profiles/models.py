@@ -37,7 +37,7 @@ class MemberProfile(models.Model):
 
     age = models.PositiveBigIntegerField(
         null=True,
-        blank=True,
+        blank=False,
         help_text="Âge temporaire, à synchroniser avec users plus tard",
     )
 

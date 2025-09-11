@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+{% block title %}Gestion du compte{% endblock %}
+{% block content %}
 <form method="post" action="{% url 'account' %}">
   {% csrf_token %}
   <table>
@@ -37,3 +40,4 @@
   <input type="submit" value="Sauvegarder les changements">
   <input type="hidden" name="next" value="{{ next }}">
 </form>
+{% endblock %}
