@@ -11,7 +11,7 @@ from django.shortcuts import redirect, render
 from .models import Match
 from .models import Evaluation, Match
 
-User = get_user_model()
+from .models import Evaluation, Match
 
 User = get_user_model()
 

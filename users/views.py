@@ -34,3 +34,9 @@ def account_view(request):
         return render(request, "registration/login_error.html")
     else:
         return render(request, "registration/account.html", {"User": request.user})
+        return render(request, "registration/account.html", {"User": User.username})
+
+
+def logout_view(request):
+    logout(request)
+    return redirect("/")

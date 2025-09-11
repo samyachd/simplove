@@ -8,6 +8,12 @@ class Evaluation(models.Model):
     UNLIKE = "UNLIKE"  # a.k.a. Pass / Dislike
     STATUS_CHOICES = [(LIKE, "Like"), (UNLIKE, "Unlike")]
 
+
+class Evaluation(models.Model):
+    LIKE = "LIKE"
+    UNLIKE = "UNLIKE"  # a.k.a. Pass / Dislike
+    STATUS_CHOICES = [(LIKE, "Like"), (UNLIKE, "Unlike")]
+
     evaluator = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
