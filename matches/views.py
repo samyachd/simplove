@@ -8,8 +8,7 @@ from django.contrib.auth import get_user_model
 from django.db.models import Q
 from django.http import HttpResponseBadRequest
 from django.shortcuts import redirect, render
-from .models import Like, Match
-
+from .models import Match
 from .models import Evaluation, Match
 
 User = get_user_model()
@@ -86,14 +85,18 @@ def remove_like(request, user_id):
 
 @login_required
 def my_matches(request):
-    matches = (
-        Match.objects.filter(
-            Q(user1=request.user) | Q(user2=request.user), is_active=True
-        )
-        .select_related("user1", "user2")
-        .order_by("-created_at")
+    matches = Match.objects.filter(user1=request.user) | Match.objects.filter(
+        user2=request.user
     )
-    return render(request, "matches/matches_list.html", {"matches": matches})
+
+    # Définir "other" pour chaque match
+    for match in matches:
+        if match.user1_id == request.user.id:
+            match.other = match.user2
+        else:
+            match.other = match.user1
+
+    return render(request, "matches_list.html", {"matches": matches})
 
 
 @login_required
@@ -103,4 +106,4 @@ def browse_profiles(request):
         "target_id", flat=True
     )
     users = User.objects.exclude(id=request.user.id).exclude(id__in=evaluated_ids)[:20]
-    return render(request, "matches/browse.html", {"users": users})
+    return render(request, "browse.html", {"users": users})

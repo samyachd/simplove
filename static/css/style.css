@@ -41,8 +41,7 @@ h4, .h4{ font-size:1.25rem; font-weight:500; }
   align-items:center;
   justify-content:center;
   text-align:center;
-  background: linear-gradient(rgba(0,0,0,0.55),rgba(0,0,0,0.55)),
-              url('/media/img/accueil.jpg') no-repeat center center;
+  background: url('/media/img/accueil.jpg') no-repeat center center;
   background-size: cover;
   color:#fff;
   position:relative;

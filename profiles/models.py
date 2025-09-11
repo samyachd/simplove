@@ -1,5 +1,8 @@
 from django.db import models
 from django.conf import settings
+from django.core.validators import MinValueValidator, MaxValueValidator
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 
 
 class MemberProfile(models.Model):
@@ -98,11 +101,6 @@ class MemberProfile(models.Model):
         if self.photo:
             return self.photo_url
         return "/media/img/default-profile.png"
-
-    # def photo_url(self):
-    #     if self.photo:
-    #         return self.photo_url
-    #     return "/static/img/default-profile.png"
 
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_member_profile(sender, instance, created, **kwargs):
