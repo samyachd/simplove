@@ -160,7 +160,18 @@ h4, .h4{ font-size:1.25rem; font-weight:500; }
   border-color:#ffd9e2;
 }
 
-/* Small/utility button sizes remain handled by Bootstrap (btn-lg, btn-sm) */
+/* Delete / light variants */
+.simplove-btn-delete {
+  background-color: var(--bs-secondary) !important;
+  border-color: var(--bs-secondary) !important;
+  color: var(--bs-body-color) !important;
+  box-shadow: 0 0 0 0.2rem rgba(255,77,109,0.25);
+}
+.simplove-btn-delete:hover{
+  background-color: var(--bs-primary-dark) !important;
+  border-color: var(--bs-primary-dark) !important;
+  color: #fff !important;
+}
 
 /* ======================= */
 /* Grid & container utils  */

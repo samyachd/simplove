@@ -35,12 +35,12 @@
         </div>
       </div>
     {% empty %}
-      <p class="text-muted">Plus de profils à afficher.</p>
+      <p class="text-muted">Aucun profils à afficher.</p>
     {% endfor %}
   </div>
 
   <div class="mt-4">
-    <a href="{% url 'matches:my_matches' %}" class="btn btn-primary">→ Voir mes matchs</a>
+    <a href="{% url 'matches:my_matches' %}" class="btn btn-primary">Voir mes matchs</a>
   </div>
 </div>
 {% endblock %}

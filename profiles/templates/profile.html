@@ -30,7 +30,11 @@
             <p class="simplove-card-text card-text"><strong>Looking for :</strong> {{ profile.get_looking_for_display }}</p>
           {% endif %}
 
-          <a href="{% url 'profiles:edit' %}" class="btn btn-primary mt-2 simplove-btn-edit">Éditer le profil</a>
+          <div class="simplove-profile-view-btn-container d-flex gap-2">
+            <a href="{% url 'profiles:edit' %}" class="btn btn-primary mt-2 simplove-btn-edit">Éditer mon profil</a>
+            <a href="{% url 'matches:my_matches' %}" class="btn btn-primary mt-2 simplove-btn-edit">Voir mes matchs</a>
+            <a href="{% url 'profiles:edit' %}" class="btn btn-primary mt-2 simplove-btn-delete">Supprimer mon profil</a>
+          </div>
         </div>
       </div>
     </div>
