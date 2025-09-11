@@ -15,12 +15,9 @@ def register_view(request):
                 email=form.cleaned_data["email"],
                 password=form.cleaned_data["password"],
             )
-
-            MemberProfile.objects.create(user=user)
-
             login(request, user)
             return redirect("profiles:create_profile")
-    else:
+    else:   
         form = RegisterForm()
     return render(request, "registration/register.html", {"form": form})
 

@@ -31,9 +31,9 @@
           {% endif %}
 
           <div class="simplove-profile-view-btn-container d-flex gap-2">
-            <a href="{% url 'profiles:edit' %}" class="btn btn-primary mt-2 simplove-btn-edit">Éditer mon profil</a>
+            <a href="{% url 'profiles:edit' profile.pk %}" class="btn btn-primary mt-2 simplove-btn-edit">Éditer mon profil</a>
             <a href="{% url 'matches:my_matches' %}" class="btn btn-primary mt-2 simplove-btn-edit">Voir mes matchs</a>
-            <a href="{% url 'profiles:edit' %}" class="btn btn-primary mt-2 simplove-btn-delete">Supprimer mon profil</a>
+            <a href="{% url 'profiles:edit' profile.pk %}" class="btn btn-primary mt-2 simplove-btn-delete">Supprimer mon profil</a>
           </div>
         </div>
       </div>
