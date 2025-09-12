@@ -1,8 +1,9 @@
 from django.urls import path
-from .views import messages_view
+from . import views
 
 app_name = "messaging"
 
 urlpatterns = [
-    path("", messages_view, name="messaging"),
+    path("", views.thread_list, name="thread_list"),
+    path("<int:pk>/", views.thread_detail, name="thread_detail"),
 ]
