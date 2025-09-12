@@ -79,8 +79,8 @@
         // Déconnexion automatique après 15 minutes d'inactivité
         let logoutTimer;
         let warningTimer;
-        const warningTime = 50 * 1000; // 50s avant la déconnexion
-        const logoutTime = 60 * 1000;  // 60s inactivité → déconnexion
+        const warningTime = 30 * 1000; // 50s avant la déconnexion
+        const logoutTime = 15 * 60 * 1000;  // 15min inactivité → déconnexion
 
         const logoutModal = new bootstrap.Modal(document.getElementById('logoutWarningModal'));
         const countdownEl = document.getElementById('logoutCountdown');
