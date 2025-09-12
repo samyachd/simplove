@@ -27,11 +27,11 @@
               <p class="card-text simplove-card-text" title="{{ u.profile.bio }}">{{ u.profile.bio|truncatewords:15 }}</p>
             {% endif %}
             <div class="d-flex gap-2 mt-2 simplove-profile-view-btn-container">
-              <form method="post" action="{% url 'matches:like_user' u.id %}">
+              <form method="post" action="{% url 'matches:like' u.id %}">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-success simplove-btn-like">🤍 Like</button>
               </form>
-              <form method="post" action="{% url 'matches:pass_user' u.id %}">
+              <form method="post" action="{% url 'matches:pass' u.id %}">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-secondary simplove-btn-pass">👎 Pass</button>
               </form>

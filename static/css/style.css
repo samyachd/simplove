@@ -597,6 +597,18 @@ section .bi:hover, .simplove-section .bi:hover {
   border-color: var(--bs-primary-dark) !important;
 }
 
+.simplove-btn-delete {
+  background-color: var(--bs-secondary);
+  color: var(--bs-body-color);
+  box-shadow: 0 0 0 0.1rem rgba(255,77,109,0.25);
+}
+
+.simplove-btn-delete:hover {
+  background-color: var(--bs-primary);
+  color: #fff;
+  box-shadow: 0 0 0 0.1rem rgba(255,77,109,0.25);
+}
+
 /* Secondary / light variants fallback */
 .btn-secondary, .simplove-btn-secondary{
   background-color: var(--bs-secondary);
@@ -718,6 +730,8 @@ section .bi:hover, .simplove-section .bi:hover {
   box-shadow: 0 0 0 0.2rem rgba(255,77,109,0.25);
   outline: none;
 }
+
+.simplove-form-group .is-invalid { border-color: var(--bs-danger); }
 
 /* Bouton Login */
 .simplove-btn-account {

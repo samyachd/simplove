@@ -2,7 +2,8 @@ from django.db import models
 from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.dispatch import receiver
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_delete
+import os
 
 
 class MemberProfile(models.Model):
@@ -42,7 +43,11 @@ class MemberProfile(models.Model):
     age = models.PositiveSmallIntegerField(
         null=True,
         blank=False,
-        help_text="Âge temporaire, à synchroniser avec users plus tard",
+        help_text="Âge de l'utilisateur",
+        validators=[
+            MinValueValidator(18),
+            MaxValueValidator(120),
+        ],
     )
 
     bio = models.TextField(max_length=500, blank=True, help_text="Bio de l'utilisateur")
@@ -77,7 +82,7 @@ class MemberProfile(models.Model):
     )
 
     def __str__(self):
-        return f"Profil de {self.user.username}"
+        return f"Profil de {self.user.username}" if self.user else "Profil inconnu"
 
     def interests_list(self):
         if self.interest:
@@ -98,10 +103,18 @@ class MemberProfile(models.Model):
 
     def photo_url(self):
         if self.photo:
-            return self.photo_url
+            return self.photo.url
         return "/media/img/default-profile.png"
 
-    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
-    def create_member_profile(sender, instance, created, **kwargs):
-        if created:
-            MemberProfile.objects.create(user=instance)
+
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_member_profile(sender, instance, created, **kwargs):
+    if created:
+        MemberProfile.objects.create(user=instance)
+
+
+@receiver(post_delete, sender="profiles.MemberProfile")
+def delete_profile_photo(sender, instance, **kwargs):
+    """Supprimer la photo quand le profil est supprimé"""
+    if instance.photo and instance.photo.path and os.path.isfile(instance.photo.path):
+        os.remove(instance.photo.path)
