@@ -14,13 +14,6 @@ def profile_view(request):
 
 
 @login_required
-def profile_view(request):
-    """Affiche le profil de l'utilisateur connecté"""
-    profile, created = MemberProfile.objects.get_or_create(user=request.user)
-    return render(request, "profile.html", {"user": request.user, "profile": profile})
-
-
-@login_required
 def profile_edit(request):
     """Modification du profil"""
     profile, created = MemberProfile.objects.get_or_create(user=request.user)
@@ -75,7 +68,7 @@ def profile_list(request):
 @login_required
 @profile_required
 def profile_detail(request, pk):
-    profile = get_object_or_404(MemberProfile, pk=pk)
+    profile = get_object_or_404(MemberProfile, pk=pk, user__is_active=True)
     return render(request, "profile_detail.html", {"profile": profile})
 
 
@@ -100,7 +93,9 @@ def create_profile(request):
 @login_required
 def profile_list(request):
     form = ProfileFilterForm(request.GET or None)
-    profiles = MemberProfile.objects.filter(user__is_superuser=False)
+    profiles = MemberProfile.objects.filter(
+        user__is_superuser=False, user__is_active=True
+    )
 
     if form.is_valid():
         q = form.cleaned_data.get("q")

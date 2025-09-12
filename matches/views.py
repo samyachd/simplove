@@ -87,16 +87,15 @@ def remove_like(request, user_id):
 
 @login_required
 def my_matches(request):
-    matches = Match.objects.filter(user1=request.user) | Match.objects.filter(
-        user2=request.user
+    # Tous les matchs où je suis user1 ou user2, match actif et utilisateurs actifs
+    matches = Match.objects.filter(
+        Q(user1=request.user, is_active=True, user2__is_active=True)
+        | Q(user2=request.user, is_active=True, user1__is_active=True)
     )
 
     # Définir "other" pour chaque match
     for match in matches:
-        if match.user1_id == request.user.id:
-            match.other = match.user2
-        else:
-            match.other = match.user1
+        match.other = match.user2 if match.user1_id == request.user.id else match.user1
 
     return render(request, "matches_list.html", {"matches": matches})
 
@@ -107,5 +106,9 @@ def browse_profiles(request):
     evaluated_ids = Evaluation.objects.filter(evaluator=request.user).values_list(
         "target_id", flat=True
     )
-    users = User.objects.exclude(id=request.user.id).exclude(id__in=evaluated_ids)[:20]
+    users = (
+        User.objects.filter(is_active=True)
+        .exclude(id=request.user.id)
+        .exclude(id__in=evaluated_ids)[:20]
+    )
     return render(request, "browse.html", {"users": users})
