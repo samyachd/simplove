@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from .models import UserAccount
 
 
 class RegisterForm(forms.Form):
@@ -15,3 +16,37 @@ class RegisterForm(forms.Form):
                 "confirm_password", "Les mots de passe ne correspondent pas."
             )
         return cleaned_data
+
+
+class AccountForm(forms.ModelForm):
+    class Meta:
+        model = UserAccount
+        fields = [
+            "first_name",
+            "last_name",
+            "email",
+            "phone_number",
+            "address",
+            "birth_date",
+            "language",
+        ]
+        labels = {
+            "first_name": "Prénom",
+            "last_name": "Nom",
+            "email": "Email",
+            "phone_number": "Téléphone",
+            "address": "Adresse",
+            "birth_date": "Date de naissance",
+            "language": "Langue",
+        }
+        widgets = {
+            "first_name": forms.TextInput(attrs={"class": "form-control"}),
+            "last_name": forms.TextInput(attrs={"class": "form-control"}),
+            "email": forms.EmailInput(attrs={"class": "form-control"}),
+            "phone_number": forms.TextInput(attrs={"class": "form-control"}),
+            "address": forms.TextInput(attrs={"class": "form-control"}),
+            "birth_date": forms.DateInput(
+                attrs={"class": "form-control", "type": "date"}
+            ),
+            "language": forms.Select(attrs={"class": "form-select"}),
+        }

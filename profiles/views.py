@@ -14,7 +14,7 @@ def profile_view(request):
 
 
 @login_required
-def profile_edit(request):
+def profile_edit(request, pk):
     """Modification du profil"""
     profile, created = MemberProfile.objects.get_or_create(user=request.user)
     if request.method == "POST":

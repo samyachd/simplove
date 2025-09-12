@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="simplove-account-form-container">
+  <h2>Modifier mon compte</h2>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <div class="simplove-form-buttons form-buttons">
+      <button type="submit" class="btn btn-primary simplove-btn-account">
+        Sauvegarder
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}

@@ -6,8 +6,9 @@ from django.dispatch import receiver
 from django.contrib import messages
 from django.db import IntegrityError
 from django.contrib.auth.models import User
-from .forms import RegisterForm
+from .forms import RegisterForm, AccountForm
 from profiles.decorators import profile_required
+from .models import UserAccount
 
 
 def register_view(request):
@@ -24,7 +25,7 @@ def register_view(request):
                 # Nécessaire pour login() avec plusieurs backends
                 user.backend = "django.contrib.auth.backends.ModelBackend"
                 login(request, user)
-                return redirect("profiles:create_profile")
+                return redirect("users:create_account")
 
             except IntegrityError:
                 messages.error(
@@ -42,9 +43,49 @@ def register_view(request):
 
 
 @login_required
+def create_account(request):
+    """
+    Compléter les informations du compte (interne) après l'inscription.
+    Puis rediriger vers create_profile pour compléter le profil public.
+    """
+    account, created = UserAccount.objects.get_or_create(user=request.user)
+
+    if request.method == "POST":
+        form = AccountForm(request.POST, instance=account)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Votre compte a été créé avec succès !")
+            # Redirection vers la page pour compléter le profil public
+            return redirect("profiles:create_profile")
+    else:
+        form = AccountForm(instance=account)
+
+    return render(request, "registration/create_account.html", {"form": form})
+
+
+@login_required
 @profile_required
 def account_view(request):
-    return render(request, "registration/account.html", {"User": request.user})
+    """Afficher les infos du compte personnel"""
+    account, created = UserAccount.objects.get_or_create(user=request.user)
+    return render(request, "registration/account.html", {"account": account})
+
+
+@login_required
+@profile_required
+def account_edit(request):
+    """Modifier les infos du compte personnel"""
+    account, created = UserAccount.objects.get_or_create(user=request.user)
+    if request.method == "POST":
+        form = AccountForm(request.POST, instance=account)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Votre compte a été mis à jour.")
+            return redirect("users:account")
+    else:
+        form = AccountForm(instance=account)
+
+    return render(request, "registration/account_edit.html", {"form": form})
 
 
 def logout_view(request):
