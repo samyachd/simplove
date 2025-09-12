@@ -1,6 +1,5 @@
 from django.db import models
 from django.conf import settings
-from django.contrib.auth.models import User
 
 
 class AccountUser(models.Model):
@@ -15,8 +14,11 @@ class AccountUser(models.Model):
 
 class Profile(models.Model):
 
-    username = models.OneToOneField(
-        User, on_delete=models.CASCADE, related_name="user_profile"
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="profile",
+        null=True,
     )
 
     LANGUAGE_CHOICES = [
@@ -39,4 +41,4 @@ class Profile(models.Model):
         blank=True, null=True, help_text="Numéro de téléphone"
     )
 
-    birth_date = models.DateField()
+    birth_date = models.DateField(null=True)

@@ -69,11 +69,39 @@
     </div>
 </section>
 
-<section class="py-5 text-center text-white simplove-cta">
-    <div class="container">
-        <h2 class="fw-bold text-white">Prêt(e) à trouver votre moitié ?</h2>
-        <p>Inscrivez-vous dès aujourd’hui et laissez Simplove jouer les cupidons</p>
-        <a href="{% url 'users:register' %}" class="btn btn-light btn-lg">Je m’inscris</a>
-    </div>
-</section>
+    <!-- Section Témoignages -->
+    <section class="py-5 bg-light">
+        <div class="container text-center">
+            <h2 class="fw-bold">Ils ont trouvé l’amour sur Simplove</h2>
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <div class="card shadow-sm p-3">
+                        <p>"Grâce à Simplove, j’ai rencontré Alex, et depuis on code en duo tous les week-ends !"</p>
+                        <small class="text-muted">— Sophie, 29 ans</small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow-sm p-3">
+                        <p>"Un site simple, efficace et fun. J’ai trouvé des amis et plus encore."</p>
+                        <small class="text-muted">— Julien, 32 ans</small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow-sm p-3">
+                        <p>"Je ne pensais pas qu’un site de rencontre pour passionnés de code pouvait exister… et pourtant !"</p>
+                        <small class="text-muted">— Clara, 26 ans</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-5 text-center text-white" style="background: #e63946;">
+        <div class="container">
+            <h2 class="fw-bold text-white">Prêt(e) à trouver votre moitié ?</h2>
+            <p>Inscrivez-vous dès aujourd’hui et laissez Simplove jouer les cupidons</p>
+            <a href="{% url 'users:register' %}" class="btn btn-light btn-lg">Je m’inscris</a>
+        </div>
+    </section>
 {% endblock %}

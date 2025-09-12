@@ -52,7 +52,7 @@ h4, .h4{ font-size:1.25rem; font-weight:500; }
   content:"";
   position:absolute;
   top:0; left:0; right:0; bottom:0;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0,0,0,0.6);
   z-index:0;
 }
 
@@ -246,6 +246,8 @@ h4, .h4{ font-size:1.25rem; font-weight:500; }
   font-size: 1.8rem;
   color: var(--bs-primary);
   margin-bottom: 1.5rem;
+  overflow: hidden;
+  transition: all 0.3s ease;
 }
 
 .simplove-form-group label {
@@ -270,6 +272,466 @@ h4, .h4{ font-size:1.25rem; font-weight:500; }
   box-shadow: 0 0 0 0.2rem rgba(255,77,109,0.25);
   outline: none;
 }
+.form-check-input { border-radius: 0.25rem; }
+
+/* Bouton Login */
+.simplove-btn-account {
+  width: 100%;
+  background-color: var(--bs-primary);
+  color: #fff;
+  font-weight: 600;
+  border-radius: var(--bs-border-radius);
+  padding: 0.6rem 1rem;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.simplove-btn-account:hover,
+.simplove-btn-account:focus {
+  background-color: #ff2a50;
+  color: #fff;
+}
+
+/* ============== */
+/* Profile view   */
+/* ============== */
+.profile-view-container, .simplove-profile-view-container{
+  max-width: 95%;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+.profile-card, .simplove-profile-card{
+  display:flex;
+  flex-direction:row;
+  background-color:#fff;
+  border-radius:var(--bs-border-radius);
+  box-shadow:0 4px 15px rgba(0,0,0,0.1);
+  overflow:hidden;
+  transition: all 0.3s ease;
+  flex-wrap:wrap;
+}
+.profile-card img,
+.simplove-profile-card img {
+  width:150px;
+  height:150px;
+  object-fit:cover;
+  border-radius:var(--bs-border-radius);
+  margin:1rem auto;
+}
+.profile-card .card-body, .simplove-profile-card .simplove-card-body {
+  padding:1.5rem;
+}
+
+/* card titles / texts */
+.card-title, .simplove-card-title { font-size:1.2rem; font-weight:600; color:var(--bs-primary); }
+.card-text, .simplove-card-text { font-size:0.95rem; color:#555; }
+
+/* ======================= */
+/* Badges (support .badge and .simplove-badge) */
+/* ======================= */
+.badge, .simplove-badge {
+  border-radius: 1rem;
+  font-weight:500;
+  padding:0.25rem 0.6rem;
+}
+.badge.bg-primary, .simplove-badge.bg-primary {
+  background-color: var(--bs-primary) !important;
+  color:#fff !important;
+}
+.badge.bg-success, .simplove-badge.bg-success {
+  background-color: var(--bs-success) !important;
+  color:#fff !important;
+}
+
+form.mb-3 {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 20px;
+}
+
+form.mb-3 .input-group {
+    width: 400px;
+}
+
+/* ======================= */
+/* Profile forms / login / edit (inputs) */
+/* ======================= */
+.profile-form-container, .simplove-profile-form-container,
+.profile-edit-container, .simplove-profile-edit-container,
+.login-form-container, .simplove-login-form-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color:#fff;
+  border-radius:var(--bs-border-radius);
+  box-shadow:0 4px 15px rgba(0,0,0,0.1);
+}
+
+.form-group, .simplove-form-group {
+  display:flex;
+  flex-direction:column;
+  margin-bottom:1rem;
+}
+.form-group label, .simplove-form-group label{
+  margin-bottom:0.5rem;
+  font-weight:500;
+  color:var(--bs-body-color);
+}
+.form-control, .simplove-form-group input, .simplove-form-group select {
+  border-radius: var(--bs-border-radius);
+  border:1px solid var(--bs-border-color);
+  padding:0.5rem 0.75rem;
+  font-size:1rem;
+  transition: all .18s ease-in-out;
+}
+.form-control:focus, .simplove-form-group input:focus, .simplove-form-group select:focus {
+  border-color: var(--bs-primary);
+  box-shadow: 0 0 0 0.2rem rgba(255,77,109,0.18);
+}
+
+/* form buttons group */
+.form-buttons, .simplove-form-buttons {
+  display:flex;
+  justify-content:center;
+  gap:1rem;
+  margin-top:1.5rem;
+}
+
+/* ======================= */
+/* Alerts (login)          */
+/* ======================= */
+.alert-danger, .simplove-alert-danger {
+  background-color:#ffe4e9;
+  color:var(--bs-danger);
+  border-radius:var(--bs-border-radius);
+  padding:0.75rem 1rem;
+}
+.alert-warning, .simplove-alert-warning {
+  background-color:#fff4e5;
+  color:#ff8c42;
+  border-radius:var(--bs-border-radius);
+  padding:0.75rem 1rem;
+}
+
+/* ======================= */
+/* CTA / bandeau (support .bg-cta, .simplove-cta, .simplove-bg-cta) */
+/* ======================= */
+.bg-cta,
+.simplove-cta,
+.simplove-bg-cta {
+  background: linear-gradient(135deg, #ff4d6d, #ff8095);
+  color:#fff;
+  text-align:center;
+  padding:4rem 2rem;
+}
+.bg-cta h2, .simplove-cta h2, .simplove-bg-cta h2 {
+  color:#fff;
+  font-size:2.25rem;
+  margin-bottom:1rem;
+}
+.bg-cta p, .simplove-cta p, .simplove-bg-cta p { font-size:1.2rem; margin-bottom:1rem; }
+.bg-cta .btn-light, .simplove-cta .btn-light, .simplove-bg-cta .btn-light {
+  background:#fff; color:var(--bs-primary); font-weight:600;
+}
+.bg-cta .btn-light:hover, .simplove-cta .btn-light:hover, .simplove-bg-cta .btn-light:hover {
+  background: #ffe4e9; color: #d4183d;
+}
+
+/* ======================= */
+/* Links, hr, small utilities */
+/* ======================= */
+a { color: var(--bs-primary); text-decoration:none; }
+a:hover { color: var(--bs-primary-dark); text-decoration:none; }
+
+hr{ border-top:1px solid var(--bs-border-color); }
+
+/* ======================= */
+/* Tables & pagination */
+/* ======================= */
+.table, .simplove-table { background:#fff; border-radius:var(--bs-border-radius); }
+.pagination .page-link, .simplove-pagination .simplove-page-link { border-radius:var(--bs-border-radius); color:var(--bs-primary); }
+.pagination .page-link:hover { background:#ffe4e9; }
+
+/* ======================= */
+/* Section icons / avantages */
+/* ======================= */
+section .bi, .simplove-section .bi {
+  display:inline-block;
+  background:var(--bs-secondary);
+  color:var(--bs-primary);
+  padding:1rem;
+  border-radius:50%;
+  transition: all .25s ease;
+}
+section .bi:hover, .simplove-section .bi:hover {
+  background:var(--bs-primary); color:#fff; transform:scale(1.08);
+}
+
+/* ======================= */
+/* Responsive tweaks */
+/* ======================= */
+@media (max-width:767px){
+  .card-img-top, .simplove-card-img-top { height:180px; }
+}
+@media (max-width:576px){
+  .profile-card, .simplove-profile-card { max-width:95%; }
+  .profile-card img, .simplove-profile-card img { height:120px; }
+}
+
+/* ======================= */
+/* Section Hero romantique */
+/* ======================= */
+.hero {
+  min-height: 90vh;
+  width: 100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  background: linear-gradient(rgba(0,0,0,0.55),rgba(0,0,0,0.55)),
+              url('/media/img/accueil.jpg') no-repeat center center;
+  background-size: cover;
+  color:#fff;
+  position:relative;
+}
+
+.hero::before,
+.simplove-hero::before{
+  content:"";
+  position:absolute;
+  top:0; left:0; right:0; bottom:0;
+  background: rgba(0,0,0,0.5);
+  z-index:0;
+}
+
+.hero > div,
+.simplove-hero > div{ position:relative; z-index:1; }
+
+.hero h1,
+.simplove-hero h1{
+  font-size:3rem;
+  font-weight:700;
+  text-shadow: 0 3px 8px rgba(0,0,0,0.4);
+}
+.hero p,
+.simplove-hero p{
+  font-size:1.25rem;
+  margin-top:1rem;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+/* ======================= */
+/* Navbar (support .navbar-brand + simplove-navbar-brand) */
+/* ======================= */
+.navbar, .simplove-navbar{
+  background-color: var(--bs-secondary);
+  border-bottom: 1px solid var(--bs-border-color);
+}
+.navbar-brand,
+.simplove-navbar-brand{
+  color: var(--bs-primary);
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+.navbar-brand:hover,
+.simplove-navbar-brand:hover{ color: var(--bs-primary-dark); }
+
+.nav-link, .simplove-nav-link{
+  color: var(--bs-body-color);
+  font-weight: 500;
+}
+.nav-link:hover, .simplove-nav-link:hover,
+.nav-link:focus, .simplove-nav-link:focus{
+  color: var(--bs-primary);
+}
+
+.navbar-toggler, .simplove-navbar-toggler{ border-color: var(--bs-border-color); }
+
+/* ======================= */
+/* Bouton Déconnexion navbar - version propre */
+/* ======================= */
+.simplove-logout-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: var(--bs-primary); /* bleu primaire */
+  color: #fff;
+  font-weight: 500;
+  border: none;
+  border-radius: 0.375rem; /* arrondi */
+  padding: 0.375rem 0.75rem;
+  line-height: 1.5;
+
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.simplove-logout-btn:hover,
+.simplove-logout-btn:focus {
+  background-color: var(--bs-danger); /* rouge au survol */
+  color: #fff;
+  text-decoration: none;
+  outline: none;
+}
+
+/* ======================= */
+/* Boutons : override Bootstrap + support simplove- prefixed */
+/* ======================= */
+.btn, .simplove-btn{
+  font-weight:500;
+  border-radius: var(--bs-border-radius);
+  padding: 0.5rem 1.25rem;
+  transition: all 0.18s ease-in-out;
+}
+
+/* Primary buttons (both .btn-primary and .simplove-btn-primary) */
+.btn-primary, .simplove-btn-primary {
+  background-color: var(--bs-primary) !important;
+  border-color: var(--bs-primary) !important;
+  color: #fff !important;
+}
+.btn-primary:hover, .simplove-btn-primary:hover{
+  background-color: var(--bs-primary-dark) !important;
+  border-color: var(--bs-primary-dark) !important;
+}
+
+.simplove-btn-delete {
+  background-color: var(--bs-secondary);
+  color: var(--bs-body-color);
+  box-shadow: 0 0 0 0.1rem rgba(255,77,109,0.25);
+}
+
+.simplove-btn-delete:hover {
+  background-color: var(--bs-primary);
+  color: #fff;
+  box-shadow: 0 0 0 0.1rem rgba(255,77,109,0.25);
+}
+
+/* Secondary / light variants fallback */
+.btn-secondary, .simplove-btn-secondary{
+  background-color: var(--bs-secondary);
+  border-color: var(--bs-secondary);
+  color: var(--bs-body-color);
+}
+.btn-secondary:hover, .simplove-btn-secondary:hover{
+  background-color:#ffd9e2;
+  border-color:#ffd9e2;
+}
+
+/* Delete / light variants */
+.simplove-btn-delete {
+  background-color: var(--bs-secondary) !important;
+  border-color: var(--bs-secondary) !important;
+  color: var(--bs-body-color) !important;
+  box-shadow: 0 0 0 0.2rem rgba(255,77,109,0.25);
+}
+.simplove-btn-delete:hover{
+  background-color: var(--bs-primary-dark) !important;
+  border-color: var(--bs-primary-dark) !important;
+  color: #fff !important;
+}
+
+/* ======================= */
+/* Grid & container utils  */
+/* ======================= */
+.container, .simplove-container{
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Card image container */
+.card-img-container, .simplove-card-img-container{
+  width:100%;
+  aspect-ratio:4/3;
+  background:#f8f9fa;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+.card-img-top, .simplove-card-img-top{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* ========================= */
+/* Card / Card body / footer */
+/* ========================= */
+.card, .simplove-card, .simplove-profile-card, .simplove-profile-detail-card {
+  border-radius: var(--bs-border-radius);
+  border: none;
+  background: #fff;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+
+.card p { 
+  font-style: italic; 
+  color:#444; 
+}
+
+.card small {
+  font-weight:600; 
+  color:var(--bs-primary); 
+}
+
+.card-body, .simplove-card-body {
+  padding: 1rem;
+}
+.card-footer, .simplove-card-footer {
+  background-color:#fff;
+  border-top:1px solid #eee;
+  padding:0.75rem;
+  text-align:center;
+}
+
+/* ================================= */
+/* Page Account (Connexion/Register) */
+/* ================================= */
+.simplove-account-form-container {
+  max-width: 600px;
+  margin: 3rem auto;
+  padding: 2rem;
+  text-align: center;
+  background-color: #fff;
+  border-radius: var(--bs-border-radius);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.simplove-account-form-container h2 {
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: var(--bs-primary);
+  margin-bottom: 1.5rem;
+}
+
+.simplove-form-group label {
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+  display: block;
+  text-align: left;
+  color: var(--bs-body-color);
+}
+
+.simplove-form-group input {
+  width: 100%;
+  border: 1px solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius);
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.simplove-form-group input:focus {
+  border-color: var(--bs-primary);
+  box-shadow: 0 0 0 0.2rem rgba(255,77,109,0.25);
+  outline: none;
+}
+
+.simplove-form-group .is-invalid { border-color: var(--bs-danger); }
 
 /* Bouton Login */
 .simplove-btn-account {
