@@ -53,8 +53,79 @@
             </div>
         </div>
     </nav>
+
+    <!-- Modal de warning de déconnexion -->
+    <div class="modal fade" id="logoutWarningModal" tabindex="-1" aria-labelledby="logoutWarningLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="logoutWarningLabel">Attention !</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+        </div>
+        <div class="modal-body">
+            Vous allez être déconnecté automatiquement dans <span id="logoutCountdown">60</span> secondes pour inactivité.
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Rester connecté</button>
+        </div>
+        </div>
+    </div>
+    </div>
     {% block content %} {% endblock %}
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'js/script.js' %}"></script>
+    {% if request.user.is_authenticated %}
+    <script>
+        // Déconnexion automatique après 15 minutes d'inactivité
+        let logoutTimer;
+        let warningTimer;
+        const warningTime = 50 * 1000; // 50s avant la déconnexion
+        const logoutTime = 60 * 1000;  // 60s inactivité → déconnexion
+
+        const logoutModal = new bootstrap.Modal(document.getElementById('logoutWarningModal'));
+        const countdownEl = document.getElementById('logoutCountdown');
+
+        function startTimers() {
+            clearTimeout(warningTimer);
+            clearTimeout(logoutTimer);
+
+            warningTimer = setTimeout(showWarning, warningTime);
+            logoutTimer = setTimeout(autoLogout, logoutTime);
+        }
+
+        function resetTimers() {
+            startTimers();
+            if (logoutModal._isShown) {
+                logoutModal.hide();
+            }
+        }
+
+        function showWarning() {
+            let countdown = (logoutTime - warningTime) / 1000; // secondes restantes
+            countdownEl.textContent = countdown;
+            logoutModal.show();
+
+            const interval = setInterval(() => {
+                countdown--;
+                countdownEl.textContent = countdown;
+                if (countdown <= 0) clearInterval(interval);
+            }, 1000);
+        }
+
+        function autoLogout() {
+            window.location.href = "/users/login"; // ton URL de logout
+        }
+
+        // Événements qui réinitialisent le timer
+        window.addEventListener('load', resetTimers);
+        document.addEventListener('mousemove', resetTimers);
+        document.addEventListener('keydown', resetTimers);
+        document.addEventListener('scroll', resetTimers);
+        document.addEventListener('click', resetTimers);
+
+        startTimers(); // démarrage initial
+
+    </script>
+    {% endif %}
 </body>
 </html>

@@ -152,3 +152,12 @@ LOGIN_REDIRECT_URL = "/accueil"
 LOGOUT_REDIRECT_URL = "/accueil"
 
 CSRF_TRUSTED_ORIGINS = ["https://*.onrender.com"]
+
+# Durée de vie d'une session (en secondes)
+SESSION_COOKIE_AGE = 60 * 15  # 15 minutes par exemple
+
+# Déconnexion automatique à la fermeture du navigateur
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+# Facultatif : étendre la session à chaque requête active
+SESSION_SAVE_EVERY_REQUEST = True

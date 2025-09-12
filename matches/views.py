@@ -87,13 +87,11 @@ def remove_like(request, user_id):
 
 @login_required
 def my_matches(request):
-    # Tous les matchs où je suis user1 ou user2, match actif et utilisateurs actifs
     matches = Match.objects.filter(
         Q(user1=request.user, is_active=True, user2__is_active=True)
         | Q(user2=request.user, is_active=True, user1__is_active=True)
     )
 
-    # Définir "other" pour chaque match
     for match in matches:
         match.other = match.user2 if match.user1_id == request.user.id else match.user1
 
