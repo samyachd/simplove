@@ -1,28 +1,39 @@
 {% extends 'base.html' %}
-{% block title %}Profil de {{ profile.user.username }} {% endblock %}
+{% block title %}Profil de {{ profile.user.username }}{% endblock %}
 
 {% block content %}
-<div class="card mb-3 simplove-profile-detail-card">
-    <div class="row g-0">
-        <div class="col-md-4">
-            <img src="{{ profile.photo_url }}" class="img-fluid rounded-start" alt="Profil">
-        </div>
-        <div class="col-md-8">
-            <div class="simplove-card-body card-body">
-                <h5 class="simplove-card-title card-title">{{ profile.full_description|safe }}</h5>
-                <p class="simplove-card-text card-text">{{ profile.bio }}</p>
+<div class="simplove-profile-view-container py-5">
+    <div class="simplove-profile-detail-card card shadow w-100">
+        <div class="row g-0">
+            <!-- Colonne Image -->
+            <div class="col-lg-5 d-flex align-items-center justify-content-center p-4 bg-light">
+                <div class="simplove-card-img-container" style="width: 100%; max-width: 350px; aspect-ratio: 1/1;">
+                    <img src="{{ profile.photo_url }}" class="simplove-card-img-top rounded" alt="Profil">
+                </div>
+            </div>
 
-                <p class="simplove-card-text card-text"><strong>Centre d'intérêts :</strong> 
-                    {% for interest in profile.interests_list %}
-                        <span class="simplove-badge badge bg-primary me-1">{{ interest }}</span>
-                    {% endfor %}
-                </p>
+            <!-- Colonne Détails -->
+            <div class="col-lg-7">
+                <div class="simplove-card-body card-body p-5">
+                    <h2 class="simplove-card-title card-title mb-3">{{ profile.full_description|safe }}</h2>
+                    <p class="simplove-card-text card-text mb-4">{{ profile.bio }}</p>
 
-                <p class="simplove-card-text card-text">
-                    <strong>Pour :</strong> 
-                    <span class="simplove-badge badge bg-success">{{ profile.get_looking_for_display }}</span>
-                </p>
-                <a href="{% url 'matches:like' profile.id %}" class="btn btn-primary w-100 mt-2 simplove-btn-like">🤍 Liker</a>
+                    {% if profile.interests_list %}
+                    <div class="mb-3">
+                        <strong>Centre d'intérêts :</strong><br>
+                        {% for interest in profile.interests_list %}
+                            <span class="simplove-badge badge bg-primary me-1 mb-1">{{ interest }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <div class="mb-4">
+                        <strong>Pour :</strong> 
+                        <span class="simplove-badge badge bg-success">{{ profile.get_looking_for_display }}</span>
+                    </div>
+
+                    <a href="{% url 'matches:like' profile.id %}" class="simplove-btn simplove-btn-primary btn-lg w-100">🤍 Liker</a>
+                </div>
             </div>
         </div>
     </div>
