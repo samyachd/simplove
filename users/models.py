@@ -51,7 +51,10 @@ class UserAccount(models.Model):
     """
 
     user = models.OneToOneField(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="user_account"
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="user_account",
+        null=True,
     )
 
     first_name = models.CharField(max_length=30, blank=True)

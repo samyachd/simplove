@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Mes conversations</h1>
+<ul>
+{% for t in threads %}
+  <li><a href="{% url 'messaging:thread_detail' t.pk %}">{{ t }}</a></li>
+{% endfor %}
+</ul>
+{% endblock %}

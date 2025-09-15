@@ -11,8 +11,11 @@ from django.shortcuts import redirect, render
 from .models import Match
 from .models import Evaluation, Match
 
+<<<<<<< HEAD
 from .models import Evaluation, Match
 
+=======
+>>>>>>> origin/messaging
 User = get_user_model()
 
 
@@ -87,6 +90,7 @@ def remove_like(request, user_id):
 
 @login_required
 def my_matches(request):
+<<<<<<< HEAD
     matches = Match.objects.filter(
         Q(user1=request.user, is_active=True, user2__is_active=True)
         | Q(user2=request.user, is_active=True, user1__is_active=True)
@@ -94,6 +98,18 @@ def my_matches(request):
 
     for match in matches:
         match.other = match.user2 if match.user1_id == request.user.id else match.user1
+=======
+    matches = Match.objects.filter(user1=request.user) | Match.objects.filter(
+        user2=request.user
+    )
+
+    # Définir "other" pour chaque match
+    for match in matches:
+        if match.user1_id == request.user.id:
+            match.other = match.user2
+        else:
+            match.other = match.user1
+>>>>>>> origin/messaging
 
     return render(request, "matches_list.html", {"matches": matches})
 
@@ -104,9 +120,13 @@ def browse_profiles(request):
     evaluated_ids = Evaluation.objects.filter(evaluator=request.user).values_list(
         "target_id", flat=True
     )
+<<<<<<< HEAD
     users = (
         User.objects.filter(is_active=True)
         .exclude(id=request.user.id)
         .exclude(id__in=evaluated_ids)[:20]
     )
+=======
+    users = User.objects.exclude(id=request.user.id).exclude(id__in=evaluated_ids)[:20]
+>>>>>>> origin/messaging
     return render(request, "browse.html", {"users": users})

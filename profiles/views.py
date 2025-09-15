@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from profiles.decorators import profile_required
 from .models import MemberProfile
-from .forms import MemberProfileForm
+from .forms import MemberProfileForm, ProfileFilterForm
 from django.contrib.auth.decorators import login_required
 from .forms import ProfileFilterForm
 
@@ -14,6 +14,15 @@ def profile_view(request):
 
 
 @login_required
+@profile_required
+def profile_view(request):
+    """Affiche le profil de l'utilisateur connecté"""
+    profile, created = MemberProfile.objects.get_or_create(user=request.user)
+    return render(request, "profile.html", {"user": request.user, "profile": profile})
+
+
+@login_required
+@profile_required
 def profile_edit(request, pk):
     """Modification du profil"""
     profile, created = MemberProfile.objects.get_or_create(user=request.user)
@@ -126,9 +135,3 @@ def profile_list(request):
                 profiles = profiles.filter(interest__icontains=interest)
 
     return render(request, "profile_list.html", {"profiles": profiles, "form": form})
-
-
-@login_required
-def profile_detail(request, pk):
-    profile = get_object_or_404(MemberProfile, pk=pk)
-    return render(request, "profile_detail.html", {"profile": profile})
