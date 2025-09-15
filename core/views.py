@@ -17,3 +17,5 @@ def home(request):
 
 def core_view(request):
     return render(request, "core/index.html")
+
+

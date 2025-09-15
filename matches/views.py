@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -6,13 +5,9 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponseBadRequest
 from django.contrib.auth import get_user_model
 from django.db.models import Q
-from django.http import HttpResponseBadRequest
-from django.shortcuts import redirect, render
-from .models import Match
 from .models import Evaluation, Match
 
 User = get_user_model()
-
 
 def _ensure_match_state(a, b):
     a_likes_b = Evaluation.objects.filter(
