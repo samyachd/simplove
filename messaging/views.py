@@ -1,21 +1,9 @@
-<<<<<<< HEAD
-from django.shortcuts import render
-from django.http import HttpResponse
-
-
-# Create your views here.
-def index(request):
-    return render(request, "index.html")
-
-
-def messages_view(request):
-    return HttpResponse("Messages.")
-=======
 from django.contrib.auth.decorators import login_required
 from profiles.decorators import profile_required
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Thread
 from .forms import MessageForm
+
 
 @profile_required
 @login_required
@@ -23,11 +11,12 @@ def thread_list(request):
     threads = request.user.threads.all()
     return render(request, "thread_list.html", {"threads": threads})
 
+
 @profile_required
 @login_required
 def thread_detail(request, pk):
     thread = get_object_or_404(Thread, pk=pk, participants=request.user)
-    messages = thread.messages.order_by('timestamp')
+    messages = thread.messages.order_by("timestamp")
 
     if request.method == "POST":
         form = MessageForm(request.POST)
@@ -36,13 +25,12 @@ def thread_detail(request, pk):
             msg.sender = request.user
             msg.thread = thread
             msg.save()
-            return redirect('messaging:thread_detail', pk=pk)
+            return redirect("messaging:thread_detail", pk=pk)
     else:
         form = MessageForm()
 
-    return render(request, "messaging/thread_detail.html", {
-        "thread": thread,
-        "messages": messages,
-        "form": form
-    })
->>>>>>> origin/messaging
+    return render(
+        request,
+        "messaging/thread_detail.html",
+        {"thread": thread, "messages": messages, "form": form},
+    )

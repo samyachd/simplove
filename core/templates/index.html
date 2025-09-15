@@ -74,8 +74,19 @@
     <section class="py-5 text-center text-white" style="background: #e63946;">
         <div class="container">
             <h2 class="fw-bold text-white">Prêt(e) à trouver votre moitié ?</h2>
-            <p>Inscrivez-vous dès aujourd’hui et laissez Simplove jouer les cupidons</p>
-            <a href="{% url 'users:register' %}" class="btn btn-light btn-lg">Je m’inscris</a>
+            <p>
+                {% if request.user.is_authenticated and request.user.member_profile %}
+                    Commencez dès maintenant à matcher avec d’autres profils
+                {% else %}
+                    Inscrivez-vous dès aujourd’hui et laissez Simplove jouer les cupidons
+                {% endif %}
+            </p>
+
+            {% if request.user.is_authenticated and request.user.member_profile %}
+                <a href="{% url 'matches:my_matches' %}" class="btn btn-light btn-lg">Matcher</a>
+            {% else %}
+                <a href="{% url 'users:register' %}" class="btn btn-light btn-lg">Je m’inscris</a>
+            {% endif %}
         </div>
     </section>
 {% endblock %}

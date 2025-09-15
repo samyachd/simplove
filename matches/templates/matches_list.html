@@ -2,7 +2,6 @@
 {% load static %}
 
 {% block content %}
-<<<<<<< HEAD
 <div class="container py-4 simplove-profile-list-container">
   <h1 class="mb-4 text-center">Mes matchs</h1>
 
@@ -29,7 +28,12 @@
               <p class="card-text simplove-card-text" title="{{ m.other.profile.bio }}">{{ m.other.profile.bio|truncatewords:15 }}</p>
             {% endif %}
             <div class="simplove-profile-view-btn-container">
-              <a href="{% url 'profiles:detail' m.other.profile.id %}" class="btn btn-primary simplove-btn-view">Voir le profil</a>
+              {% if m.other.member_profile %}
+                  <a href="{% url 'profiles:detail' m.other.member_profile.id %}" 
+                    class="btn btn-primary simplove-btn-view">Voir le profil</a>
+              {% else %}
+                  <span class="text-muted">Profil non disponible</span>
+              {% endif %}
             </div>
           </div>
         </div>
@@ -39,32 +43,4 @@
     {% endfor %}
   </div>
 </div>
-=======
-
-{% if messages %}
-  {% for m in messages %}
-    <div class="alert alert-{{ m.tags }}">{{ m }}</div>
-  {% endfor %}
-{% endif %}
-
-<div class="row">
-  {% for m in matches %}
-    <div class="col-md-6 mb-3">
-      <div class="card shadow-sm">
-        <div class="card-body d-flex flex-column align-items-center">
-          <img src="{% static 'img/default-profile.png' %}" 
-               alt="Photo de profil" 
-               class="rounded-circle mb-3" 
-               width="80" height="80">
-          <h5>{{ m.other.username }}</h5>
-          <p>{{ m.other.email }}</p>
-        </div>
-      </div>
-    </div>
-  {% empty %}
-    <p>Aucun match pour le moment.</p>
-  {% endfor %}
-</div>
-
->>>>>>> origin/messaging
 {% endblock %}
