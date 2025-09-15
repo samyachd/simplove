@@ -5,11 +5,11 @@
   <h2>Mon compte</h2>
 
   <p><strong>Nom d'utilisateur :</strong> {{ user.username }}</p>
-  <p><strong>Prénom :</strong> {{ user.first_name }}</p>
-  <p><strong>Nom :</strong> {{ user.last_name }}</p>
+  <p><strong>Prénom :</strong> {{ account.first_name }}</p>
+  <p><strong>Nom :</strong> {{ account.last_name }}</p>
   <p><strong>Email :</strong> {{ user.email }}</p>
   <p><strong>Téléphone :</strong> {{ account.phone_number|default:"Non renseigné" }}</p>
-  <p><strong>Adresse :</strong> {{ account.adress|default:"Non renseigné" }}</p>
+  <p><strong>Adresse :</strong> {{ account.address|default:"Non renseigné" }}</p>
   <p><strong>Date de naissance :</strong> {{ account.birth_date|date:"d/m/Y"|default:"Non renseignée" }}</p>
 
   <div class="simplove-form-buttons form-buttons mt-3">
