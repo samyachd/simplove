@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models, connection
 from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.dispatch import receiver
@@ -16,6 +16,9 @@ class Interest(models.Model):
         "Lecture",
     ]
     name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
 
 
 class MemberProfile(models.Model):
@@ -114,8 +117,10 @@ class MemberProfile(models.Model):
         return "/media/img/default-profile.png"
 
     def create_default_interests(sender, **kwargs):
-        for name in Interest.DEFAULT_INTERESTS:
-            Interest.objects.get_or_create(name=name)
+        # Vérifier que la table Interest existe
+        if "profiles_interest" in connection.introspection.table_names():
+            for name in Interest.DEFAULT_INTERESTS:
+                Interest.objects.get_or_create(name=name)
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)

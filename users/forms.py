@@ -24,7 +24,6 @@ class AccountForm(forms.ModelForm):
         fields = [
             "first_name",
             "last_name",
-            "email",
             "phone_number",
             "address",
             "birth_date",
@@ -33,7 +32,6 @@ class AccountForm(forms.ModelForm):
         labels = {
             "first_name": "Prénom",
             "last_name": "Nom",
-            "email": "Email",
             "phone_number": "Téléphone",
             "address": "Adresse",
             "birth_date": "Date de naissance",
@@ -42,7 +40,6 @@ class AccountForm(forms.ModelForm):
         widgets = {
             "first_name": forms.TextInput(attrs={"class": "form-control"}),
             "last_name": forms.TextInput(attrs={"class": "form-control"}),
-            "email": forms.EmailInput(attrs={"class": "form-control"}),
             "phone_number": forms.TextInput(attrs={"class": "form-control"}),
             "address": forms.TextInput(attrs={"class": "form-control"}),
             "birth_date": forms.DateInput(
