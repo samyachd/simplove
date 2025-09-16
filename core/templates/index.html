@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %}Simplove - Le cupidon du code !{% endblock %}
+
+{% block content %}
+<div class="simplove-hero d-flex align-items-center justify-content-center text-center text-white">
+    <div>
+        <h1>Bienvenue sur Simplove, le cupidon du code !</h1>
+        <p>Découvrez de nouvelles connexions à travers vos personnalités.</p>
+        <div class="mt-4">
+            {% if request.user.is_authenticated and request.user.member_profile %}
+                <a href="{% url 'profiles:list' %}" class="btn btn-primary btn-lg me-3">Voir les profils</a>
+                <a href="{% url 'profiles:profile' %}" class="btn btn-outline-light btn-lg">Mon profil</a>
+            {% else %}
+                <a href="{% url 'users:register' %}" class="btn btn-primary btn-lg me-3">S'inscrire</a>
+                <a href="{% url 'users:login' %}" class="btn btn-outline-light btn-lg">Connexion</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<section class="py-5 text-center simplove-section">
+    <div class="container">
+        <h2 class="fw-bold">Pourquoi Simplove ?</h2>
+        <p class="text-muted">Un site pensé pour les passionnés de code... et d’amour 💻❤️</p>
+        <div class="row mt-4">
+            <div class="col-md-4 simplove-feature">
+                <i class="bi bi-heart-fill text-danger fs-1"></i>
+                <h4 class="mt-3">Des rencontres authentiques</h4>
+                <p>Trouvez des personnes qui partagent vos centres d’intérêt et valeurs.</p>
+            </div>
+            <div class="col-md-4 simplove-feature">
+                <i class="bi bi-people-fill text-primary fs-1"></i>
+                <h4 class="mt-3">Une communauté engagée</h4>
+                <p>Des membres actifs, prêts à discuter et partager leur univers.</p>
+            </div>
+            <div class="col-md-4 simplove-feature">
+                <i class="bi bi-shield-lock-fill text-success fs-1"></i>
+                <h4 class="mt-3">Sécurité & confiance</h4>
+                <p>Vos données sont protégées et votre expérience reste agréable.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light simplove-testimonials">
+    <div class="container text-center">
+        <h2 class="fw-bold">Ils ont trouvé l’amour sur Simplove</h2>
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <div class="card simplove-testimonial-card shadow-sm p-3">
+                    <p>"Grâce à Simplove, j’ai rencontré Alex, et depuis on code en duo tous les week-ends !"</p>
+                    <small class="text-muted">— Sophie, 29 ans</small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card simplove-testimonial-card shadow-sm p-3">
+                    <p>"Un site simple, efficace et fun. J’ai trouvé des amis et plus encore."</p>
+                    <small class="text-muted">— Julien, 32 ans</small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card simplove-testimonial-card shadow-sm p-3">
+                    <p>"Je ne pensais pas qu’un site de rencontre pour passionnés de code pouvait exister… et pourtant !"</p>
+                    <small class="text-muted">— Clara, 26 ans</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 text-center text-white simplove-cta">
+    <div class="container">
+        <h2 class="fw-bold text-white">Prêt(e) à trouver votre moitié ?</h2>
+        <p>Inscrivez-vous dès aujourd’hui et laissez Simplove jouer les cupidons</p>
+        <a href="{% url 'users:register' %}" class="btn btn-light btn-lg">Je m’inscris</a>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="simplove-account-form-container">
+  <h2>Dites nous en plus sur vous!</h2>
+    <form method="post" id="MemberProfileForm">
+      {% csrf_token %}
+          <div class="form-step active simplove-form-group">
+            {{ form.gender.errors }}
+            <center><h3>Tu es un/une ... ?</h3></center>
+            {{ form.gender }}
+            <button type="button" class="btn btn-primary next-step simplove-btn-account">Suivant</button>
+          </div>
+        <div class="form-step simplove-form-group">
+          {{ form.orientation.errors }}
+          <center><h3>Tu t'identifies comme ... ?</h3></center>
+          {{ form.orientation }}
+          <button type="button" class="btn btn-primary next-step simplove-btn-account">Suivant</button>
+        </div>
+        <div class="form-step simplove-form-group">
+          {{ form.age.errors }}
+          <center><h3>Indiques nous ton âge !</h3></center>
+          {{ form.age }}
+          <button type="button" class="btn btn-primary next-step simplove-btn-account">Suivant</button>
+        </div>
+      <div class="form-step simplove-form-group">
+          {{ form.location.errors }}
+          <center><h3>Où habites-tu ?</h3></center>
+          {{ form.location }}
+          <button type="button" class="btn btn-primary next-step simplove-btn-account">Suivant</button>
+        </div>
+        <div class="form-step simplove-form-group">
+          {{ form.interests.errors }}
+          <center><h3>Quels sont tes centres d'intérêt?</h3></center>
+          {{ form.interests }}
+          <button type="button" class="btn btn-primary next-step simplove-btn-account">Suivant</button>
+        </div>
+        <div class="form-step simplove-form-group">
+          {{ form.looking_for.errors }}
+          <center><h3>Qu'est-ce que tu recherches ?</h3></center>
+          {{ form.looking_for }}
+          <button type="button" class="btn btn-primary next-step simplove-btn-account">Suivant</button>
+        </div>
+        <div class="form-step simplove-form-group">
+          {{ form.bio.errors }}
+          <center><h3>Ajoutes une petite description à ton profil pour finir !</h3></center>
+          {{ form.bio }}
+          <button type="submit" class="btn btn-success simplove-btn-account">Terminer</button>
+        </div>
+      </form>
+</div>
+
+
+<style>
+.form-step { 
+  display:none;
+}
+.form-step.active { 
+  display:block;
+  align-items: center;
+  align-self: center;
+ }
+.is-invalid { border-color: red; }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const steps = document.querySelectorAll('.form-step');
+  let currentStep = 0;
+
+  document.querySelectorAll('.next-step').forEach(button => {
+    button.addEventListener('click', () => {
+      const fields = steps[currentStep].querySelectorAll('input, select, textarea');
+      let allFilled = true;
+      const ageInput = steps[currentStep].querySelector('#id_age');
+      const age = ageInput ? ageInput.valueAsNumber : NaN;
+      
+      if ((isNaN(age) || age < 17) && currentStep === 2) {
+        alert("Vous devez avoir au moins 18 ans pour continuer.");
+        return;
+    }
+
+      fields.forEach(field => {
+        if (field.hasAttribute('required') && !field.value.trim()) {
+          allFilled = false;
+          field.classList.add('is-invalid');
+        } else {
+          field.classList.remove('is-invalid');
+        }
+      });
+
+      if (!allFilled) {
+        alert("Veuillez remplir le(s) champ(s) avant de continuer");
+        return;
+      }
+
+      if (currentStep + 1 < steps.length) {
+        steps[currentStep].classList.remove('active');
+        currentStep++;
+        steps[currentStep].classList.add('active');
+      }
+    });
+  });
+});
+</script>
+
+{% endblock %}
