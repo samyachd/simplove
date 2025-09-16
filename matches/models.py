@@ -2,28 +2,29 @@ from django.conf import settings
 from django.db import models
 from django.db.models import Q
 
+# Create your models here.
+
+User = settings.AUTH_USER_MODEL
 
 class Evaluation(models.Model):
     LIKE = "LIKE"
-    UNLIKE = "UNLIKE"  # a.k.a. Pass / Dislike
-    STATUS_CHOICES = [(LIKE, "Like"), (UNLIKE, "Unlike")]
+    UNLIKE = "UNLIKE"  # pass / dislike
+    STATUS_CHOICES = [
+        (LIKE, "Like"),
+        (UNLIKE, "Unlike"),
+    ]
 
     evaluator = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="evaluations_sent",
+        User, on_delete=models.CASCADE, related_name="given_evaluations"
     )
     target = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="evaluations_received",
+        User, on_delete=models.CASCADE, related_name="received_evaluations"
     )
     status = models.CharField(max_length=10, choices=STATUS_CHOICES)
-    decided_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        unique_together = ("evaluator", "target")  # one current opinion per pair
+        unique_together = ("evaluator", "target")
 
     def __str__(self):
         return f"{self.evaluator} → {self.target}: {self.status}"
@@ -31,14 +32,10 @@ class Evaluation(models.Model):
 
 class Match(models.Model):
     user1 = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="matches_as_user1",
+        User, on_delete=models.CASCADE, related_name="matches_as_user1"
     )
     user2 = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="matches_as_user2",
+        User, on_delete=models.CASCADE, related_name="matches_as_user2"
     )
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -51,4 +48,6 @@ class Match(models.Model):
 
     @staticmethod
     def pair_q(a, b):
+        # Helper to query a pair regardless of order
         return Q(user1=a, user2=b) | Q(user1=b, user2=a)
+
