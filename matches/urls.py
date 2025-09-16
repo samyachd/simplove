@@ -10,4 +10,6 @@ urlpatterns = [
     path("like/<int:user_id>/", views.like_user, name="like"),
     path("pass/<int:user_id>/", views.pass_user, name="pass"),
     path("remove-like/<int:user_id>/", views.remove_like, name="remove_like"),
+    path("like/<int:user_id>/", views.like, name="like"),
+    path("pass/<int:user_id>/", views.pass_profile, name="pass"),
 ]
