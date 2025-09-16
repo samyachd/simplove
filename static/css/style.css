@@ -12,7 +12,7 @@
   --clr-warning: #ff8c42;
 
   /* Fond & texte */
-  --clr-body-bg: #fdf6f8;
+  --clr-body-bg: #faf5f6;
   --clr--div-bg: #fcebf0;
   --clr-body: #1a1a1a;
   --clr-muted: #6c757d;
@@ -478,6 +478,66 @@ img {
 }
 .simplove-img-profile:hover {
   transform: scale(1.05);
+}
+
+/* ===== CHAT – FIL DE DISCUSSION ===== */
+.simplove-chat-card {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--space-lg);
+  max-height: 60vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+/* Bulle complète (gauche ou droite) */
+.simplove-msg {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-sm);
+}
+.simplove-msg--left {
+  align-self: flex-start;
+  flex-direction: row;
+}
+.simplove-msg--right {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+/* Avatar */
+.simplove-msg-avatar img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+}
+
+/* Corps du message */
+.simplove-msg-body {
+  max-width: 70%;
+}
+.simplove-msg-header {
+  font-size: 0.85rem;
+  margin-bottom: var(--space-xs);
+}
+.simplove-msg-content {
+  background: var(--clr-secondary);
+  color: #fff;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius);
+  width: fit-content;
+}
+.simplove-msg--right .simplove-msg-content {
+  background: var(--clr-primary);
+}
+
+/* Champ de saisie */
+.simplove-chat-input {
+  border-radius: var(--radius);
+  resize: none;
 }
 
 /* ===== FOOTER ===== */

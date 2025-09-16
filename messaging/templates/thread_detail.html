@@ -4,35 +4,52 @@
 {% block content %}
 <section class="py-5">
   <div class="container">
+
+    <!-- Titre -->
     <h1 class="mb-5 text-center">Conversation</h1>
 
-    <!-- Messages -->
-    <div class="simplove-card mb-4" style="max-height:400px; overflow-y:auto;">
+    <!-- FIL DE DISCUSSION -->
+    <div class="simplove-chat-card mb-4">
       {% if messages %}
         {% for m in messages %}
-          <div class="mb-3">
-            <strong>{{ m.sender.username }} :</strong>
-            <span class="text-break">{{ m.content }}</span>
-            <small class="text-muted float-end">{{ m.created_at|date:"d/m/Y H:i" }}</small>
+          <!-- Bulle : gauche (autre) / droite (moi) -->
+          <div class="simplove-msg {% if m.sender == request.user %}simplove-msg--right{% else %}simplove-msg--left{% endif %}">
+            <div class="simplove-msg-avatar">
+              <img src="{{ m.sender.profile.photo.url|default:'/media/img/default-profile.png' }}"
+                   alt="{{ m.sender.username }}" class="rounded-circle" width="40" height="40">
+            </div>
+            <div class="simplove-msg-body">
+              <div class="simplove-msg-header">
+                <strong>{{ m.sender.username }}</strong>
+                <small class="text-muted ms-2">{{ m.created_at|date:"d/m/Y H:i" }}</small>
+              </div>
+              <div class="simplove-msg-content text-break">
+                {{ m.content }}
+              </div>
+            </div>
           </div>
-          <hr class="my-2">
         {% endfor %}
       {% else %}
         <p class="text-center mb-0">Aucun message dans cette conversation.</p>
       {% endif %}
     </div>
 
-    <!-- Nouveau message -->
+    <!-- NOUVEAU MESSAGE -->
     <div class="simplove-card">
-      <form method="post">
+      <form method="post" class="d-flex flex-column flex-md-row gap-2">
         {% csrf_token %}
-        <div class="simplove-form-group">
-          {{ form.content.label_tag }}
-          {{ form.content }}
+        <div class="flex-grow-1">
+          <label for="{{ form.content.id_for_label }}" class="visually-hidden">Message</label>
+          <textarea name="{{ form.content.name }}" id="{{ form.content.id_for_label }}"
+                    class="form-control simplove-chat-input"
+                    rows="2"
+                    placeholder="Tapez votre message…"
+                    required>{{ form.content.value|default:'' }}</textarea>
         </div>
-        <button type="submit" class="simplove-btn simplove-btn--primary simplove-btn--block">Envoyer</button>
+        <button type="submit" class="simplove-btn simplove-btn--primary align-self-end">Envoyer</button>
       </form>
     </div>
+
   </div>
 </section>
 {% endblock %}
