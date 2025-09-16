@@ -46,7 +46,7 @@
 
                         <form action="{% url 'matches:like' profile.user.id %}" method="post" style="display:inline;">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-sm btn-outline-danger simplove-btn-view">
+                            <button type="submit" class="btn btn-sm btn-primary simplove-btn-view">
                                 🤍 Liker
                             </button>
                         </form>
