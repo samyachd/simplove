@@ -37,7 +37,6 @@ def profile_edit(request, pk):
     )
 
 
-
 @login_required
 @profile_required
 def profile_detail(request, pk):
