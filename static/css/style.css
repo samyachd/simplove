@@ -464,6 +464,20 @@ img {
   transform: scale(1.08);
 }
 
+/* ---- Images profil – sans déformation ---- */
+.simplove-img-profile {
+  width: 100%;
+  max-width: 250px;        /* taille max */
+  aspect-ratio: 1 / 1;     /* CARRÉ parfait */
+  object-fit: cover;       /* remplissage sans déformer */
+  border-radius: var(--radius);
+  cursor: zoom-in;
+  transition: transform .25s;
+}
+.simplove-img-profile:hover {
+  transform: scale(1.05);
+}
+
 /* ===== FOOTER ===== */
 .simplove-footer {
   background: var(--clr--div-bg);
