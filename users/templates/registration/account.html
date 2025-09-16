@@ -3,42 +3,19 @@
 {% block content %}
 <div class="simplove-profile-form-container">
   <h2>Mon compte</h2>
-  <form method="post" action="{% url 'users:account' %}">
-    {% csrf_token %}
 
-    <div class="simplove-form-group">
-      {{ form.username.label_tag }}
-      {{ form.username }}
-    </div>
-    <div class="simplove-form-group">
-      {{ form.password.label_tag }}
-      {{ form.password }}
-    </div>
-    <div class="simplove-form-group">
-      {{ form.first_name.label_tag }}
-      {{ form.first_name }}
-    </div>
-    <div class="simplove-form-group">
-      {{ form.last_name.label_tag }}
-      {{ form.last_name }}
-    </div>
-    <div class="simplove-form-group">
-      {{ form.phone_number.label_tag }}
-      {{ form.phone_number }}
-    </div>
-    <div class="simplove-form-group">
-      {{ form.email.label_tag }}
-      {{ form.email }}
-    </div>
-    <div class="simplove-form-group">
-      {{ form.birth_date.label_tag }}
-      {{ form.birth_date }}
-    </div>
+  <p><strong>Nom d'utilisateur :</strong> {{ user.username }}</p>
+  <p><strong>Prénom :</strong> {{ account.first_name }}</p>
+  <p><strong>Nom :</strong> {{ account.last_name }}</p>
+  <p><strong>Email :</strong> {{ user.email }}</p>
+  <p><strong>Téléphone :</strong> {{ account.phone_number|default:"Non renseigné" }}</p>
+  <p><strong>Adresse :</strong> {{ account.address|default:"Non renseigné" }}</p>
+  <p><strong>Date de naissance :</strong> {{ account.birth_date|date:"d/m/Y"|default:"Non renseignée" }}</p>
 
-    <div class="simplove-form-buttons form-buttons">
-      <input type="submit" value="Sauvegarder les changements" class="btn btn-primary simplove-btn-save">
-      <input type="hidden" name="next" value="{{ next }}">
-    </div>
-  </form>
+  <div class="simplove-form-buttons form-buttons mt-3">
+    <a href="{% url 'users:account_edit' %}" class="btn btn-primary simplove-btn-edit">
+      Modifier mes informations
+    </a>
+  </div>
 </div>
 {% endblock %}

@@ -5,6 +5,7 @@ class MemberProfileForm(forms.ModelForm):
     class Meta:
         model = MemberProfile
         fields = [
+            "photo",
             "gender",
             "orientation",
             "age",
@@ -19,6 +20,7 @@ class MemberProfileForm(forms.ModelForm):
             "age": forms.NumberInput(attrs={"class": "form-control"}),
             "location": forms.TextInput(attrs={"class": "form-control"}),
             'interests': forms.CheckboxSelectMultiple(attrs={'class': 'my-checkboxes'}),
+            "photo": forms.FileInput(attrs={"class": "form-control"}),
         }
 
         labels = {

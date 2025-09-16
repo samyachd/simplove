@@ -1,17 +1,31 @@
 {% extends 'base.html' %}
+{% block title %}Conversation{% endblock %}
+
 {% block content %}
+<div class="container py-4">
+    <h1 class="mb-4 text-center">Conversation</h1>
 
-<h1>Conversation</h1>
+    <div class="simplove-card p-3 mb-4" style="max-height: 500px; overflow-y: auto;">
+        {% if messages %}
+            {% for m in messages %}
+                <p>
+                    <strong>{{ m.sender.username }}:</strong>
+                    {{ m.content }}
+                    <small class="text-muted float-end">{{ m.created_at|date:"d/m/Y H:i" }}</small>
+                </p>
+                <hr>
+            {% endfor %}
+        {% else %}
+            <p class="text-center">Aucun message dans cette conversation.</p>
+        {% endif %}
+    </div>
 
-<div>
-{% for m in messages %}
-  <p><strong>{{ m.sender.username }}:</strong> {{ m.content }}</p>
-{% endfor %}
+    <div class="simplove-profile-form-container">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary simplove-btn-primary w-100 mt-2">Envoyer</button>
+        </form>
+    </div>
 </div>
-
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Envoyer</button>
-</form>
 {% endblock %}

@@ -8,18 +8,15 @@
     <div class="row g-0">
       <div class="col-md-4 text-center">
         {% if profile.photo %}
-          <img src="{{ profile.photo.url }}" alt="Avatar de {{ user.username }}">
+          <img src="{{ profile.photo.url }}" alt="Photo de {{ user.username }}">
         {% else %}
-          <img src="/media/img/default-profile.png" alt="Avatar par défaut">
+          <img src="/media/img/default-profile.png" alt="Photo par défaut">
         {% endif %}
       </div>
       <div class="col-md-8">
         <div class="simplove-card-body card-body">
           <h3 class="simplove-card-title card-title">{{ user.username }}</h3>
-          <p class="simplove-card-text card-text"><strong>Prénom :</strong> {{ user.first_name }}</p>
-          <p class="simplove-card-text card-text"><strong>Nom :</strong> {{ user.last_name }}</p>
-          <p class="simplove-card-text card-text"><strong>Email :</strong> {{ user.email }}</p>
-
+          
           {% if profile %}
             <p class="simplove-card-text card-text"><strong>Genre :</strong> {{ profile.get_gender_display }}</p>
             <p class="simplove-card-text card-text"><strong>Orientation :</strong> {{ profile.get_orientation_display }}</p>
@@ -42,7 +39,8 @@
           <div class="simplove-profile-view-btn-container d-flex gap-2">
             <a href="{% url 'profiles:edit' profile.pk %}" class="btn btn-primary mt-2 simplove-btn-edit">Éditer mon profil</a>
             <a href="{% url 'matches:my_matches' %}" class="btn btn-primary mt-2 simplove-btn-edit">Voir mes matchs</a>
-            <a href="{% url 'profiles:edit' profile.pk %}" class="btn btn-primary mt-2 simplove-btn-delete">Supprimer mon profil</a>
+            <a href="{% url 'users:account' %}" class="btn btn-primary mt-2 simplove-btn-edit">Voir mon compte</a>
+            <a href="{% url 'users:manage_account' %}" class="btn btn-primary mt-2 simplove-btn-delete">Supprimer ou désactiver mon compte</a>
           </div>
         </div>
       </div>

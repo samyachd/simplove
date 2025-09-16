@@ -2,7 +2,8 @@ from django.db import models
 from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.dispatch import receiver
-from django.db.models.signals import post_save, post_migrate
+from django.db.models.signals import post_save, post_delete, post_migrate
+import os
 
 
 class Interest(models.Model):
@@ -59,8 +60,11 @@ class MemberProfile(models.Model):
     age = models.PositiveSmallIntegerField(
         null=True,
         blank=False,
-        validators=[MinValueValidator(18)],
-        help_text="Âge temporaire, à synchroniser avec users plus tard",
+        help_text="Âge de l'utilisateur",
+        validators=[
+            MinValueValidator(18),
+            MaxValueValidator(120),
+        ],
     )
 
     bio = models.TextField(max_length=500, blank=True, help_text="Bio de l'utilisateur")
@@ -93,7 +97,7 @@ class MemberProfile(models.Model):
     )
 
     def __str__(self):
-        return f"Profil de {self.user.username}"
+        return f"Profil de {self.user.username}" if self.user else "Profil inconnu"
 
     def full_description(self):
         if self.user:
@@ -109,7 +113,7 @@ class MemberProfile(models.Model):
 
     def photo_url(self):
         if self.photo:
-            return self.photo_url
+            return self.photo.url
         return "/media/img/default-profile.png"
     
     def create_default_interests(sender, **kwargs):
@@ -117,9 +121,15 @@ class MemberProfile(models.Model):
             Interest.objects.get_or_create(name=name)
 
 
-    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
-    def create_member_profile(sender, instance, created, **kwargs):
-        if created:
-            MemberProfile.objects.create(user=instance)
 
-post_migrate.connect(MemberProfile.create_default_interests)
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_member_profile(sender, instance, created, **kwargs):
+    if created:
+        MemberProfile.objects.create(user=instance)
+
+
+@receiver(post_delete, sender="profiles.MemberProfile")
+def delete_profile_photo(sender, instance, **kwargs):
+    """Supprimer la photo quand le profil est supprimé"""
+    if instance.photo and instance.photo.path and os.path.isfile(instance.photo.path):
+        os.remove(instance.photo.path)

@@ -84,18 +84,28 @@ TEMPLATES = [
 WSGI_APPLICATION = "config.wsgi.application"
 
 MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_ROOT = os.path.join(BASE_DIR / "media")
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+if os.getenv("DATABASE_URL"):
+    DATABASES = {
+        "default": dj_database_url.parse(os.getenv("DATABASE_URL")),
+        "sqlite_fallback": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        },
     }
-}
+else:
+    # Dev local : SQLite uniquement
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -113,6 +123,11 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
+]
+
+AUTHENTICATION_BACKENDS = [
+    "users.backends.ReactivationBackend",  # à mettre avant le backend Django standard
+    "django.contrib.auth.backends.ModelBackend",
 ]
 
 
@@ -145,3 +160,12 @@ LOGIN_REDIRECT_URL = "/accueil"
 LOGOUT_REDIRECT_URL = "/accueil"
 
 CSRF_TRUSTED_ORIGINS = ["https://*.onrender.com"]
+
+# Durée de vie d'une session (en secondes)
+SESSION_COOKIE_AGE = 60 * 15  # 15 minutes par exemple
+
+# Déconnexion automatique à la fermeture du navigateur
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+# Facultatif : étendre la session à chaque requête active
+SESSION_SAVE_EVERY_REQUEST = True
