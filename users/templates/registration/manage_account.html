@@ -1,98 +1,102 @@
 {% extends "base.html" %}
-
 {% block title %}Gérer mon compte{% endblock %}
 
 {% block content %}
-<div class="simplove-profile-view-container py-5">
-  <div class="simplove-profile-card card shadow p-5 mx-auto" style="max-width: 600px;">
-    <h2 class="text-center mb-4">Gérer votre compte</h2>
-    <p class="text-center text-muted mb-5">
-      Vous pouvez soit désactiver temporairement votre compte, soit le supprimer définitivement.
-      Choisissez l'action qui correspond à votre besoin.
-    </p>
+<section class="py-5">
+  <div class="container">
+    <div class="simplove-card" style="max-width: 600px; margin: 0 auto;">
+      <h2 class="mb-4 text-center">Gérer votre compte</h2>
+      <p class="text-center text-muted mb-5">
+        Vous pouvez soit désactiver temporairement votre compte, soit le supprimer définitivement.<br>
+        Choisissez l’action qui correspond à votre besoin.
+      </p>
 
-    <div class="d-flex flex-column gap-4">
-      <!-- Carte pour Désactivation -->
-      <div class="card border-warning shadow-sm p-4">
-        <h5 class="text-warning mb-3">Désactiver temporairement</h5>
-        <p class="mb-3">
-          Votre compte sera désactivé, mais toutes vos données seront conservées. 
-          Vous pourrez le réactiver à tout moment en vous reconnectant.
-        </p>
-        <button type="button" class="btn btn-warning w-100" data-bs-toggle="modal" data-bs-target="#confirmDeactivateModal">
-          Désactiver mon compte
-        </button>
-      </div>
+      <div class="row g-4">
+        <!-- Désactivation -->
+        <div class="col-md-6">
+          <div class="simplove-card border-warning h-100">
+            <h5 class="text-warning mb-3">Désactiver temporairement</h5>
+            <p class="small mb-4">
+              Votre compte sera désactivé, mais toutes vos données seront conservées. Vous pourrez le réactiver à tout moment en vous reconnectant.
+            </p>
+            <button type="button" class="simplove-btn simplove-btn--warning simplove-btn--block"
+                    data-bs-toggle="modal" data-bs-target="#confirmDeactivateModal">
+              Désactiver mon compte
+            </button>
+          </div>
+        </div>
 
-      <!-- Carte pour Suppression -->
-      <div class="card border-danger shadow-sm p-4">
-        <h5 class="text-danger mb-3">Supprimer définitivement</h5>
-        <p class="mb-3">
-          Cette action est irréversible. Toutes vos données seront définitivement supprimées.
-          Assurez-vous de bien vouloir continuer.
-        </p>
-        <button type="button" class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
-          Supprimer mon compte
-        </button>
+        <!-- Suppression -->
+        <div class="col-md-6">
+          <div class="simplove-card border-danger h-100">
+            <h5 class="text-danger mb-3">Supprimer définitivement</h5>
+            <p class="small mb-4">
+              Cette action est irréversible. Toutes vos données seront définitivement supprimées.
+            </p>
+            <button type="button" class="simplove-btn simplove-btn--danger simplove-btn--block"
+                    data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
+              Supprimer mon compte
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- Modal Supprimer -->
-<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content border-danger">
-      <div class="modal-header bg-danger text-white">
-        <h5 class="modal-title" id="confirmDeleteLabel"><i class="bi bi-exclamation-triangle-fill"></i> Confirmer la suppression</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
-      </div>
-      <div class="modal-body">
-        Êtes-vous sûr de vouloir supprimer définitivement votre compte ? Cette action est irréversible.
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-        <button type="button" class="btn btn-danger" id="deleteAccountBtn">Supprimer</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal Désactiver -->
-<div class="modal fade" id="confirmDeactivateModal" tabindex="-1" aria-labelledby="confirmDeactivateLabel" aria-hidden="true">
+<!-- Modale Désactivation -->
+<div class="modal fade" id="confirmDeactivateModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content border-warning">
       <div class="modal-header bg-warning text-dark">
-        <h5 class="modal-title" id="confirmDeactivateLabel"><i class="bi bi-info-circle-fill"></i> Confirmer la désactivation</h5>
+        <h5 class="modal-title"><i class="bi bi-info-circle-fill me-2"></i>Confirmer la désactivation</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
       </div>
       <div class="modal-body">
         Voulez-vous vraiment désactiver votre compte ? Vous pourrez le réactiver en vous reconnectant.
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-        <button type="button" class="btn btn-warning" id="deactivateAccountBtn">Désactiver</button>
+        <button type="button" class="simplove-btn simplove-btn--secondary" data-bs-dismiss="modal">Annuler</button>
+        <button type="button" class="simplove-btn simplove-btn--warning" id="deactivateAccountBtn">Désactiver</button>
       </div>
     </div>
   </div>
 </div>
 
+<!-- Modale Suppression -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-danger">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title"><i class="bi bi-exclamation-triangle-fill me-2"></i>Confirmer la suppression</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
+      </div>
+      <div class="modal-body">
+        Êtes-vous sûr de vouloir supprimer définitivement votre compte ? Cette action est irréversible.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="simplove-btn simplove-btn--secondary" data-bs-dismiss="modal">Annuler</button>
+        <button type="button" class="simplove-btn simplove-btn--danger" id="deleteAccountBtn">Supprimer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Formulaire caché pour la soumission -->
+<form method="post" id="accountForm" style="display:none;">
+  {% csrf_token %}
+</form>
+
 <script>
-const form = document.createElement("form");
-form.method = "post";
-form.id = "accountForm";
-form.style.display = "none";
-form.innerHTML = `{% csrf_token %}`;
-document.body.appendChild(form);
-
-document.getElementById("deleteAccountBtn").addEventListener("click", function() {
-    form.innerHTML += '<input type="hidden" name="action" value="delete">';
-    form.submit();
+document.getElementById('deleteAccountBtn').addEventListener('click', () => {
+  const form = document.getElementById('accountForm');
+  form.innerHTML += '<input type="hidden" name="action" value="delete">';
+  form.submit();
 });
-
-document.getElementById("deactivateAccountBtn").addEventListener("click", function() {
-    form.innerHTML += '<input type="hidden" name="action" value="deactivate">';
-    form.submit();
+document.getElementById('deactivateAccountBtn').addEventListener('click', () => {
+  const form = document.getElementById('accountForm');
+  form.innerHTML += '<input type="hidden" name="action" value="deactivate">';
+  form.submit();
 });
 </script>
 {% endblock %}

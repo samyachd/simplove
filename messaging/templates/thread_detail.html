@@ -2,30 +2,37 @@
 {% block title %}Conversation{% endblock %}
 
 {% block content %}
-<div class="container py-4">
-    <h1 class="mb-4 text-center">Conversation</h1>
+<section class="py-5">
+  <div class="container">
+    <h1 class="mb-5 text-center">Conversation</h1>
 
-    <div class="simplove-card p-3 mb-4" style="max-height: 500px; overflow-y: auto;">
-        {% if messages %}
-            {% for m in messages %}
-                <p>
-                    <strong>{{ m.sender.username }}:</strong>
-                    {{ m.content }}
-                    <small class="text-muted float-end">{{ m.created_at|date:"d/m/Y H:i" }}</small>
-                </p>
-                <hr>
-            {% endfor %}
-        {% else %}
-            <p class="text-center">Aucun message dans cette conversation.</p>
-        {% endif %}
+    <!-- Messages -->
+    <div class="simplove-card mb-4" style="max-height:400px; overflow-y:auto;">
+      {% if messages %}
+        {% for m in messages %}
+          <div class="mb-3">
+            <strong>{{ m.sender.username }} :</strong>
+            <span class="text-break">{{ m.content }}</span>
+            <small class="text-muted float-end">{{ m.created_at|date:"d/m/Y H:i" }}</small>
+          </div>
+          <hr class="my-2">
+        {% endfor %}
+      {% else %}
+        <p class="text-center mb-0">Aucun message dans cette conversation.</p>
+      {% endif %}
     </div>
 
-    <div class="simplove-profile-form-container">
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary simplove-btn-primary w-100 mt-2">Envoyer</button>
-        </form>
+    <!-- Nouveau message -->
+    <div class="simplove-card">
+      <form method="post">
+        {% csrf_token %}
+        <div class="simplove-form-group">
+          {{ form.content.label_tag }}
+          {{ form.content }}
+        </div>
+        <button type="submit" class="simplove-btn simplove-btn--primary simplove-btn--block">Envoyer</button>
+      </form>
     </div>
-</div>
+  </div>
+</section>
 {% endblock %}

@@ -1,21 +1,24 @@
 {% extends 'base.html' %}
+{% block title %}Mon compte{% endblock %}
 
 {% block content %}
-<div class="simplove-profile-form-container">
-  <h2>Mon compte</h2>
+<section class="py-5">
+  <div class="container">
+    <div class="simplove-card" style="max-width: 600px; margin: 0 auto;">
+      <h2 class="mb-4 text-center">Mon compte</h2>
 
-  <p><strong>Nom d'utilisateur :</strong> {{ user.username }}</p>
-  <p><strong>Prénom :</strong> {{ account.first_name }}</p>
-  <p><strong>Nom :</strong> {{ account.last_name }}</p>
-  <p><strong>Email :</strong> {{ user.email }}</p>
-  <p><strong>Téléphone :</strong> {{ account.phone_number|default:"Non renseigné" }}</p>
-  <p><strong>Adresse :</strong> {{ account.address|default:"Non renseigné" }}</p>
-  <p><strong>Date de naissance :</strong> {{ account.birth_date|date:"d/m/Y"|default:"Non renseignée" }}</p>
+      <div class="mb-2"><strong>Nom d'utilisateur :</strong> {{ user.username }}</div>
+      <div class="mb-2"><strong>Prénom :</strong> {{ account.first_name }}</div>
+      <div class="mb-2"><strong>Nom :</strong> {{ account.last_name }}</div>
+      <div class="mb-2"><strong>Email :</strong> {{ user.email }}</div>
+      <div class="mb-2"><strong>Téléphone :</strong> {{ account.phone_number|default:"Non renseigné" }}</div>
+      <div class="mb-2"><strong>Adresse :</strong> {{ account.address|default:"Non renseigné" }}</div>
+      <div class="mb-4"><strong>Date de naissance :</strong> {{ account.birth_date|date:"d/m/Y"|default:"Non renseignée" }}</div>
 
-  <div class="simplove-form-buttons form-buttons mt-3">
-    <a href="{% url 'users:account_edit' %}" class="btn btn-primary simplove-btn-edit">
-      Modifier mes informations
-    </a>
+      <a href="{% url 'users:account_edit' %}" class="simplove-btn simplove-btn--primary simplove-btn--block">
+        Modifier mes informations
+      </a>
+    </div>
   </div>
-</div>
+</section>
 {% endblock %}

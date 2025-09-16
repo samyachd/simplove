@@ -1,4 +1,22 @@
 {% extends 'base.html' %}
+{% block title %}Accès refusé{% endblock %}
 
-<p class="simplove-login-error">Votre compte n’a pas accès à cette page. Pour continuer, connectez-vous avec un compte qui y a accès.</p>
-<p class="simplove-login-error">Veuillez vous connecter pour voir cette page.</p>
+{% block content %}
+<section class="py-5">
+  <div class="container">
+    <div class="simplove-card" style="max-width: 500px; margin: 0 auto;">
+      <div class="text-center">
+        <i class="bi bi-exclamation-triangle-fill text-warning fs-1 mb-3"></i>
+        <h2 class="mb-3">Accès refusé</h2>
+        <p class="mb-4">
+          Votre compte n’a pas accès à cette page.<br>
+          Veuillez vous connecter avec un compte autorisé.
+        </p>
+        <a href="{% url 'users:login' %}" class="simplove-btn simplove-btn--primary simplove-btn--block">
+          Retour à la connexion
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

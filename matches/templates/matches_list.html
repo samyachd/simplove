@@ -1,50 +1,48 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block title %}Mes matchs{% endblock %}
+
 {% block content %}
-<div class="container py-4 simplove-profile-list-container">
-  <h1 class="mb-4 text-center">Mes matchs</h1>
+<section class="py-5">
+  <div class="container">
+    <h1 class="mb-5 text-center">Mes matchs</h1>
 
-  <!-- {% if messages %}
-    {% for m in messages %}
-      <div class="alert alert-{{ m.tags }} simplove-alert-{{ m.tags }}">{{ m }}</div>
-    {% endfor %}
-  {% endif %} -->
+    {% if messages %}
+      {% for m in messages %}
+        <div class="alert alert-{{ m.tags }} simplove-alert-{{ m.tags }} w-100 mb-4">
+          {{ m }}
+        </div>
+      {% endfor %}
+    {% endif %}
 
-  <div class="row g-4">
-    {% for m in matches %}
-      <div class="col-12 col-sm-6 col-md-4">
-        <div class="card h-100 shadow-sm simplove-profile-card">
-          <div class="card-img-container text-center">
-            <img src="{{ m.other.profile.photo.url|default:'/media/img/default-profile.png' }}" 
-                alt="Photo de profil de {{ m.other.username }}" 
-                class="rounded-circle mb-3 simplove-profile-img" 
-                width="100" height="100">
-          </div>
-          <div class="card-body text-center simplove-card-body">
-            <h5 class="card-title simplove-card-title">@{{ m.other.username }}</h5>
-            <p class="card-text simplove-card-text">{{ m.other.email }}</p>
-            {% if m.other.profile.bio %}
-              <p class="card-text simplove-card-text" title="{{ m.other.profile.bio }}">{{ m.other.profile.bio|truncatewords:15 }}</p>
-            {% endif %}
-            <div class="simplove-profile-view-btn-container">
-              {% if m.other.member_profile %}
-                  <a href="{% url 'profiles:detail' m.other.member_profile.id %}" 
-                    class="btn btn-primary simplove-btn-view">Voir le profil</a>
-                  <a href="{% url 'messaging:new_thread' m.other.id %}" 
-                  class="btn btn-success simplove-btn-view ms-2">
-                  Envoyer un message
-                  </a>
-              {% else %}
-                  <span class="text-muted">Profil non disponible</span>
-              {% endif %}
-            </div>
+    <div class="simplove-grid">
+      {% for m in matches %}
+        <div class="simplove-card text-center">
+          <!-- Photo -->
+          <img src="{{ m.other.profile.photo.url|default:'/media/img/default-profile.png' }}"
+               alt="Photo de {{ m.other.username }}"
+               class="rounded-circle mb-3" width="100" height="100">
+
+          <!-- Infos -->
+          <h5 class="mb-1">@{{ m.other.username }}</h5>
+          <p class="small text-muted mb-2">{{ m.other.email }}</p>
+          {% if m.other.profile.bio %}
+            <p class="small mb-3">{{ m.other.profile.bio|truncatewords:15 }}</p>
+          {% endif %}
+
+          <!-- Actions -->
+          <div class="d-flex gap-2 justify-content-center">
+            <a href="{% url 'profiles:detail' m.other.member_profile.id %}"
+               class="simplove-btn simplove-btn--primary simplove-btn--sm">Voir le profil</a>
+            <a href="{% url 'messaging:new_thread' m.other.id %}"
+               class="simplove-btn simplove-btn--secondary simplove-btn--sm">Message</a>
           </div>
         </div>
-      </div>
-    {% empty %}
-      <p class="text-center simplove-no-profiles">Aucun match pour le moment.</p>
-    {% endfor %}
+      {% empty %}
+        <p class="text-center w-100">Aucun match pour le moment.</p>
+      {% endfor %}
+    </div>
   </div>
-</div>
+</section>
 {% endblock %}

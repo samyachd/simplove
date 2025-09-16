@@ -2,24 +2,25 @@
 {% block title %}Mes conversations{% endblock %}
 
 {% block content %}
-<div class="container py-4">
-    <h1 class="mb-4 text-center">Mes conversations</h1>
+<section class="py-5">
+  <div class="container">
+    <h1 class="mb-5 text-center">Mes conversations</h1>
 
     {% if threads %}
-    <div class="row g-4">
+      <div class="simplove-grid">
         {% for t in threads %}
-        <div class="col-12 col-md-6 col-lg-4">
-            <div class="card simplove-card shadow-sm h-100">
-                <div class="card-body">
-                    <h5 class="card-title simplove-card-title">{{ t }}</h5>
-                    <a href="{% url 'messaging:thread_detail' t.pk %}" class="btn btn-primary simplove-btn-primary mt-2 w-100">Voir la conversation</a>
-                </div>
-            </div>
-        </div>
+          <div class="simplove-card text-center">
+            <h5 class="mb-3">{{ t }}</h5>
+            <a href="{% url 'messaging:thread_detail' t.pk %}"
+               class="simplove-btn simplove-btn--primary simplove-btn--block">
+              Voir la conversation
+            </a>
+          </div>
         {% endfor %}
-    </div>
+      </div>
     {% else %}
-        <p class="text-center mt-4">Vous n'avez aucune conversation pour le moment.</p>
+      <p class="text-center mt-4">Vous n'avez aucune conversation pour le moment.</p>
     {% endif %}
-</div>
+  </div>
+</section>
 {% endblock %}

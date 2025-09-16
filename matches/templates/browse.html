@@ -1,48 +1,59 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block title %}Découvrir des profils{% endblock %}
+
 {% block content %}
-<div class="container py-4 simplove-profile-list-container">
-  <h1 class="mb-4 text-center">Découvrir des profils</h1>
+<section class="py-5">
+  <div class="container">
+    <h1 class="mb-5 text-center">Découvrir des profils</h1>
 
-  <!-- {% if messages %}
-    {% for m in messages %}
-      <div class="alert alert-{{ m.tags }} simplove-alert-{{ m.tags }}">{{ m }}</div>
-    {% endfor %}
-  {% endif %} -->
+    {% if messages %}
+      {% for m in messages %}
+        <div class="alert alert-{{ m.tags }} simplove-alert-{{ m.tags }} w-100 mb-4">
+          {{ m }}
+        </div>
+      {% endfor %}
+    {% endif %}
 
-  {% if user %}
-    <div class="row justify-content-center">
-      <div class="col-12 col-sm-6 col-md-4">
-        <div class="card h-100 shadow-sm simplove-profile-card text-center">
-          <div class="card-img-container mb-3">
-            <img src="{{ user.profile.photo.url|default:'/media/img/default-profile.png' }}" 
-                 alt="Photo de profil de {{ user.username }}" 
-                 class="rounded-circle simplove-profile-img" width="120" height="120">
-          </div>
-          <h5 class="card-title">@{{ user.username }}</h5>
-          {% if user.profile.bio %}
-            <p class="card-text" title="{{ user.profile.bio }}">{{ user.profile.bio|truncatewords:20 }}</p>
-          {% endif %}
-          <div class="d-flex gap-2 mt-2 simplove-profile-view-btn-container">
-            <form method="post" action="{% url 'matches:like' user.id %}">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-success simplove-btn-like">🤍 Like</button>
-            </form>
-            <form method="post" action="{% url 'matches:pass' user.id %}">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-secondary simplove-btn-pass">👎 Pass</button>
-            </form>
+    {% if user %}
+      <div class="row justify-content-center">
+        <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+          <div class="simplove-card text-center">
+            <!-- Photo -->
+            <div class="mb-3">
+              <img src="{{ user.profile.photo.url|default:'/media/img/default-profile.png' }}"
+                   alt="Photo de {{ user.username }}"
+                   class="rounded-circle" width="120" height="120">
             </div>
+
+            <!-- Infos -->
+            <h5 class="mb-1">@{{ user.username }}</h5>
+            {% if user.profile.bio %}
+              <p class="small text-muted mb-4">{{ user.profile.bio|truncatewords:20 }}</p>
+            {% endif %}
+
+            <!-- Actions -->
+            <div class="d-flex gap-3 justify-content-center">
+              <form method="post" action="{% url 'matches:like' user.id %}">
+                {% csrf_token %}
+                <button type="submit" class="simplove-btn simplove-btn--primary">🤍 Liker</button>
+              </form>
+              <form method="post" action="{% url 'matches:pass' user.id %}">
+                {% csrf_token %}
+                <button type="submit" class="simplove-btn simplove-btn--secondary">Passer</button>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  {% else %}
-    <p class="text-center mt-4">Aucun profil à afficher pour le moment.</p>
-  {% endif %}
+    {% else %}
+      <p class="text-center mt-4">Aucun profil à afficher pour le moment.</p>
+    {% endif %}
 
-  <div class="mt-4 text-center">
-    <a href="{% url 'matches:my_matches' %}" class="btn btn-primary">Voir mes matchs</a>
+    <div class="mt-5 text-center">
+      <a href="{% url 'matches:my_matches' %}" class="simplove-btn simplove-btn--primary">Voir mes matchs</a>
+    </div>
   </div>
-</div>
+</section>
 {% endblock %}

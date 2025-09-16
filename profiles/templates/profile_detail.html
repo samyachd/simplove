@@ -2,55 +2,52 @@
 {% block title %}Profil de {{ profile.user.username }}{% endblock %}
 
 {% block content %}
-<div class="simplove-profile-view-container py-5">
-    <div class="simplove-profile-detail-card card shadow w-100">
-        <div class="row g-0">
-            <!-- Colonne Image -->
-            <div class="col-lg-5 d-flex align-items-center justify-content-center p-4 bg-light">
-                <div class="simplove-card-img-container" style="width: 100%; max-width: 350px; aspect-ratio: 1/1;">
-                    {% if profile.photo %}
-                        <img src="{{ profile.photo.url }}" class="simplove-card-img-top rounded" alt="Photo de {{ profile.user.username }}">
-                    {% else %}
-                        <img src="/media/img/default-profile.png" class="simplove-card-img-top rounded" alt="Photo par défaut">
-                    {% endif %}
-                </div>
-            </div>
-
-            <!-- Colonne Détails -->
-            <div class="col-lg-7">
-                <div class="simplove-card-body card-body p-5">
-                    <h2 class="simplove-card-title card-title mb-3">{{ profile.user.username }}</h2>
-
-                    <p class="simplove-card-text card-text"><strong>Genre :</strong> {{ profile.get_gender_display }}</p>
-                    <p class="simplove-card-text card-text"><strong>Orientation :</strong> {{ profile.get_orientation_display }}</p>
-                    <p class="simplove-card-text card-text"><strong>Âge :</strong> {{ profile.age }}</p>
-                    <p class="simplove-card-text card-text"><strong>Localisation :</strong> {{ profile.location }}</p>
-
-                    {% if profile.bio %}
-                        <p class="simplove-card-text card-text mb-4"><strong>Bio :</strong> {{ profile.bio }}</p>
-                    {% endif %}
-
-                    {% if profile.interests.all %}
-                        <div class="mb-3">
-                            <strong>Centres d’intérêt :</strong><br>
-                            {% for interest in profile.interests.all %}
-                                <span class="simplove-badge badge bg-primary me-1 mb-1">{{ interest.name }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        <p>Aucun centre d’intérêt sélectionné.</p>
-                    {% endif %}
-
-                    <div class="mb-4">
-                        <strong>Pour :</strong> 
-                        <span class="simplove-badge badge bg-success">{{ profile.get_looking_for_display }}</span>
-                    </div>
-
-                    <!-- Bouton Liker -->
-                    <a href="{% url 'matches:like' profile.id %}" class="simplove-btn simplove-btn-primary btn-lg w-25">🤍 Liker</a>
-                </div>
-            </div>
+<section class="py-5">
+  <div class="container">
+    <div class="simplove-card">
+      <div class="row g-0 align-items-center">
+        <!-- Colonne Photo -->
+        <div class="col-lg-5 d-flex justify-content-center p-4">
+          <img src="{{ profile.photo.url|default:'/media/img/default-profile.png' }}"
+               alt="Photo de {{ profile.user.username }}"
+               class="rounded" width="250" height="250">
         </div>
+
+        <!-- Colonne Infos -->
+        <div class="col-lg-7 p-4">
+          <h2 class="mb-3">{{ profile.user.username }}</h2>
+
+          <div class="mb-2"><strong>Genre :</strong> {{ profile.get_gender_display }}</div>
+          <div class="mb-2"><strong>Orientation :</strong> {{ profile.get_orientation_display }}</div>
+          <div class="mb-2"><strong>Âge :</strong> {{ profile.age }}</div>
+          <div class="mb-3"><strong>Localisation :</strong> {{ profile.location }}</div>
+
+          {% if profile.bio %}
+            <p class="mb-3"><strong>Bio :</strong> {{ profile.bio }}</p>
+          {% endif %}
+
+          {% if profile.interests.all %}
+            <div class="mb-3">
+              <strong>Centres d’intérêt :</strong><br>
+              {% for interest in profile.interests.all %}
+                <span class="simplove-badge badge bg-primary me-1 mb-1">{{ interest.name }}</span>
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          <div class="mb-4">
+            <strong>Pour :</strong>
+            <span class="simplove-badge badge bg-success">{{ profile.get_looking_for_display }}</span>
+          </div>
+
+          <!-- Bouton Liker -->
+          <a href="{% url 'matches:like' profile.id %}"
+             class="simplove-btn simplove-btn--primary">
+            🤍 Liker
+          </a>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
+</section>
 {% endblock %}
