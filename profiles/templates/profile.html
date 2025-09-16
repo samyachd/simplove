@@ -26,7 +26,16 @@
             <p class="simplove-card-text card-text"><strong>Âge :</strong> {{ profile.age }}</p>
             <p class="simplove-card-text card-text"><strong>Bio :</strong> {{ profile.bio }}</p>
             <p class="simplove-card-text card-text"><strong>Localisation :</strong> {{ profile.location }}</p>
-            <p class="simplove-card-text card-text"><strong>Intérêt :</strong> {{ profile.interest }}</p>
+            <p class="simplove-card-text card-text"><strong>Centres d'intérêt :</strong>
+            {% if profile.interests.all %}
+              <ul>
+                {% for interest in profile.interests.all %}
+                  <li>{{ interest.name }}</li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <p>Aucun centre d’intérêt sélectionné.</p>
+            {% endif %}
             <p class="simplove-card-text card-text"><strong>Looking for :</strong> {{ profile.get_looking_for_display }}</p>
           {% endif %}
 

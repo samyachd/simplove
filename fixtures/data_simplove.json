@@ -35,7 +35,6 @@
       "age": 31,
       "bio": "Hé moi c'est Charlie",
       "location": "Paris",
-      "interest": "Le tuning et les gonzesses",
       "looking_for": "ONE_NIGHT"
     }
   },
@@ -75,15 +74,14 @@
       "age": 21,
       "bio": "Hé moi c'est Jack",
       "location": "Montpellier",
-      "interest": "Le tuning et les mecs",
       "looking_for": "TALK"
     }
-  }
+  },
   {
     "model": "messaging.thread",
     "pk": 1,
     "fields": {
-      "user": 1,
+      "participants": [1, 2],
       "created_at": "2025-09-08T10:00:00Z"
     }
   },
@@ -94,6 +92,16 @@
       "thread": 1, 
       "sender": 1,
       "content": "Salut, tu vas bien? Tu veux boire un verre ce soir?",
+      "timestamp": "2025-03-08T12:45:00Z"
+    }
+  },
+  {
+    "model": "messaging.message",
+    "pk": 2,
+    "fields": {
+      "thread": 1, 
+      "sender": 2,
+      "content": "Ouais aller je suis chaud",
       "timestamp": "2025-03-08T12:45:00Z"
     }
   }

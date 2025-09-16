@@ -81,5 +81,5 @@ def create_profile(request):
     else:
 
         form = MemberProfileForm(instance=profile)
-
-    return render(request, "create_profile.html", {"form": form})
+    context = {"form": form} | {"hide_navbar": True}
+    return render(request, "create_profile.html", context)

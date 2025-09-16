@@ -248,6 +248,13 @@ h4, .h4{ font-size:1.25rem; font-weight:500; }
   margin-bottom: 1.5rem;
 }
 
+.simplove-account-form-container h3 {
+  font-weight: 500;
+  font-size: 1.rem;
+  color: var(--bs-primary);
+  margin-bottom: 1.5rem;
+}
+
 .simplove-form-group label {
   font-weight: 500;
   margin-bottom: 0.25rem;
@@ -463,4 +470,10 @@ section .bi:hover, .simplove-section .bi:hover {
 @media (max-width:576px){
   .profile-card, .simplove-profile-card { max-width:95%; }
   .profile-card img, .simplove-profile-card img { height:120px; }
+}
+
+.form-control {
+  align-items: center;
+  align-self: center;
+  align-content: center;
 }

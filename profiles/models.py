@@ -2,8 +2,23 @@ from django.db import models
 from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.dispatch import receiver
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_migrate
 
+
+class Interest(models.Model):
+
+    DEFAULT_INTERESTS = [
+    'Musique',
+    'Sport',
+    'Cinéma',
+    'Voyages',
+    'Lecture',
+]
+    
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
 
 class MemberProfile(models.Model):
 
@@ -19,6 +34,7 @@ class MemberProfile(models.Model):
     gender = models.CharField(
         max_length=1,
         choices=GENDER_CHOICES,
+        default="H",
         blank=False,
         null=False,
         help_text="Genre de l'utilisateur",
@@ -34,6 +50,7 @@ class MemberProfile(models.Model):
     orientation = models.CharField(
         max_length=3,
         choices=ORIENTATION_CHOICES,
+        default="HET",
         blank=False,
         null=False,
         help_text="Orientation sexuelle",
@@ -42,10 +59,13 @@ class MemberProfile(models.Model):
     age = models.PositiveSmallIntegerField(
         null=True,
         blank=False,
+        validators=[MinValueValidator(18)],
         help_text="Âge temporaire, à synchroniser avec users plus tard",
     )
 
     bio = models.TextField(max_length=500, blank=True, help_text="Bio de l'utilisateur")
+
+    interests = models.ManyToManyField(Interest, blank=True)
 
     photo = models.ImageField(
         upload_to="photos/%Y/%m",
@@ -56,10 +76,6 @@ class MemberProfile(models.Model):
 
     location = models.CharField(
         max_length=100, blank=True, help_text="Ville de l'utilisateur"
-    )
-
-    interest = models.TextField(
-        blank=True, help_text="Centre d'intérêt séparé par des virgules"
     )
 
     LOOKING_FOR_CHOICES = [
@@ -79,11 +95,6 @@ class MemberProfile(models.Model):
     def __str__(self):
         return f"Profil de {self.user.username}"
 
-    def interests_list(self):
-        if self.interest:
-            return [i.strip() for i in self.interest.split(",") if i.strip()]
-        return []
-
     def full_description(self):
         if self.user:
             desc = f"{self.user.username}<br>{self.get_gender_display()}, {self.age} ans<br>{self.get_orientation_display()}"
@@ -100,8 +111,15 @@ class MemberProfile(models.Model):
         if self.photo:
             return self.photo_url
         return "/media/img/default-profile.png"
+    
+    def create_default_interests(sender, **kwargs):
+        for name in Interest.DEFAULT_INTERESTS:
+            Interest.objects.get_or_create(name=name)
+
 
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_member_profile(sender, instance, created, **kwargs):
         if created:
             MemberProfile.objects.create(user=instance)
+
+post_migrate.connect(MemberProfile.create_default_interests)

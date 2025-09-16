@@ -1,7 +1,6 @@
 from django import forms
 from .models import MemberProfile
 
-
 class MemberProfileForm(forms.ModelForm):
     class Meta:
         model = MemberProfile
@@ -11,7 +10,7 @@ class MemberProfileForm(forms.ModelForm):
             "age",
             "bio",
             "location",
-            "interest",
+            "interests",
             "looking_for",
         ]
         widgets = {
@@ -19,6 +18,7 @@ class MemberProfileForm(forms.ModelForm):
             "interest": forms.TextInput(attrs={"class": "form-control"}),
             "age": forms.NumberInput(attrs={"class": "form-control"}),
             "location": forms.TextInput(attrs={"class": "form-control"}),
+            'interests': forms.CheckboxSelectMultiple(attrs={'class': 'my-checkboxes'}),
         }
 
         labels = {
@@ -27,7 +27,7 @@ class MemberProfileForm(forms.ModelForm):
             "age": "Âge",
             "bio": "Biographie",
             "location": "Localisation",
-            "interest": "Intérêts",
+            "interests":"Centres d'intérêt",
             "looking_for": "Recherche",
         }
 
