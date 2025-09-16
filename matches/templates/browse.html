@@ -8,14 +8,6 @@
   <div class="container">
     <h1 class="mb-5 text-center">Découvrir des profils</h1>
 
-    {% if messages %}
-      {% for m in messages %}
-        <div class="alert alert-{{ m.tags }} simplove-alert-{{ m.tags }} w-100 mb-4">
-          {{ m }}
-        </div>
-      {% endfor %}
-    {% endif %}
-
     {% if user %}
       <div class="row justify-content-center">
         <div class="col-12 col-sm-8 col-md-6 col-lg-4">

@@ -8,14 +8,6 @@
   <div class="container">
     <h1 class="mb-5 text-center">Mes matchs</h1>
 
-    {% if messages %}
-      {% for m in messages %}
-        <div class="alert alert-{{ m.tags }} simplove-alert-{{ m.tags }} w-100 mb-4">
-          {{ m }}
-        </div>
-      {% endfor %}
-    {% endif %}
-
     <div class="simplove-grid">
       {% for m in matches %}
         <div class="simplove-card text-center">

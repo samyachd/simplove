@@ -467,12 +467,14 @@ img {
 /* ---- Images profil – sans déformation ---- */
 .simplove-img-profile {
   width: 100%;
-  max-width: 250px;        /* taille max */
-  aspect-ratio: 1 / 1;     /* CARRÉ parfait */
-  object-fit: cover;       /* remplissage sans déformer */
+  max-width: 250px;
+  aspect-ratio: 1 / 1;      /* on garde le carré */
+  object-fit: contain;      /* image entière + ajustée */
+  object-position: center;  /* centrée */
   border-radius: var(--radius);
   cursor: zoom-in;
   transition: transform .25s;
+  background: #fff;         /* fond blanc si image transparente */
 }
 .simplove-img-profile:hover {
   transform: scale(1.05);
