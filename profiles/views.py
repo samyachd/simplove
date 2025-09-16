@@ -5,6 +5,7 @@ from .forms import MemberProfileForm, ProfileFilterForm
 from django.contrib.auth.decorators import login_required
 from .forms import ProfileFilterForm
 
+
 @login_required
 @profile_required
 def profile_view(request):
@@ -28,6 +29,7 @@ def profile_edit(request, pk):
 
     return render(request, "profile_edit.html", {"form": form})
 
+
 @login_required
 @profile_required
 def profile_detail(request, pk):
@@ -50,12 +52,13 @@ def create_profile(request):
     context = {"form": form} | {"hide_navbar": True}
     return render(request, "create_profile.html", context)
 
+
 @login_required
 def profile_list(request):
     form = ProfileFilterForm(request.GET or None)
     profiles = MemberProfile.objects.filter(
         user__is_superuser=False, user__is_active=True
-    )
+    ).exclude(user=request.user)
 
     if form.is_valid():
         q = form.cleaned_data.get("q")
