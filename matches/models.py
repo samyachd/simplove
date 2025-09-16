@@ -1,10 +1,12 @@
 from django.conf import settings
 from django.db import models
 from django.db.models import Q
+from django.utils import timezone
 
 # Create your models here.
 
 User = settings.AUTH_USER_MODEL
+
 
 class Evaluation(models.Model):
     LIKE = "LIKE"
@@ -21,6 +23,7 @@ class Evaluation(models.Model):
         User, on_delete=models.CASCADE, related_name="received_evaluations"
     )
     status = models.CharField(max_length=10, choices=STATUS_CHOICES)
+    decided_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
@@ -50,4 +53,3 @@ class Match(models.Model):
     def pair_q(a, b):
         # Helper to query a pair regardless of order
         return Q(user1=a, user2=b) | Q(user1=b, user2=a)
-
