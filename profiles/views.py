@@ -27,7 +27,14 @@ def profile_edit(request, pk):
     else:
         form = MemberProfileForm(instance=profile)
 
-    return render(request, "profile_edit.html", {"form": form})
+    return render(
+        request,
+        "profile_edit.html",
+        {
+            "form": form,
+            "profile": profile,
+        },
+    )
 
 
 @login_required
