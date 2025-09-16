@@ -48,7 +48,7 @@ def like_user(request, user_id):
         obj.save()
     _ensure_match_state(request.user, target)
     messages.success(request, f"You liked @{target.username}.")
-    return redirect("my_matches")
+    return redirect("matches:my_matches")
 
 
 @login_required
@@ -64,7 +64,7 @@ def pass_user(request, user_id):
         obj.save()
     _ensure_match_state(request.user, target)
     messages.info(request, f"You passed on @{target.username}.")
-    return redirect("browse_profiles")
+    return redirect("matches:browse_profiles")
 
 
 @login_required
@@ -80,7 +80,7 @@ def remove_like(request, user_id):
         obj.save()
     _ensure_match_state(request.user, target)
     messages.warning(request, f"You removed your like for @{target.username}.")
-    return redirect("my_matches")
+    return redirect("matches:my_matches")
 
 
 @login_required
