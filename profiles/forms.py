@@ -27,10 +27,11 @@ class MemberProfileForm(forms.ModelForm):
             "gender": "Genre",
             "orientation": "Orientation",
             "age": "Âge",
-            "bio": "Biographie",
+            "bio": "Description",
             "location": "Localisation",
             "interests":"Centres d'intérêt",
             "looking_for": "Recherche",
+            "photo":"Photo"
         }
 
 

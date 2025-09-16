@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from .models import UserAccount
 
 
@@ -16,7 +16,6 @@ class RegisterForm(forms.Form):
                 "confirm_password", "Les mots de passe ne correspondent pas."
             )
         return cleaned_data
-
 
 class AccountForm(forms.ModelForm):
     class Meta:

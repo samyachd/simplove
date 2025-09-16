@@ -1,9 +1,8 @@
-from django.shortcuts import render
-from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from profiles.decorators import profile_required
 from django.shortcuts import get_object_or_404, redirect, render
-from django.http import HttpResponseBadRequest
+from django.http import HttpResponseBadRequest, HttpResponse
 from django.contrib.auth import get_user_model
 from django.db.models import Q
 from django.http import HttpResponseBadRequest
@@ -33,6 +32,7 @@ def _ensure_match_state(a, b):
         Match.objects.filter(Match.pair_q(a, b), is_active=True).update(is_active=False)
 
 
+@profile_required
 @login_required
 def like_user(request, user_id):
     if request.method != "POST":
@@ -59,6 +59,7 @@ def like_user(request, user_id):
     return render(request, "browse.html", {"user": next_user})
 
 
+@profile_required
 @login_required
 def pass_user(request, user_id):
     if request.method != "POST":
@@ -82,6 +83,7 @@ def pass_user(request, user_id):
     return render(request, "browse.html", {"user": next_user})
 
 
+@profile_required
 @login_required
 def remove_like(request, user_id):
     if request.method != "POST":
@@ -98,6 +100,7 @@ def remove_like(request, user_id):
     return redirect("matches:my_matches")
 
 
+@profile_required
 @login_required
 def my_matches(request):
     matches = Match.objects.filter(user1=request.user) | Match.objects.filter(
@@ -114,6 +117,7 @@ def my_matches(request):
     return render(request, "matches_list.html", {"matches": matches})
 
 
+@profile_required
 @login_required
 def browse_profiles(request):
     """Afficher un profil aléatoire que l'utilisateur n'a pas encore évalué."""

@@ -96,12 +96,26 @@
         <button type="button" class="btn btn-primary simplove-btn-account next-step w-50">Suivant</button>
       </div>
     </div>
-
+    
     <div class="form-step simplove-form-step d-none" data-step="6">
       <div class="simplove-form-group">
         {{ form.bio.label_tag }}
         {{ form.bio }}
         {% if form.bio.errors %}
+          <div class="simplove-text-danger text-danger mt-1">{{ form.bio.errors }}</div>
+        {% endif %}
+      </div>
+      <div class="simplove-form-buttons d-flex gap-2">
+        <button type="button" class="btn btn-secondary simplove-btn-account prev-step w-50">Précédent</button>
+        <button type="button" class="btn btn-primary simplove-btn-account next-step w-50">Suivant</button>
+      </div>
+    </div>
+
+    <div class="form-step simplove-form-step d-none" data-step="7">
+      <div class="simplove-form-group">
+        <h3>Rajoutes une photo de toi pour compléter ton profil</h3>
+        {{ form.photo }}
+        {% if form.photo.errors %}
           <div class="simplove-text-danger text-danger mt-1">{{ form.bio.errors }}</div>
         {% endif %}
       </div>

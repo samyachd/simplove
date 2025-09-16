@@ -60,7 +60,8 @@ def create_account(request):
     else:
         form = AccountForm(instance=account)
 
-    return render(request, "registration/create_account.html", {"form": form})
+    context = {"form": form} | {"hide_navbar": True}
+    return render(request, "registration/create_account.html", context)
 
 
 @login_required
@@ -73,6 +74,7 @@ def account_view(request):
 
 @login_required
 @profile_required
+
 def account_edit(request):
     """Modifier les infos du compte personnel"""
     account, created = UserAccount.objects.get_or_create(user=request.user)
@@ -86,12 +88,6 @@ def account_edit(request):
         form = AccountForm(instance=account)
 
     return render(request, "registration/account_edit.html", {"form": form})
-
-
-def logout_view(request):
-    logout(request)
-    return redirect("/")
-
 
 @login_required
 @profile_required
