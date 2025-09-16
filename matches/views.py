@@ -38,8 +38,8 @@ def like_user(request, user_id):
         return HttpResponseBadRequest("POST required")
     target = get_object_or_404(User, id=user_id)
     if target == request.user:
-        messages.error(request, "You cannot like yourself.")
-        return redirect("browse_profiles")
+        messages.error(request, "Tu ne peux pas liker toi-même.")
+        return redirect("matches:browse_profiles")
     obj, _ = Evaluation.objects.get_or_create(
         evaluator=request.user, target=target, defaults={"status": Evaluation.LIKE}
     )
