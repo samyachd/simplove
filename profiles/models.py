@@ -66,7 +66,7 @@ class MemberProfile(models.Model):
         ],
     )
 
-    bio = models.TextField(max_length=500, blank=True, help_text="Bio de l'utilisateur")
+    bio = models.TextField(max_length=500, blank=True, help_text="Description de l'utilisateur")
 
     interests = models.ManyToManyField(Interest, blank=True)
 

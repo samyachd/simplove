@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from .models import UserAccount
 
 
@@ -17,14 +17,12 @@ class RegisterForm(forms.Form):
             )
         return cleaned_data
 
-
 class AccountForm(forms.ModelForm):
     class Meta:
         model = UserAccount
         fields = [
             "first_name",
             "last_name",
-            "email",
             "phone_number",
             "address",
             "birth_date",
@@ -33,7 +31,6 @@ class AccountForm(forms.ModelForm):
         labels = {
             "first_name": "Prénom",
             "last_name": "Nom",
-            "email": "Email",
             "phone_number": "Téléphone",
             "address": "Adresse",
             "birth_date": "Date de naissance",
@@ -42,7 +39,6 @@ class AccountForm(forms.ModelForm):
         widgets = {
             "first_name": forms.TextInput(attrs={"class": "form-control"}),
             "last_name": forms.TextInput(attrs={"class": "form-control"}),
-            "email": forms.EmailInput(attrs={"class": "form-control"}),
             "phone_number": forms.TextInput(attrs={"class": "form-control"}),
             "address": forms.TextInput(attrs={"class": "form-control"}),
             "birth_date": forms.DateInput(

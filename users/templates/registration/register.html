@@ -5,12 +5,6 @@
 <div class="simplove-account-form-container">
   <h2>Créer un compte</h2>
 
-  {% if form.errors %}
-    <div class="alert alert-danger simplove-alert-danger">
-      Une erreur est survenue dans le formulaire. Merci de vérifier les champs.
-    </div>
-  {% endif %}
-
   <form method="post" action="">
     {% csrf_token %}
     {% for field in form %}

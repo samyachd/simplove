@@ -50,6 +50,7 @@ def create_profile(request):
     context = {"form": form} | {"hide_navbar": True}
     return render(request, "create_profile.html", context)
 
+@profile_required
 @login_required
 def profile_list(request):
     form = ProfileFilterForm(request.GET or None)
