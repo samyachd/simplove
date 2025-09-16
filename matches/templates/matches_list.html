@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block title %}My Matches · Simplove{% endblock %}
+
 {% block content %}
 
 {% if messages %}
@@ -9,23 +11,96 @@
   {% endfor %}
 {% endif %}
 
-<div class="row">
-  {% for m in matches %}
-    <div class="col-md-6 mb-3">
-      <div class="card shadow-sm">
-        <div class="card-body d-flex flex-column align-items-center">
-          <img src="{% static 'img/default-profile.png' %}" 
-               alt="Photo de profil" 
-               class="rounded-circle mb-3" 
-               width="80" height="80">
-          <h5>{{ m.other.username }}</h5>
-          <p>{{ m.other.email }}</p>
+<div class="row g-3 mb-4 text-center">
+  <div class="col-6 col-md-3"><div class="p-3 border rounded-3">
+    <div class="fw-bold fs-4">{{ total_matches|default:"0" }}</div>
+    <div class="text-muted">Active matches</div>
+  </div></div>
+  <div class="col-6 col-md-3"><div class="p-3 border rounded-3">
+    <div class="fw-bold fs-4">{{ likes_received|default:"0" }}</div>
+    <div class="text-muted">Likes received</div>
+  </div></div>
+  <div class="col-6 col-md-3"><div class="p-3 border rounded-3">
+    <div class="fw-bold fs-4">{{ likes_sent|default:"0" }}</div>
+    <div class="text-muted">Likes sent</div>
+  </div></div>
+  <div class="col-6 col-md-3"><div class="p-3 border rounded-3">
+    <div class="fw-bold fs-4">{{ pending_count|default:"0" }}</div>
+    <div class="text-muted">Pending</div>
+  </div></div>
+</div>
+
+{% if pending_likes %}
+  <h5 class="mb-3">They liked you · Decide</h5>
+  <div class="row g-3 mb-4">
+    {% for e in pending_likes %}
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="fw-bold">@{{ e.evaluator.username }}</div>
+            <div class="small text-muted">liked on {{ e.updated_at|date:"Y-m-d H:i" }}</div>
+            <div class="d-flex gap-2 mt-3">
+              <form method="post" action="{% url 'matches:like_user' user_id=e.evaluator.id %}">
+                {% csrf_token %}<button class="btn btn-success btn-sm">Like</button>
+              </form>
+              <form method="post" action="{% url 'matches:pass_user' user_id=e.evaluator.id %}">
+                {% csrf_token %}<button class="btn btn-outline-secondary btn-sm">Pass</button>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  {% empty %}
-    <p>Aucun match pour le moment.</p>
-  {% endfor %}
-</div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+{% if page_obj.object_list %}
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <h5 class="m-0">My matches</h5>
+    <a class="btn btn-sm btn-primary" href="{% url 'matches:browse_profiles' %}">Browse profiles</a>
+  </div>
+
+  <div class="row g-3">
+    {% for m in page_obj.object_list %}
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+        <div class="card h-100">
+          <div class="card-body d-flex flex-column">
+            <div class="fw-bold">@{{ m.other_username }}</div>
+            <div class="small text-muted">matched {{ m.created_at|date:"Y-m-d" }}</div>
+
+            <div class="mt-auto d-flex gap-2">
+              <form method="post" action="{% url 'matches:remove_like' user_id=m.other_id %}">
+                {% csrf_token %}<button class="btn btn-outline-danger btn-sm">Unmatch</button>
+              </form>
+              <a class="btn btn-sm btn-outline-primary" href="{% url 'profiles:list' %}">View profile</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+
+  <!-- Pagination -->
+  <nav class="mt-3">
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Prev</a></li>
+      {% else %}
+        <li class="page-item disabled"><span class="page-link">Prev</span></li>
+      {% endif %}
+
+      <li class="page-item active"><span class="page-link">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span></li>
+
+      {% if page_obj.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+      {% else %}
+        <li class="page-item disabled"><span class="page-link">Next</span></li>
+      {% endif %}
+    </ul>
+  </nav>
+{% else %}
+  <div class="alert alert-info">No matches yet.</div>
+{% endif %}
 
 {% endblock %}
