@@ -171,6 +171,22 @@ h4, .h4{ font-size:1.25rem; font-weight:500; }
   color: #fff !important;
 }
 
+.simplove-profile-view-btn-container a.btn {
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.95rem;
+  white-space: normal; 
+}
+
+.simplove-profile-view-btn-container {
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 0.5rem;
+}
+
 /* ======================= */
 /* Container / Grid utils  */
 /* ======================= */
@@ -218,11 +234,24 @@ h4, .h4{ font-size:1.25rem; font-weight:500; }
   margin:1rem auto;
 }
 
+.simplove-card-img-container img {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  object-fit: cover; /* ou contain si tu veux voir toute l’image */
+  border-radius: var(--bs-border-radius);
+  display: block;
+}
+
 /* Profile view container */
 .profile-view-container, .simplove-profile-view-container{
-  max-width: 600px;
+  max-width: 1000px;
   margin: 2rem auto;
-  padding: 1rem;
+  padding: 1.5rem;
+}
+
+.simplove-profile-card {
+  min-height: auto; /* ajuste selon ton besoin */
 }
 
 /* ======================= */

@@ -5,7 +5,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponseBadRequest, HttpResponse
 from django.contrib.auth import get_user_model
 from django.db.models import Q
-from .models import Match, Evaluation
+from .models import Evaluation, Match
+import random
 
 User = get_user_model()
 
@@ -32,35 +33,49 @@ def _ensure_match_state(a, b):
 def like_user(request, user_id):
     if request.method != "POST":
         return HttpResponseBadRequest("POST required")
+
     target = get_object_or_404(User, id=user_id)
     if target == request.user:
-        messages.error(request, "You cannot like yourself.")
-        return redirect("browse_profiles")
+        return redirect("matches:browse_profiles")
+
     obj, _ = Evaluation.objects.get_or_create(
         evaluator=request.user, target=target, defaults={"status": Evaluation.LIKE}
     )
-    if obj.status != Evaluation.LIKE:
-        obj.status = Evaluation.LIKE
-        obj.save()
+    obj.status = Evaluation.LIKE
+    obj.save()
     _ensure_match_state(request.user, target)
-    messages.success(request, f"You liked @{target.username}.")
-    return redirect("my_matches")
+
+    # Afficher le prochain profil
+    evaluated_ids = Evaluation.objects.filter(evaluator=request.user).values_list(
+        "target_id", flat=True
+    )
+    candidates = User.objects.exclude(id=request.user.id).exclude(id__in=evaluated_ids)
+    next_user = random.choice(candidates) if candidates.exists() else None
+
+    return render(request, "browse.html", {"user": next_user})
 
 @profile_required
 @login_required
 def pass_user(request, user_id):
     if request.method != "POST":
         return HttpResponseBadRequest("POST required")
+
     target = get_object_or_404(User, id=user_id)
     obj, _ = Evaluation.objects.get_or_create(
         evaluator=request.user, target=target, defaults={"status": Evaluation.UNLIKE}
     )
-    if obj.status != Evaluation.UNLIKE:
-        obj.status = Evaluation.UNLIKE
-        obj.save()
+    obj.status = Evaluation.UNLIKE
+    obj.save()
     _ensure_match_state(request.user, target)
-    messages.info(request, f"You passed on @{target.username}.")
-    return redirect("browse_profiles")
+
+    # Afficher le prochain profil
+    evaluated_ids = Evaluation.objects.filter(evaluator=request.user).values_list(
+        "target_id", flat=True
+    )
+    candidates = User.objects.exclude(id=request.user.id).exclude(id__in=evaluated_ids)
+    next_user = random.choice(candidates) if candidates.exists() else None
+
+    return render(request, "browse.html", {"user": next_user})
 
 @profile_required
 @login_required
@@ -76,7 +91,7 @@ def remove_like(request, user_id):
         obj.save()
     _ensure_match_state(request.user, target)
     messages.warning(request, f"You removed your like for @{target.username}.")
-    return redirect("my_matches")
+    return redirect("matches:my_matches")
 
 @profile_required
 @login_required
@@ -97,9 +112,29 @@ def my_matches(request):
 @profile_required
 @login_required
 def browse_profiles(request):
-    """Super basic browse page: show everyone except me."""
+    """Afficher un profil aléatoire que l'utilisateur n'a pas encore évalué."""
     evaluated_ids = Evaluation.objects.filter(evaluator=request.user).values_list(
         "target_id", flat=True
     )
-    users = User.objects.exclude(id=request.user.id).exclude(id__in=evaluated_ids)[:20]
-    return render(request, "browse.html", {"users": users})
+
+    candidates = User.objects.exclude(id=request.user.id).exclude(id__in=evaluated_ids)
+
+    if candidates.exists():
+        user = random.choice(candidates)  # Choisir un profil au hasard
+        return render(request, "browse.html", {"user": user})
+    else:
+        return render(request, "browse.html", {"user": None})
+
+
+@login_required
+def like(request, user_id):
+    target = get_object_or_404(User, id=user_id)
+    Evaluation.objects.create(evaluator=request.user, target=target, liked=True)
+    return redirect("matches:browse_profiles")  # ← retour au profil suivant
+
+
+@login_required
+def pass_profile(request, user_id):
+    target = get_object_or_404(User, id=user_id)
+    Evaluation.objects.create(evaluator=request.user, target=target, liked=False)
+    return redirect("matches:browse_profiles")  # ← retour au profil suivant

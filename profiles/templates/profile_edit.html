@@ -1,31 +1,78 @@
 {% extends 'base.html' %}
-
 {% block title %}Modifier mon profil{% endblock %}
 
 {% block content %}
 <div class="simplove-account-form-container">
-  <h2>Modifier mon profil</h2>
+    <h2>Modifier mon profil</h2>
 
-  {% if form.errors %}
+    {% if form.errors %}
     <div class="alert alert-danger simplove-alert-danger">
-      Une erreur est survenue dans le formulaire. Merci de vérifier les champs.
+        Une erreur est survenue dans le formulaire. Merci de vérifier les champs.
     </div>
-  {% endif %}
+    {% endif %}
 
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {% for field in form %}
-      <div class="simplove-form-group">
-        {{ field.label_tag }}
-        {{ field }}
-        {% if field.errors %}
-          <div class="simplove-text-danger text-danger mt-1">{{ field.errors }}</div>
-        {% endif %}
-      </div>
-    {% endfor %}
-    <div class="simplove-form-buttons form-buttons">
-      <button type="submit" class="btn btn-primary simplove-btn-account w-100">Enregistrer</button>
-    </div>
-  </form>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% for field in form %}
+        <div class="simplove-form-group">
+            {{ field.label_tag }}
+            {{ field }}
+
+            {% if field.name == "photo" %}
+            <!-- Conteneur pour les deux photos côte à côte -->
+            <div style="display: flex; gap: 20px; align-items: center; margin-top: 10px;">
+                <!-- Photo actuelle -->
+                <div>
+                    <p>Ancienne photo :</p>
+                    {% if profile.photo %}
+                        <img src="{{ profile.photo.url }}" alt="Ancienne photo" style="max-width: 150px; border-radius: 10px;">
+                    {% else %}
+                        <img src="/media/img/default-profile.png" alt="Photo par défaut" style="max-width: 150px; border-radius: 10px;">
+                    {% endif %}
+                </div>
+                <!-- Aperçu de la nouvelle photo -->
+                <div>
+                    <p>Nouvelle photo :</p>
+                    <img id="photo-preview" src="#" alt="Aperçu de la photo" 
+                         style="max-width: 150px; border-radius: 10px; display: none;">
+                </div>
+            </div>
+            {% endif %}
+
+            {% if field.errors %}
+            <div class="simplove-text-danger text-danger mt-1">{{ field.errors }}</div>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        <div class="simplove-form-buttons form-buttons">
+            <button type="submit" class="btn btn-primary simplove-btn-account w-100">Enregistrer</button>
+        </div>
+    </form>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const photoInput = document.querySelector('input[type="file"][name="photo"]');
+    const preview = document.getElementById('photo-preview');
+
+    if(photoInput) {
+        photoInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if(file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block'; // Affiche l'image une fois chargée
+                }
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = '#';
+                preview.style.display = 'none'; // Cache l'image si aucun fichier sélectionné
+            }
+        });
+    }
+});
+</script>
 {% endblock %}

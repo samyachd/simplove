@@ -3,49 +3,46 @@
 
 {% block content %}
 <div class="container py-4 simplove-profile-list-container">
-  <h1 class="mb-4 text-center">Parcourir les profils</h1>
+  <h1 class="mb-4 text-center">Découvrir des profils</h1>
 
-  {% if messages %}
+  <!-- {% if messages %}
     {% for m in messages %}
       <div class="alert alert-{{ m.tags }} simplove-alert-{{ m.tags }}">{{ m }}</div>
     {% endfor %}
-  {% endif %}
+  {% endif %} -->
 
-  <div class="row g-4">
-    {% for u in users %}
+  {% if user %}
+    <div class="row justify-content-center">
       <div class="col-12 col-sm-6 col-md-4">
-        <div class="card h-100 shadow-sm simplove-profile-card">
-          <div class="card-img-container text-center">
-            <img src="{{ u.profile.photo.url|default:'/media/img/default-profile.png' }}" 
-                 alt="Photo de profil de {{ u.username }}" 
-                 class="rounded-circle mb-3 simplove-profile-img" 
-                 width="100" height="100">
+        <div class="card h-100 shadow-sm simplove-profile-card text-center">
+          <div class="card-img-container mb-3">
+            <img src="{{ user.profile.photo.url|default:'/media/img/default-profile.png' }}" 
+                 alt="Photo de profil de {{ user.username }}" 
+                 class="rounded-circle simplove-profile-img" width="120" height="120">
           </div>
-          <div class="card-body text-center simplove-card-body">
-            <h5 class="card-title simplove-card-title">@{{ u.username }}</h5>
-            {% if u.profile.bio %}
-              <p class="card-text simplove-card-text" title="{{ u.profile.bio }}">{{ u.profile.bio|truncatewords:15 }}</p>
-            {% endif %}
-            <div class="d-flex gap-2 mt-2 simplove-profile-view-btn-container">
-              <form method="post" action="{% url 'matches:like' u.id %}">
+          <h5 class="card-title">@{{ user.username }}</h5>
+          {% if user.profile.bio %}
+            <p class="card-text" title="{{ user.profile.bio }}">{{ user.profile.bio|truncatewords:20 }}</p>
+          {% endif %}
+          <div class="d-flex gap-2 mt-2 simplove-profile-view-btn-container">
+            <form method="post" action="{% url 'matches:like' user.id %}">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-success simplove-btn-like">🤍 Like</button>
-              </form>
-              <form method="post" action="{% url 'matches:pass' u.id %}">
+            </form>
+            <form method="post" action="{% url 'matches:pass' user.id %}">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-secondary simplove-btn-pass">👎 Pass</button>
-              </form>
+            </form>
             </div>
-          </div>
         </div>
       </div>
-    {% empty %}
-      <p class="text-center simplove-no-profiles">Aucun profil à afficher pour le moment.</p>
-    {% endfor %}
-  </div>
+    </div>
+  {% else %}
+    <p class="text-center mt-4">Aucun profil à afficher pour le moment.</p>
+  {% endif %}
 
   <div class="mt-4 text-center">
-    <a href="{% url 'matches:my_matches' %}" class="btn btn-primary simplove-btn-view">Voir mes matchs</a>
+    <a href="{% url 'matches:my_matches' %}" class="btn btn-primary">Voir mes matchs</a>
   </div>
 </div>
 {% endblock %}

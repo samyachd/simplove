@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models, connection
 from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.dispatch import receiver
@@ -9,16 +9,17 @@ import os
 class Interest(models.Model):
 
     DEFAULT_INTERESTS = [
-    'Musique',
-    'Sport',
-    'Cinéma',
-    'Voyages',
-    'Lecture',
-]
-    name = models.CharField(max_length=50)
+        "Musique",
+        "Sport",
+        "Cinéma",
+        "Voyages",
+        "Lecture",
+    ]
+    name = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name
+
 
 class MemberProfile(models.Model):
 
@@ -114,11 +115,12 @@ class MemberProfile(models.Model):
         if self.photo:
             return self.photo.url
         return "/media/img/default-profile.png"
-    
-    def create_default_interests(sender, **kwargs):
-        for name in Interest.DEFAULT_INTERESTS:
-            Interest.objects.get_or_create(name=name)
 
+    def create_default_interests(sender, **kwargs):
+        # Vérifier que la table Interest existe
+        if "profiles_interest" in connection.introspection.table_names():
+            for name in Interest.DEFAULT_INTERESTS:
+                Interest.objects.get_or_create(name=name)
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
@@ -132,5 +134,6 @@ def delete_profile_photo(sender, instance, **kwargs):
     """Supprimer la photo quand le profil est supprimé"""
     if instance.photo and instance.photo.path and os.path.isfile(instance.photo.path):
         os.remove(instance.photo.path)
+
 
 post_migrate.connect(MemberProfile.create_default_interests)

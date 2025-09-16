@@ -5,11 +5,11 @@
 <div class="container py-4 simplove-profile-list-container">
   <h1 class="mb-4 text-center">Mes matchs</h1>
 
-  {% if messages %}
+  <!-- {% if messages %}
     {% for m in messages %}
       <div class="alert alert-{{ m.tags }} simplove-alert-{{ m.tags }}">{{ m }}</div>
     {% endfor %}
-  {% endif %}
+  {% endif %} -->
 
   <div class="row g-4">
     {% for m in matches %}
@@ -17,9 +17,9 @@
         <div class="card h-100 shadow-sm simplove-profile-card">
           <div class="card-img-container text-center">
             <img src="{{ m.other.profile.photo.url|default:'/media/img/default-profile.png' }}" 
-                 alt="Photo de profil de {{ m.other.username }}" 
-                 class="rounded-circle mb-3 simplove-profile-img" 
-                 width="100" height="100">
+                alt="Photo de profil de {{ m.other.username }}" 
+                class="rounded-circle mb-3 simplove-profile-img" 
+                width="100" height="100">
           </div>
           <div class="card-body text-center simplove-card-body">
             <h5 class="card-title simplove-card-title">@{{ m.other.username }}</h5>
@@ -31,6 +31,10 @@
               {% if m.other.member_profile %}
                   <a href="{% url 'profiles:detail' m.other.member_profile.id %}" 
                     class="btn btn-primary simplove-btn-view">Voir le profil</a>
+                  <a href="{% url 'messaging:new_thread' m.other.id %}" 
+                  class="btn btn-success simplove-btn-view ms-2">
+                  Envoyer un message
+                  </a>
               {% else %}
                   <span class="text-muted">Profil non disponible</span>
               {% endif %}
