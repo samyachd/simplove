@@ -8,7 +8,7 @@ from .forms import MessageForm
 @profile_required
 @login_required
 def thread_list(request):
-    threads = request.user.thread.all()
+    threads = request.user.threads.all()
     return render(request, "thread_list.html", {"threads": threads})
 
 
@@ -16,11 +16,7 @@ def thread_list(request):
 @login_required
 def thread_detail(request, pk):
     thread = get_object_or_404(Thread, pk=pk, participants=request.user)
-<<<<<<< HEAD
     messages = thread.message.order_by('timestamp')
-=======
-    messages = thread.messages.order_by("timestamp")
->>>>>>> origin/mvp_v0.7
 
     if request.method == "POST":
         form = MessageForm(request.POST)
@@ -33,16 +29,8 @@ def thread_detail(request, pk):
     else:
         form = MessageForm()
 
-<<<<<<< HEAD
     return render(request, "thread_detail.html", {
         "thread": thread,
         "messages": messages,
         "form": form
     })
-=======
-    return render(
-        request,
-        "messaging/thread_detail.html",
-        {"thread": thread, "messages": messages, "form": form},
-    )
->>>>>>> origin/mvp_v0.7

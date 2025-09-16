@@ -15,7 +15,6 @@ class Interest(models.Model):
     'Voyages',
     'Lecture',
 ]
-    
     name = models.CharField(max_length=50)
 
     def __str__(self):
@@ -133,3 +132,5 @@ def delete_profile_photo(sender, instance, **kwargs):
     """Supprimer la photo quand le profil est supprimé"""
     if instance.photo and instance.photo.path and os.path.isfile(instance.photo.path):
         os.remove(instance.photo.path)
+
+post_migrate.connect(MemberProfile.create_default_interests)

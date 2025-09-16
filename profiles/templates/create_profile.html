@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const ageInput = steps[currentStep].querySelector('#id_age');
       const age = ageInput ? ageInput.valueAsNumber : NaN;
       
-      if ((isNaN(age) || age < 17) && currentStep === 2) {
+      if ((isNaN(age) || age < 18) && currentStep === 2) {
         alert("Vous devez avoir au moins 18 ans pour continuer.");
         return;
     }

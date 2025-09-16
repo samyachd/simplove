@@ -16,7 +16,7 @@
     }
   },
   {
-    "model": "users.accountuser",
+    "model": "users.useraccount",
     "pk": 1,
     "fields": {
       "user": 1,
@@ -55,7 +55,7 @@
     }
   },
   {
-    "model": "users.accountuser",
+    "model": "users.useraccount",
     "pk": 2,
     "fields": {
       "user": 2,
