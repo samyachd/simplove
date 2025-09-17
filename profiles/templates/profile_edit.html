@@ -1,78 +1,86 @@
 {% extends 'base.html' %}
 {% block title %}Modifier mon profil{% endblock %}
 
+{% block extra_css %}
+<style>
+  .photo-preview {
+    max-width: 150px;
+    border-radius: var(--bs-border-radius);
+    display: none;
+  }
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="simplove-account-form-container">
-    <h2>Modifier mon profil</h2>
+<section class="py-5">
+  <div class="container">
+    <div class="simplove-card" style="max-width:700px; margin:0 auto;">
+      <h2 class="mb-4 text-center">Modifier mon profil</h2>
 
-    {% if form.errors %}
-    <div class="alert alert-danger simplove-alert-danger">
-        Une erreur est survenue dans le formulaire. Merci de vérifier les champs.
-    </div>
-    {% endif %}
+      {% if form.errors %}
+        <div class="alert alert-danger simplove-alert-danger">
+          Une erreur est survenue dans le formulaire. Merci de vérifier les champs.
+        </div>
+      {% endif %}
 
-    <form method="post" enctype="multipart/form-data">
+      <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
         {% for field in form %}
-        <div class="simplove-form-group">
+          <div class="simplove-form-group">
             {{ field.label_tag }}
             {{ field }}
 
             {% if field.name == "photo" %}
-            <!-- Conteneur pour les deux photos côte à côte -->
-            <div style="display: flex; gap: 20px; align-items: center; margin-top: 10px;">
-                <!-- Photo actuelle -->
-                <div>
-                    <p>Ancienne photo :</p>
-                    {% if profile.photo %}
-                        <img src="{{ profile.photo.url }}" alt="Ancienne photo" style="max-width: 150px; border-radius: 10px;">
-                    {% else %}
-                        <img src="/media/img/default-profile.png" alt="Photo par défaut" style="max-width: 150px; border-radius: 10px;">
-                    {% endif %}
+              <!-- Aperçu photo -->
+              <div class="d-flex gap-3 align-items-center mt-2">
+                <div class="text-center">
+                  <p class="small mb-1">Actuelle</p>
+                  {% if profile.photo %}
+                    <img src="{{ profile.photo.url }}" alt="Actuelle" class="simplove-img-profile">
+                  {% else %}
+                    <img src="/media/img/default-profile.png" alt="Défaut" class="simplove-img-profile">
+                  {% endif %}
                 </div>
-                <!-- Aperçu de la nouvelle photo -->
-                <div>
-                    <p>Nouvelle photo :</p>
-                    <img id="photo-preview" src="#" alt="Aperçu de la photo" 
-                         style="max-width: 150px; border-radius: 10px; display: none;">
+                <div class="text-center">
+                  <p class="small mb-1">Nouvelle</p>
+                  <img id="photo-preview" class="photo-preview" alt="Aperçu">
                 </div>
-            </div>
+              </div>
             {% endif %}
 
             {% if field.errors %}
-            <div class="simplove-text-danger text-danger mt-1">{{ field.errors }}</div>
+              <div class="text-danger mt-1">{{ field.errors }}</div>
             {% endif %}
-        </div>
+          </div>
         {% endfor %}
 
-        <div class="simplove-form-buttons form-buttons">
-            <button type="submit" class="btn btn-primary simplove-btn-account w-100">Enregistrer</button>
-        </div>
-    </form>
-</div>
+        <button type="submit" class="simplove-btn simplove-btn--primary simplove-btn--block">Enregistrer</button>
+      </form>
+    </div>
+  </div>
+</section>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const photoInput = document.querySelector('input[type="file"][name="photo"]');
-    const preview = document.getElementById('photo-preview');
+document.addEventListener('DOMContentLoaded', () => {
+  const photoInput = document.querySelector('input[type="file"][name="photo"]');
+  const preview = document.getElementById('photo-preview');
 
-    if(photoInput) {
-        photoInput.addEventListener('change', function() {
-            const file = this.files[0];
-            if(file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    preview.src = e.target.result;
-                    preview.style.display = 'block'; // Affiche l'image une fois chargée
-                }
-                reader.readAsDataURL(file);
-            } else {
-                preview.src = '#';
-                preview.style.display = 'none'; // Cache l'image si aucun fichier sélectionné
-            }
-        });
-    }
+  if (photoInput) {
+    photoInput.addEventListener('change', e => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = ev => {
+          preview.src = ev.target.result;
+          preview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      } else {
+        preview.style.display = 'none';
+      }
+    });
+  }
 });
 </script>
 {% endblock %}

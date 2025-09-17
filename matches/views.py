@@ -28,6 +28,10 @@ def _ensure_match_state(a, b):
     else:
         Match.objects.filter(Match.pair_q(a, b), is_active=True).update(is_active=False)
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> maj_all_css
 @profile_required
 @login_required
 def like_user(request, user_id):
@@ -54,6 +58,10 @@ def like_user(request, user_id):
 
     return render(request, "browse.html", {"user": next_user})
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> maj_all_css
 @profile_required
 @login_required
 def pass_user(request, user_id):
@@ -77,6 +85,10 @@ def pass_user(request, user_id):
 
     return render(request, "browse.html", {"user": next_user})
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> maj_all_css
 @profile_required
 @login_required
 def remove_like(request, user_id):
@@ -93,6 +105,10 @@ def remove_like(request, user_id):
     messages.warning(request, f"You removed your like for @{target.username}.")
     return redirect("matches:my_matches")
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> maj_all_css
 @profile_required
 @login_required
 def my_matches(request):
@@ -109,6 +125,10 @@ def my_matches(request):
 
     return render(request, "matches_list.html", {"matches": matches})
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> maj_all_css
 @profile_required
 @login_required
 def browse_profiles(request):

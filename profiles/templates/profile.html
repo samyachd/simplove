@@ -1,50 +1,72 @@
 {% extends 'base.html' %}
-
 {% block title %}Mon profil{% endblock %}
 
 {% block content %}
-<div class="simplove-profile-view-container">
-  <div class="simplove-profile-card card">
-    <div class="row g-0">
-      <div class="col-md-4 text-center">
-        {% if profile.photo %}
-          <img src="{{ profile.photo.url }}" alt="Photo de {{ user.username }}">
-        {% else %}
-          <img src="/media/img/default-profile.png" alt="Photo par défaut">
-        {% endif %}
-      </div>
-      <div class="col-md-8">
-        <div class="simplove-card-body card-body">
-          <h3 class="simplove-card-title card-title">{{ user.username }}</h3>
-          
+<section class="py-5">
+  <div class="container">
+    <div class="simplove-card">
+      <div class="row g-0 align-items-center">
+        <!-- Photo -->
+        <div class="col-md-4 text-center p-4">
+          {% if profile.photo %}
+            <img src="{{ profile.photo.url }}" alt="Photo de {{ user.username }}"
+                 class="simplove-img-profile">
+          {% else %}
+            <img src="/media/img/default-profile.png" alt="Photo par défaut"
+                 class="simplove-img-profile">
+          {% endif %}
+        </div>
+
+        <!-- Infos -->
+        <div class="col-md-8 p-4">
+          <h3 class="mb-3">{{ user.username }}</h3>
+
           {% if profile %}
-            <p class="simplove-card-text card-text"><strong>Genre :</strong> {{ profile.get_gender_display }}</p>
-            <p class="simplove-card-text card-text"><strong>Orientation :</strong> {{ profile.get_orientation_display }}</p>
-            <p class="simplove-card-text card-text"><strong>Âge :</strong> {{ profile.age }}</p>
-            <p class="simplove-card-text card-text"><strong>Description :</strong> {{ profile.bio }}</p>
-            <p class="simplove-card-text card-text"><strong>Localisation :</strong> {{ profile.location }}</p>
-            <p class="simplove-card-text card-text"><strong>Centres d'intérêt :</strong>
-            {% if profile.interests.all %}
-              <ul>
-                {% for interest in profile.interests.all %}
-                  <li>{{ interest.name }}</li>
-                {% endfor %}
-              </ul>
-            {% else %}
-              <p>Aucun centre d’intérêt sélectionné.</p>
+            <div class="mb-2"><strong>Genre :</strong> {{ profile.get_gender_display }}</div>
+            <div class="mb-2"><strong>Orientation :</strong> {{ profile.get_orientation_display }}</div>
+            <div class="mb-2"><strong>Âge :</strong> {{ profile.age }}</div>
+            {% if profile.bio %}
+              <p class="mb-2"><strong>Bio :</strong> {{ profile.bio }}</p>
             {% endif %}
-            <p class="simplove-card-text card-text"><strong>Looking for :</strong> {{ profile.get_looking_for_display }}</p>
+            <div class="mb-2"><strong>Localisation :</strong> {{ profile.location }}</div>
+
+            {% if profile.interests.all %}
+              <div class="mb-3">
+                <strong>Centres d’intérêt :</strong>
+                <div class="mt-1">
+                  {% for interest in profile.interests.all %}
+                    <span class="simplove-badge badge bg-primary me-1 mb-1">{{ interest.name }}</span>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endif %}
+
+            <div class="mb-4">
+              <strong>Looking for :</strong>
+              <span class="simplove-badge badge bg-success">{{ profile.get_looking_for_display }}</span>
+            </div>
           {% endif %}
 
-          <div class="simplove-profile-view-btn-container d-flex gap-2">
-            <a href="{% url 'profiles:edit' profile.pk %}" class="btn btn-primary mt-2 simplove-btn-edit">Éditer mon profil</a>
-            <a href="{% url 'matches:my_matches' %}" class="btn btn-primary mt-2 simplove-btn-edit">Voir mes matchs</a>
-            <a href="{% url 'users:account' %}" class="btn btn-primary mt-2 simplove-btn-edit">Voir mon compte</a>
-            <a href="{% url 'users:manage_account' %}" class="btn btn-primary mt-2 simplove-btn-delete">Supprimer ou désactiver mon compte</a>
+          <!-- Actions -->
+          <div class="simplove-btn-grid">
+            <a href="{% url 'profiles:edit' profile.pk %}" class="simplove-btn simplove-btn--primary simplove-btn--sm">Éditer</a>
+            <a href="{% url 'matches:my_matches' %}" class="simplove-btn simplove-btn--secondary simplove-btn--sm">Mes matchs</a>
+            <a href="{% url 'users:account' %}" class="simplove-btn simplove-btn--secondary simplove-btn--sm">Mon compte</a>
+            <a href="{% url 'users:manage_account' %}" class="simplove-btn simplove-btn--danger simplove-btn--sm">Suppr./Désact.</a>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+  .simplove-btn-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: .5rem;
+  }
+</style>
 {% endblock %}

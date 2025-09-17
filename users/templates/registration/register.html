@@ -2,9 +2,12 @@
 {% block title %}Inscription{% endblock %}
 
 {% block content %}
-<div class="simplove-account-form-container">
-  <h2>Créer un compte</h2>
+<section class="py-5">
+  <div class="container">
+    <div class="simplove-card" style="max-width: 400px; margin: 0 auto;">
+      <h2 class="mb-4 text-center">Créer un compte</h2>
 
+<<<<<<< HEAD
   <form method="post" action="">
     {% csrf_token %}
     {% for field in form %}
@@ -15,7 +18,36 @@
     {% endfor %}
     <div class="simplove-form-buttons form-buttons">
       <input type="submit" value="S’inscrire" class="btn btn-primary simplove-btn-account">
+=======
+      {% if form.errors %}
+        <div class="alert alert-danger simplove-alert-danger">
+          Une erreur est survenue dans le formulaire. Merci de vérifier les champs.
+        </div>
+      {% endif %}
+
+      <form method="post" action="">
+        {% csrf_token %}
+
+        {% for field in form %}
+          <div class="simplove-form-group">
+            {{ field.label_tag }}
+            {{ field }}
+            {% if field.errors %}
+              <div class="text-danger mt-1">{{ field.errors }}</div>
+            {% endif %}
+          </div>
+        {% endfor %}
+
+        <button type="submit" class="simplove-btn simplove-btn--primary simplove-btn--block">
+          S’inscrire
+        </button>
+      </form>
+
+      <p class="text-center mt-3 mb-0">
+        Déjà membre ? <a href="{% url 'users:login' %}">Se connecter</a>
+      </p>
+>>>>>>> maj_all_css
     </div>
-  </form>
-</div>
+  </div>
+</section>
 {% endblock %}

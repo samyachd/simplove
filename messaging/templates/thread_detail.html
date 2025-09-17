@@ -2,30 +2,54 @@
 {% block title %}Conversation{% endblock %}
 
 {% block content %}
-<div class="container py-4">
-    <h2 class="mb-4 text-center">Conversation</h2>
+<section class="py-5">
+  <div class="container">
 
-    <div class="simplove-card p-3 mb-4" style="max-height: 500px; overflow-y: auto;">
-        {% if messages %}
-            {% for m in messages %}
-                <p>
-                    <strong>{{ m.sender.username }}:</strong>
-                    {{ m.content }}
-                    <small class="text-muted float-end">{{ m.created_at|date:"d/m/Y H:i" }}</small>
-                </p>
-                <hr>
-            {% endfor %}
-        {% else %}
-            <p class="text-center">Aucun message dans cette conversation.</p>
-        {% endif %}
+    <!-- Titre -->
+    <h1 class="mb-5 text-center">Conversation</h1>
+
+    <!-- FIL DE DISCUSSION -->
+    <div class="simplove-chat-card mb-4">
+      {% if messages %}
+        {% for m in messages %}
+          <!-- Bulle : gauche (autre) / droite (moi) -->
+          <div class="simplove-msg {% if m.sender == request.user %}simplove-msg--right{% else %}simplove-msg--left{% endif %}">
+            <div class="simplove-msg-avatar">
+              <img src="{{ m.sender.profile.photo.url|default:'/media/img/default-profile.png' }}"
+                   alt="{{ m.sender.username }}" class="rounded-circle" width="40" height="40">
+            </div>
+            <div class="simplove-msg-body">
+              <div class="simplove-msg-header">
+                <strong>{{ m.sender.username }}</strong>
+                <small class="text-muted ms-2">{{ m.created_at|date:"d/m/Y H:i" }}</small>
+              </div>
+              <div class="simplove-msg-content text-break">
+                {{ m.content }}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p class="text-center mb-0">Aucun message dans cette conversation.</p>
+      {% endif %}
     </div>
 
-    <div class="simplove-profile-form-container">
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary simplove-btn-primary w-100 mt-2">Envoyer</button>
-        </form>
+    <!-- NOUVEAU MESSAGE -->
+    <div class="simplove-card">
+      <form method="post" class="d-flex flex-column flex-md-row gap-2">
+        {% csrf_token %}
+        <div class="flex-grow-1">
+          <label for="{{ form.content.id_for_label }}" class="visually-hidden">Message</label>
+          <textarea name="{{ form.content.name }}" id="{{ form.content.id_for_label }}"
+                    class="form-control simplove-chat-input"
+                    rows="2"
+                    placeholder="Tapez votre message…"
+                    required>{{ form.content.value|default:'' }}</textarea>
+        </div>
+        <button type="submit" class="simplove-btn simplove-btn--primary align-self-end">Envoyer</button>
+      </form>
     </div>
-</div>
+
+  </div>
+</section>
 {% endblock %}

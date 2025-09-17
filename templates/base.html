@@ -1,116 +1,192 @@
 {% load static %}
-
+<!doctype html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Simplove{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Simplove{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  {% block extra_css %}{% endblock %}
 </head>
-<body class="simplove-body">
-    {% if not hide_navbar %}
-    <nav class="navbar navbar-expand-lg sticky-top simplove-navbar">
-        <div class="container">
-            <img src="/media/img/logo.png" alt="Simplove Logo" width="40" height="40" class="me-2">
-            <a class="navbar-brand" href="/">Simplove</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'core:core' %}">Accueil</a>
-                    </li>
-                    {% if request.user.is_authenticated %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'profiles:profile' %}">Profil</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'profiles:list' %}">Membres</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'matches:browse_profiles' %}">Match</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'messaging:thread_list' %}">Messages</a>
-                        </li>
-                    {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'users:register' %}">Inscription</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'users:login' %}">Connexion</a>
-                        </li>
-                    {% endif %}
-                    {% if request.user.is_authenticated %}
-                        <li class="nav-item">
-                            <form action="{% url 'users:logout' %}" method="post" class="d-inline">
-                                {% csrf_token %}
-                                <button type="submit" class="btn simplove-logout-btn">Déconnexion</button>
-                            </form>
-                        </li>
-                    {% endif %}
-                </ul>
-            </div>
+
+<body class="simplove-body d-flex flex-column min-vh-100">
+  {% if not hide_navbar %}
+  <nav class="navbar navbar-expand-lg simplove-navbar sticky-top">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="{% url 'core:core' %}">
+        <img src="/media/img/logo.png" alt="Simplove" width="40" height="40">
+        <span class="simplove-navbar-brand">Simplove</span>
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+              aria-controls="mainNavbar" aria-expanded="false" aria-label="Menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="mainNavbar">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-2">
+          <li class="nav-item"><a class="nav-link simplove-nav-link" href="{% url 'core:core' %}">Accueil</a></li>
+
+          {% if request.user.is_authenticated %}
+            <li class="nav-item"><a class="nav-link simplove-nav-link" href="{% url 'profiles:profile' %}">Mon profil</a></li>
+            <li class="nav-item"><a class="nav-link simplove-nav-link" href="{% url 'profiles:list' %}">Membres</a></li>
+            <li class="nav-item"><a class="nav-link simplove-nav-link" href="{% url 'matches:browse_profiles' %}">Match</a></li>
+            <li class="nav-item"><a class="nav-link simplove-nav-link" href="{% url 'messaging:thread_list' %}">Messages</a></li>
+            <li class="nav-item">
+              <form action="{% url 'users:logout' %}" method="post" class="d-inline">
+                {% csrf_token %}
+                <button type="submit" class="simplove-btn simplove-btn--secondary simplove-btn--sm">Déconnexion</button>
+              </form>
+            </li>
+          {% else %}
+            <li class="nav-item"><a class="nav-link simplove-nav-link" href="{% url 'users:register' %}">Inscription</a></li>
+            <li class="nav-item"><a class="simplove-btn simplove-btn--primary simplove-btn--sm" href="{% url 'users:login' %}">Connexion</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+  {% endif %}
+
+  <main class="flex-grow-1">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="simplove-footer mt-auto">
+    <div class="container py-5">
+        <div class="row gy-4">
+
+        <!-- Navigation -->
+        <div class="col-md-3">
+            <h6 class="text-uppercase fw-bold mb-3">Navigation</h6>
+            <ul class="list-unstyled">
+            <li class="mb-2"><a href="{% url 'core:core' %}" class="simplove-footer-link">Accueil</a></li>
+            <li class="mb-2"><a href="{% url 'profiles:list' %}" class="simplove-footer-link">Membres</a></li>
+            {% if request.user.is_authenticated %}
+                <li class="mb-2"><a href="{% url 'profiles:profile' %}" class="simplove-footer-link">Mon profil</a></li>
+            {% else %}
+                <li class="mb-2"><a href="{% url 'users:register' %}" class="simplove-footer-link">Inscription</a></li>
+            {% endif %}
+            </ul>
         </div>
-    </nav>
-    {% endif %}
-    {% block content %} {% endblock %}
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'js/script.js' %}"></script>
-    {% if request.user.is_authenticated %}
-    <script>
-        // Déconnexion automatique après 15 minutes d'inactivité
-        let logoutTimer;
-        let warningTimer;
-        const warningTime = 14 * 60 * 1000; // 1min avant la déconnexion
-        const logoutTime = 15 * 60 * 1000;  // 15min inactivité → déconnexion
 
-        const logoutModal = new bootstrap.Modal(document.getElementById('logoutWarningModal'));
-        const countdownEl = document.getElementById('logoutCountdown');
+        <!-- Aide -->
+        <div class="col-md-3">
+            <h6 class="text-uppercase fw-bold mb-3">Aide</h6>
+            <ul class="list-unstyled">
+            <li class="mb-2"><a href="#" class="simplove-footer-link">FAQ</a></li>
+            <li class="mb-2"><a href="#" class="simplove-footer-link">Contact</a></li>
+            <li class="mb-2"><a href="#" class="simplove-footer-link">Confidentialité</a></li>
+            <li class="mb-2"><a href="#" class="simplove-footer-link">Conditions d’utilisation</a></li>
+            </ul>
+        </div>
 
-        function startTimers() {
-            clearTimeout(warningTimer);
-            clearTimeout(logoutTimer);
+        <!-- À propos -->
+        <div class="col-md-3">
+            <h6 class="text-uppercase fw-bold mb-3">À propos</h6>
+            <ul class="list-unstyled">
+            <li class="mb-2"><a href="#" class="simplove-footer-link">Qui sommes-nous ?</a></li>
+            <li class="mb-2"><a href="#" class="simplove-footer-link">Témoignages</a></li>
+            <li class="mb-2"><a href="#" class="simplove-footer-link">Carrières</a></li>
+            <li class="mb-2"><a href="#" class="simplove-footer-link">Presse</a></li>
+            </ul>
+        </div>
 
-            warningTimer = setTimeout(showWarning, warningTime);
-            logoutTimer = setTimeout(autoLogout, logoutTime);
-        }
+        <!-- Suivez-nous -->
+        <div class="col-md-3">
+          <h6 class="text-uppercase fw-bold mb-3">Suivez-nous</h6>
 
-        function resetTimers() {
-            startTimers();
-            if (logoutModal._isShown) {
-                logoutModal.hide();
-            }
-        }
+          <!-- Icônes Bootstrap Icons -->
+          <div class="d-flex gap-3 mb-3 simplove-footer-social">
+            <a href="https://facebook.com/" target="_blank" rel="noopener" aria-label="Facebook" class="simplove-footer-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
+                <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0 0 3.603 0 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
+              </svg>
+            </a>
 
-        function showWarning() {
-            let countdown = (logoutTime - warningTime) / 1000; // secondes restantes
-            countdownEl.textContent = countdown;
-            logoutModal.show();
+            <a href="https://twitter.com/" target="_blank" rel="noopener" aria-label="Twitter" class="simplove-footer-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16">
+                <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.141 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
+              </svg>
+            </a>
 
-            const interval = setInterval(() => {
-                countdown--;
-                countdownEl.textContent = countdown;
-                if (countdown <= 0) clearInterval(interval);
-            }, 1000);
-        }
+            <a href="https://instagram.com/" target="_blank" rel="noopener" aria-label="Instagram" class="simplove-footer-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" fill="currentColor" class="bi bi-instagram" viewBox="0 0 16 16">
+                <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.703.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417a3.916 3.916 0 0 0 1.417.923c.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.198-.509.333-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.942a3.917 3.917 0 0 0-.923-1.417A3.916 3.916 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.282.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.042a2.062 2.062 0 1 0 0 4.124 2.062 2.062 0 0 0 0-4.124z"/>
+              </svg>
+            </a>
 
-        function autoLogout() {
-            window.location.href = "{% url 'users:logout' %}"; // URL de logout
-        }
+            <a href="https://linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn" class="simplove-footer-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
+                <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.706-.52-1.248-1.342-1.248-.822 0-1.359.542-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.451.568-.887 1.237-.887.692 0 .996.535.996 1.318v4.778h2.473V9.359c0-1.843-1.03-2.7-2.4-2.7-1.113 0-1.6.613-1.881 1.022v-.87h-2.42c.032.587 0 6.224 0 6.224h2.42z"/>
+              </svg>
+            </a>
+          </div>
+          <p class="small text-muted mb-0">Rejoignez la communauté Simplove !</p>
+        </div>
+      </div>
 
-        // Événements qui réinitialisent le timer
-        window.addEventListener('load', resetTimers);
-        document.addEventListener('mousemove', resetTimers);
-        document.addEventListener('keydown', resetTimers);
-        document.addEventListener('scroll', resetTimers);
-        document.addEventListener('click', resetTimers);
+      <hr class="my-4 simplove-footer-hr">
 
-        startTimers(); // démarrage initial
+      <!-- Copyright centré -->
+      <div class="text-center">
+        <small class="text-muted">&copy; {% now 'Y' %} Simplove – Tous droits réservés</small>
+      </div>
+    </div>
+  </footer>
 
-    </script>
-    {% endif %}
+  <!-- Modal avertissement déconnexion auto -->
+  <div class="modal fade" id="logoutWarningModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Déconnexion imminente</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+        </div>
+        <div class="modal-body">
+          Vous serez déconnecté(e) dans <strong id="logoutCountdown">60</strong> secondes par inactivité.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="simplove-btn simplove-btn--secondary" data-bs-dismiss="modal">Rester connecté</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'js/script.js' %}"></script>
+
+  {% if request.user.is_authenticated %}
+  <script>
+    /* Déconnexion auto après 15 min d'inactivité */
+    const logoutTime = 15 * 60 * 1000;
+    const warningTime = 14 * 60 * 1000;
+    let logoutTimer, warningTimer;
+    const modal = new bootstrap.Modal(document.getElementById('logoutWarningModal'));
+    const countdownEl = document.getElementById('logoutCountdown');
+
+    function resetTimers(){
+      clearTimeout(logoutTimer);
+      clearTimeout(warningTimer);
+      warningTimer = setTimeout(showWarning, warningTime);
+      logoutTimer = setTimeout(logout, logoutTime);
+      if(modal._isShown) modal.hide();
+    }
+    function showWarning(){
+      let sec = (logoutTime - warningTime) / 1000;
+      countdownEl.textContent = sec;
+      modal.show();
+      const t = setInterval(() => { countdownEl.textContent = --sec; if(sec <= 0) clearInterval(t); }, 1000);
+    }
+    function logout(){ location.href = "{% url 'users:logout' %}"; }
+
+    ['mousemove','keydown','scroll','click'].forEach(e => document.addEventListener(e, resetTimers));
+    resetTimers();
+    
+  </script>
+  {% endif %}
+  {% block extra_js %}{% endblock %}
 </body>
 </html>

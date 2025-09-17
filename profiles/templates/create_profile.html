@@ -1,206 +1,215 @@
 {% extends "base.html" %}
+{% block title %}Complétez votre profil{% endblock %}
 
-{% block title %}Dites-nous en plus sur vous !{% endblock %}
+{% block extra_css %}
+<style>
+  .photo-preview {
+    max-width: 150px;
+    border-radius: var(--bs-border-radius);
+    display: none;
+    margin: 0 auto;
+  }
+</style>
+{% endblock %}
 
 {% block content %}
-<div class="container py-4 simplove-account-form-container">
-  <h2 class="mb-4 text-center">Complétez votre profil</h2>
+<section class="py-5">
+  <div class="container">
+    <h2 class="mb-5 text-center">Complétez votre profil</h2>
 
-  {% if form.errors %}
-    <div class="alert alert-danger simplove-alert-danger">
-      Une erreur est survenue dans le formulaire. Merci de vérifier les champs.
-    </div>
-  {% endif %}
+    {% if form.errors %}
+      <div class="alert alert-danger simplove-alert-danger">
+        Une erreur est survenue dans le formulaire. Merci de vérifier les champs.
+      </div>
+    {% endif %}
 
-  <form method="post" id="MemberProfileForm" class="simplove-form">
-    {% csrf_token %}
-    <div class="form-step simplove-form-step d-block" data-step="0">
-      <div class="simplove-form-group">
-        {{ form.gender.label_tag }}
-        {{ form.gender }}
-        {% if form.gender.errors %}
-          <div class="simplove-text-danger text-danger mt-1">{{ form.gender.errors }}</div>
-        {% endif %}
-      </div>
-      <div class="simplove-form-buttons d-flex gap-2">
-        <button type="button" class="btn btn-primary simplove-btn-account next-step w-100">Suivant</button>
-      </div>
-    </div>
+    <form method="post" enctype="multipart/form-data" id="MemberProfileForm" class="simplove-form">
+      {% csrf_token %}
 
-    <div class="form-step simplove-form-step d-none" data-step="1">
-      <div class="simplove-form-group">
-        {{ form.orientation.label_tag }}
-        {{ form.orientation }}
-        {% if form.orientation.errors %}
-          <div class="simplove-text-danger text-danger mt-1">{{ form.orientation.errors }}</div>
-        {% endif %}
+      <!-- Étape 0 : Genre -->
+      <div class="form-step simplove-form-step d-block" data-step="0">
+        <div class="simplove-form-group">
+          {{ form.gender.label_tag }}
+          {{ form.gender }}
+          {% if form.gender.errors %}<div class="text-danger mt-1">{{ form.gender.errors }}</div>{% endif %}
+        </div>
+        <div class="simplove-form-buttons">
+          <button type="button" class="simplove-btn simplove-btn--primary next-step w-50">Suivant</button>
+        </div>
       </div>
-      <div class="simplove-form-buttons d-flex gap-2">
-        <button type="button" class="btn btn-secondary simplove-btn-account prev-step w-50">Précédent</button>
-        <button type="button" class="btn btn-primary simplove-btn-account next-step w-50">Suivant</button>
-      </div>
-    </div>
 
-    <div class="form-step simplove-form-step d-none" data-step="2">
-      <div class="simplove-form-group">
-        {{ form.age.label_tag }}
-        {{ form.age }}
-        {% if form.age.errors %}
-          <div class="simplove-text-danger text-danger mt-1">{{ form.age.errors }}</div>
-        {% endif %}
+      <!-- Étape 1 : Orientation -->
+      <div class="form-step simplove-form-step d-none" data-step="1">
+        <div class="simplove-form-group">
+          {{ form.orientation.label_tag }}
+          {{ form.orientation }}
+          {% if form.orientation.errors %}<div class="text-danger mt-1">{{ form.orientation.errors }}</div>{% endif %}
+        </div>
+        <div class="simplove-form-buttons d-flex gap-2">
+          <button type="button" class="simplove-btn simplove-btn--secondary prev-step w-25">Précédent</button>
+          <button type="button" class="simplove-btn simplove-btn--primary next-step w-25">Suivant</button>
+        </div>
       </div>
-      <div class="simplove-form-buttons d-flex gap-2">
-        <button type="button" class="btn btn-secondary simplove-btn-account prev-step w-50">Précédent</button>
-        <button type="button" class="btn btn-primary simplove-btn-account next-step w-50">Suivant</button>
-      </div>
-    </div>
 
-    <div class="form-step simplove-form-step d-none" data-step="3">
-      <div class="simplove-form-group">
-        {{ form.location.label_tag }}
-        {{ form.location }}
-        {% if form.location.errors %}
-          <div class="simplove-text-danger text-danger mt-1">{{ form.location.errors }}</div>
-        {% endif %}
+      <!-- Étape 2 : Âge -->
+      <div class="form-step simplove-form-step d-none" data-step="2">
+        <div class="simplove-form-group">
+          {{ form.age.label_tag }}
+          {{ form.age }}
+          {% if form.age.errors %}<div class="text-danger mt-1">{{ form.age.errors }}</div>{% endif %}
+        </div>
+        <div class="simplove-form-buttons d-flex gap-2">
+          <button type="button" class="simplove-btn simplove-btn--secondary prev-step w-25">Précédent</button>
+          <button type="button" class="simplove-btn simplove-btn--primary next-step w-25">Suivant</button>
+        </div>
       </div>
-      <div class="simplove-form-buttons d-flex gap-2">
-        <button type="button" class="btn btn-secondary simplove-btn-account prev-step w-50">Précédent</button>
-        <button type="button" class="btn btn-primary simplove-btn-account next-step w-50">Suivant</button>
-      </div>
-    </div>
 
-    <div class="form-step simplove-form-step d-none" data-step="4">
-      <div class="simplove-form-group">
-        {{ form.interests.label_tag }}
-        {{ form.interests }}
-        {% if form.interests.errors %}
-          <div class="simplove-text-danger text-danger mt-1">{{ form.interests.errors }}</div>
-        {% endif %}
+      <!-- Étape 3 : Localisation -->
+      <div class="form-step simplove-form-step d-none" data-step="3">
+        <div class="simplove-form-group">
+          {{ form.location.label_tag }}
+          {{ form.location }}
+          {% if form.location.errors %}<div class="text-danger mt-1">{{ form.location.errors }}</div>{% endif %}
+        </div>
+        <div class="simplove-form-buttons d-flex gap-2">
+          <button type="button" class="simplove-btn simplove-btn--secondary prev-step w-25">Précédent</button>
+          <button type="button" class="simplove-btn simplove-btn--primary next-step w-25">Suivant</button>
+        </div>
       </div>
-      <div class="simplove-form-buttons d-flex gap-2">
-        <button type="button" class="btn btn-secondary simplove-btn-account prev-step w-50">Précédent</button>
-        <button type="button" class="btn btn-primary simplove-btn-account next-step w-50">Suivant</button>
-      </div>
-    </div>
 
-    <div class="form-step simplove-form-step d-none" data-step="5">
-      <div class="simplove-form-group">
-        {{ form.looking_for.label_tag }}
-        {{ form.looking_for }}
-        {% if form.looking_for.errors %}
-          <div class="simplove-text-danger text-danger mt-1">{{ form.looking_for.errors }}</div>
-        {% endif %}
+      <!-- Étape 4 : Centres d’intérêt -->
+      <div class="form-step simplove-form-step d-none" data-step="4">
+        <div class="simplove-form-group">
+          {{ form.interests.label_tag }}
+          {{ form.interests }}
+          {% if form.interests.errors %}<div class="text-danger mt-1">{{ form.interests.errors }}</div>{% endif %}
+        </div>
+        <div class="simplove-form-buttons d-flex gap-2">
+          <button type="button" class="simplove-btn simplove-btn--secondary prev-step w-25">Précédent</button>
+          <button type="button" class="simplove-btn simplove-btn--primary next-step w-25">Suivant</button>
+        </div>
       </div>
-      <div class="simplove-form-buttons d-flex gap-2">
-        <button type="button" class="btn btn-secondary simplove-btn-account prev-step w-50">Précédent</button>
-        <button type="button" class="btn btn-primary simplove-btn-account next-step w-50">Suivant</button>
-      </div>
-    </div>
-    
-    <div class="form-step simplove-form-step d-none" data-step="6">
-      <div class="simplove-form-group">
-        {{ form.bio.label_tag }}
-        {{ form.bio }}
-        {% if form.bio.errors %}
-          <div class="simplove-text-danger text-danger mt-1">{{ form.bio.errors }}</div>
-        {% endif %}
-      </div>
-      <div class="simplove-form-buttons d-flex gap-2">
-        <button type="button" class="btn btn-secondary simplove-btn-account prev-step w-50">Précédent</button>
-        <button type="button" class="btn btn-primary simplove-btn-account next-step w-50">Suivant</button>
-      </div>
-    </div>
 
-    <div class="form-step simplove-form-step d-none" data-step="7">
-      <div class="simplove-form-group">
-        <h3>Rajoutes une photo de toi pour compléter ton profil</h3>
-        {{ form.photo }}
-        {% if form.photo.errors %}
-          <div class="simplove-text-danger text-danger mt-1">{{ form.bio.errors }}</div>
-        {% endif %}
+      <!-- Étape 5 : Looking for -->
+      <div class="form-step simplove-form-step d-none" data-step="5">
+        <div class="simplove-form-group">
+          {{ form.looking_for.label_tag }}
+          {{ form.looking_for }}
+          {% if form.looking_for.errors %}<div class="text-danger mt-1">{{ form.looking_for.errors }}</div>{% endif %}
+        </div>
+        <div class="simplove-form-buttons d-flex gap-2">
+          <button type="button" class="simplove-btn simplove-btn--secondary prev-step w-25">Précédent</button>
+          <button type="button" class="simplove-btn simplove-btn--primary next-step w-25">Suivant</button>
+        </div>
       </div>
-      <div class="simplove-form-buttons d-flex gap-2">
-        <button type="button" class="btn btn-secondary simplove-btn-account prev-step w-50">Précédent</button>
-        <button type="submit" class="btn btn-success simplove-btn-account w-50">Terminer</button>
+
+      <!-- Étape 6 : Bio -->
+      <div class="form-step simplove-form-step d-none" data-step="6">
+        <div class="simplove-form-group">
+          {{ form.bio.label_tag }}
+          {{ form.bio }}
+          {% if form.bio.errors %}<div class="text-danger mt-1">{{ form.bio.errors }}</div>{% endif %}
+        </div>
+        <div class="simplove-form-buttons d-flex gap-2">
+          <button type="button" class="simplove-btn simplove-btn--secondary prev-step w-25">Précédent</button>
+          <button type="button" class="simplove-btn simplove-btn--primary next-step w-25">Suivant</button>
+        </div>
       </div>
-    </div>
-  </form>
-</div>
+
+      <!-- Étape 7 : Photo -->
+      <div class="form-step simplove-form-step d-none" data-step="7">
+        <div class="simplove-form-group text-center">
+          <h4 class="mb-3">Ajoute une photo de toi</h4>
+          {{ form.photo }}
+          {% if form.photo.errors %}<div class="text-danger mt-1">{{ form.photo.errors }}</div>{% endif %}
+          <img id="photo-preview" class="photo-preview mt-3" alt="Aperçu">
+        </div>
+        <div class="simplove-form-buttons d-flex gap-2">
+          <button type="button" class="simplove-btn simplove-btn--secondary prev-step w-25">Précédent</button>
+          <button type="submit" class="simplove-btn simplove-btn--primary w-25">Terminer</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  console.log("Script chargé pour le formulaire multi-étapes");
-  const steps = document.querySelectorAll('.simplove-form-step');
-  console.log(`Nombre d'étapes trouvées : ${steps.length}`);
+document.addEventListener('DOMContentLoaded', () => {
+  const steps = document.querySelectorAll('.form-step');
   let currentStep = 0;
 
-  // Initialiser l'affichage : seule la première étape est visible
-  steps.forEach((step, index) => {
-    if (index === 0) {
-      step.classList.add('d-block');
-      step.classList.remove('d-none');
-    } else {
-      step.classList.add('d-none');
-      step.classList.remove('d-block');
-    }
-  });
+  function showStep(n) {
+    steps.forEach((s, i) => s.classList.toggle('d-none', i !== n));
+    steps[n].classList.add('d-block');
+  }
 
-  // Gestion des boutons "Suivant"
-  document.querySelectorAll('.next-step').forEach(button => {
-    button.addEventListener('click', () => {
-      console.log(`Clic sur Suivant, étape actuelle : ${currentStep}`);
-      const currentFields = steps[currentStep].querySelectorAll('input, select, textarea');
-      let allFilled = true;
+  /* Prévisualisation photo */
+  const photoInput = document.querySelector('input[type="file"][name="photo"]');
+  const preview = document.getElementById('photo-preview');
+  if (photoInput) {
+    photoInput.addEventListener('change', e => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = ev => {
+          preview.src = ev.target.result;
+          preview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      } else {
+        preview.style.display = 'none';
+      }
+    });
+  }
+
+  /* Navigation étapes */
+  document.querySelectorAll('.next-step').forEach(btn =>
+    btn.addEventListener('click', () => {
+      const inputs = steps[currentStep].querySelectorAll('input, select, textarea');
+      let ok = true;
+
+      /* Vérif âge */
       const ageInput = steps[currentStep].querySelector('#id_age');
-      const age = ageInput ? ageInput.valueAsNumber : NaN;
-      
-      if ((isNaN(age) || age < 18) && currentStep === 2) {
-        alert("Vous devez avoir au moins 18 ans pour continuer.");
-        return;
-    }
+      if (ageInput) {
+        const age = parseInt(ageInput.value, 10);
+        if (isNaN(age) || age < 18) {
+          alert('Vous devez avoir au moins 18 ans.');
+          ok = false;
+        }
+      }
 
-      // Vérifier si les champs requis sont remplis
-      currentFields.forEach(field => {
-        if (field.hasAttribute('required') && !field.value.trim()) {
-          allFilled = false;
-          field.classList.add('is-invalid');
-          console.log(`Champ non rempli : ${field.name}`);
+      /* Champs requis */
+      inputs.forEach(el => {
+        if (el.hasAttribute('required') && !el.value.trim()) {
+          el.classList.add('is-invalid');
+          ok = false;
         } else {
-          field.classList.remove('is-invalid');
+          el.classList.remove('is-invalid');
         }
       });
 
-      if (!allFilled) {
-        alert("Veuillez remplir le(s) champ(s) avant de continuer");
+      if (!ok) {
+        alert('Veuillez remplir le(s) champ(s) avant de continuer.');
         return;
       }
 
-      // Passer à l'étape suivante
-      if (currentStep + 1 < steps.length) {
-        console.log(`Passage à l'étape ${currentStep + 1}`);
-        steps[currentStep].classList.remove('d-block');
-        steps[currentStep].classList.add('d-none');
+      if (currentStep < steps.length - 1) {
         currentStep++;
-        steps[currentStep].classList.remove('d-none');
-        steps[currentStep].classList.add('d-block');
+        showStep(currentStep);
       }
-    });
-  });
+    })
+  );
 
-  // Gestion des boutons "Précédent"
-  document.querySelectorAll('.prev-step').forEach(button => {
-    button.addEventListener('click', () => {
-      console.log(`Clic sur Précédent, étape actuelle : ${currentStep}`);
+  document.querySelectorAll('.prev-step').forEach(btn =>
+    btn.addEventListener('click', () => {
       if (currentStep > 0) {
-        steps[currentStep].classList.remove('d-block');
-        steps[currentStep].classList.add('d-none');
         currentStep--;
-        steps[currentStep].classList.remove('d-none');
-        steps[currentStep].classList.add('d-block');
-        console.log(`Retour à l'étape ${currentStep}`);
+        showStep(currentStep);
       }
-    });
-  });
+    })
+  );
+
+  showStep(0);
 });
 </script>
 {% endblock %}

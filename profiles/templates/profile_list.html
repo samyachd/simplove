@@ -1,61 +1,68 @@
 {% extends 'base.html' %}
-
 {% block title %}Liste des membres{% endblock %}
 
 {% block content %}
-<div class="container py-4 simplove-profile-list-container">
-    <h1 class="mb-4 text-center">Découvrez nos membres</h1>
+<section class="py-5">
+  <div class="container">
+    <h1 class="mb-5 text-center">Découvrez nos membres</h1>
 
-    <form method="get" class="mb-4 simplove-search-form">
-        <div class="row g-3">
-            {% for field in form %}
-            <div class="col-md-3">
-                <label class="form-label">{{ field.label }}</label>
-                {{ field }}
-            </div>
-            {% endfor %}
-            <div class="col-md-12 text-center">
-                <button class="btn btn-primary" type="submit">Rechercher</button>
-                <a href="{% url 'profiles:list' %}" class="btn btn-secondary">Réinitialiser</a>
-            </div>
+    <!-- Filtres -->
+    <form method="get" class="mb-5">
+      <div class="row g-3 justify-content-center">
+        {% for field in form %}
+          <div class="col-md-3">
+            <label class="form-label fw-bold">{{ field.label }}</label>
+            {{ field }}
+          </div>
+        {% endfor %}
+        <div class="col-md-12 text-center">
+          <button type="submit" class="simplove-btn simplove-btn--primary">Rechercher</button>
+          <a href="{% url 'profiles:list' %}" class="simplove-btn simplove-btn--secondary ms-2">Réinitialiser</a>
         </div>
+      </div>
     </form>
 
-    <div class="row g-4">
+    <!-- Grille profils -->
+    {% if profiles %}
+      <div class="simplove-grid">
         {% for profile in profiles %}
-            <div class="col-12 col-sm-6 col-md-4">
-                <div class="card h-100 shadow-sm simplove-profile-card">
-                    <div class="card-img-container">
-                        <img src="{{ profile.photo_url }}" class="card-img-top" alt="Profil de {{ profile.user.username }}">
-                    </div>
-                    <div class="card-body text-center simplove-card-body">
-                        <h5 class="card-title simplove-card-title">{{ profile.user.username }}</h5>
-                        <p class="card-text simplove-card-text" title="{{ profile.bio }}">
-                            {{ profile.bio|truncatewords:15 }}
-                        </p>
-                        <div class="mb-2 simplove-badges-container">
-                            {% for interest in profile.interests_list %}
-                                <span class="simplove-badge badge bg-primary me-1">{{ interest }}</span>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    <div class="card-footer text-center simplove-card-footer">
-                        <a href="{% url 'profiles:detail' profile.id %}" class="btn btn-sm btn-primary simplove-btn-view">
-                            Voir le profil
-                        </a>
+          <div class="simplove-card text-center">
+            <!-- Photo -->
+            <img src="{{ profile.photo_url }}" alt="{{ profile.user.username }}"
+                 class="simplove-img-profile">
 
-                        <form action="{% url 'matches:like' profile.user.id %}" method="post" style="display:inline;">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-sm btn-outline-danger simplove-btn-view">
-                                🤍 Liker
-                            </button>
-                        </form>
-                    </div>
-                </div>
+            <!-- Infos -->
+            <h5 class="mb-1">{{ profile.user.username }}</h5>
+            {% if profile.bio %}
+              <p class="small text-muted mb-3" title="{{ profile.bio }}">
+                {{ profile.bio|truncatewords:15 }}
+              </p>
+            {% endif %}
+
+            <!-- Intérêts -->
+            {% if profile.interests_list %}
+              <div class="mb-3">
+                {% for interest in profile.interests_list %}
+                  <span class="simplove-badge badge bg-primary me-1 mb-1">{{ interest }}</span>
+                {% endfor %}
+              </div>
+            {% endif %}
+
+            <!-- Actions -->
+            <div class="d-flex gap-2 justify-content-center">
+              <a href="{% url 'profiles:detail' profile.id %}"
+                 class="simplove-btn simplove-btn--primary simplove-btn--sm">Voir le profil</a>
+              <form action="{% url 'matches:like' profile.user.id %}" method="post" class="d-inline">
+                {% csrf_token %}
+                <button type="submit" class="simplove-btn simplove-btn--secondary simplove-btn--sm">🤍 Liker</button>
+              </form>
             </div>
-        {% empty %}
-            <p class="text-center simplove-no-profiles">Aucun profil trouvé pour le moment.</p>
+          </div>
         {% endfor %}
-    </div>
-</div>
+      </div>
+    {% else %}
+      <p class="text-center">Aucun profil trouvé pour le moment.</p>
+    {% endif %}
+  </div>
+</section>
 {% endblock %}

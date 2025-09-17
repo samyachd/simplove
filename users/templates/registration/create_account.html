@@ -1,17 +1,42 @@
 {% extends "base.html" %}
-
 {% block title %}Complétez votre compte{% endblock %}
 
 {% block content %}
-<div class="container py-4 simplove-account-form-container">
-  <h2 class="mb-4 text-center">Complétez votre compte</h2>
+<section class="py-5">
+  <div class="container">
+    <div class="simplove-card" style="max-width: 600px; margin: 0 auto;">
+      <h2 class="mb-4 text-center">Complétez votre compte</h2>
 
-  {% if form.errors %}
-    <div class="alert alert-danger simplove-alert-danger">
-      Une erreur est survenue dans le formulaire. Merci de vérifier les champs.
+      {% if form.errors %}
+        <div class="alert alert-danger simplove-alert-danger">
+          Une erreur est survenue dans le formulaire. Merci de vérifier les champs.
+        </div>
+      {% endif %}
+
+      <form method="post" id="AccountForm">
+        {% csrf_token %}
+
+        {% for field in form %}
+          <div class="simplove-form-group">
+            {{ field.label_tag }}
+            {{ field }}
+            {% if field.errors %}
+              <div class="text-danger mt-1">{{ field.errors }}</div>
+            {% endif %}
+          </div>
+        {% endfor %}
+
+        <div style="text-align: center;">
+          <button type="submit" class="simplove-btn simplove-btn--primary">
+            Terminer
+          </button>
+        </div>
+      </form>
     </div>
-  {% endif %}
+  </div>
+</section>
 
+<<<<<<< HEAD
   <form method="post" id="AccountForm" class="simplove-form">
     {% csrf_token %}
     {% for field in form %}
@@ -58,3 +83,27 @@
   
   </script>
 {% endblock %}
+=======
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('AccountForm');
+  form.addEventListener('submit', e => {
+    const fields = form.querySelectorAll('input, select, textarea');
+    let ok = true;
+    fields.forEach(el => {
+      if (el.hasAttribute('required') && !el.value.trim()) {
+        el.classList.add('is-invalid');
+        ok = false;
+      } else {
+        el.classList.remove('is-invalid');
+      }
+    });
+    if (!ok) {
+      e.preventDefault();
+      alert('Veuillez remplir tous les champs requis.');
+    }
+  });
+});
+</script>
+{% endblock %}
+>>>>>>> maj_all_css
