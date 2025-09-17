@@ -38,3 +38,5 @@ photos/
 *.jpeg
 
 migrations/
+
+staticfiles/

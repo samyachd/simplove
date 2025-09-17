@@ -9,7 +9,7 @@
         <!-- Colonne Photo -->
         <div class="col-lg-5 d-flex justify-content-center p-4">
           {% if profile.photo %}
-            <img src="{{ profile.photo.url }}" alt="Photo de {{ user.username }}"
+            <img src="{{ profile.photo_url }}" alt="Photo de {{ profile.user.username }}"
                  class="simplove-img-profile">
           {% else %}
             <img src="/media/img/default-profile.png" alt="Photo par défaut"

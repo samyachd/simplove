@@ -1,7 +1,11 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect
 from profiles.models import MemberProfile
 from users.models import UserAccount
+from django.conf import settings
+from utils.supabase_client import get_supabase
+import mimetypes
+
 
 def core(request):
     if (
@@ -15,3 +19,14 @@ def core(request):
     ):
         return redirect("profiles:create_profile")
     return render(request, "index.html")
+
+
+def media_proxy(request, path):
+    """Sert le fichier stocké dans Supabase via Django."""
+    try:
+        res = get_supabase().storage.from_(settings.SUPABASE_BUCKET).download(path)
+    except Exception:
+        raise Http404("Fichier introuvable")
+
+    mime, _ = mimetypes.guess_type(path)
+    return HttpResponse(res, content_type=mime or "application/octet-stream")

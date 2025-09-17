@@ -122,7 +122,7 @@
           <h4 class="mb-3">Ajoute une photo de toi</h4>
           {{ form.photo }}
           {% if form.photo.errors %}<div class="text-danger mt-1">{{ form.photo.errors }}</div>{% endif %}
-          <img id="photo-preview" class="photo-preview mt-3" alt="Aperçu">
+          <img src="{{ profile.photo_url }}" alt="Photo de {{ profile.user.username }}" class="photo-preview mt-3" alt="Aperçu">
         </div>
         <div class="simplove-form-buttons d-flex gap-2">
           <button type="button" class="simplove-btn simplove-btn--secondary prev-step w-25">Précédent</button>

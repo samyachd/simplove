@@ -3,7 +3,7 @@ from profiles.decorators import profile_required
 from .models import MemberProfile
 from .forms import MemberProfileForm, ProfileFilterForm
 from django.contrib.auth.decorators import login_required
-from .forms import ProfileFilterForm
+from profiles.storage_backends import SupabaseMediaStorage
 
 
 @login_required
@@ -20,8 +20,10 @@ def profile_edit(request, pk):
     """Modification du profil"""
     profile, created = MemberProfile.objects.get_or_create(user=request.user)
     if request.method == "POST":
+        print("FILES reçus :", request.FILES)
         form = MemberProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
+            print("photo nettoyée :", form.cleaned_data.get("photo"))
             form.save()
             return redirect("profiles:profile")
     else:
@@ -49,21 +51,22 @@ def create_profile(request):
     profile, created = MemberProfile.objects.get_or_create(user=request.user)
 
     if request.method == "POST":
-        form = MemberProfileForm(request.POST, instance=profile)
+        form = MemberProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
             return redirect("core:core")
     else:
-
         form = MemberProfileForm(instance=profile)
-    context = {"form": form} | {"hide_navbar": True}
+
+    context = {"form": form, "hide_navbar": True}
     return render(request, "create_profile.html", context)
+
 
 @profile_required
 @login_required
 def profile_list(request):
     form = ProfileFilterForm(request.GET or None)
-    profiles = MemberProfile.objects.filter(
+    queryset = MemberProfile.objects.filter(
         user__is_superuser=False, user__is_active=True
     ).exclude(user=request.user)
 
@@ -78,21 +81,25 @@ def profile_list(request):
         interests = form.cleaned_data.get("interests")
 
         if q:
-            profiles = profiles.filter(user__username__icontains=q)
+            queryset = queryset.filter(user__username__icontains=q)
         if age_min:
-            profiles = profiles.filter(age__gte=age_min)
+            queryset = queryset.filter(age__gte=age_min)
         if age_max:
-            profiles = profiles.filter(age__lte=age_max)
+            queryset = queryset.filter(age__lte=age_max)
         if gender:
-            profiles = profiles.filter(gender=gender)
+            queryset = queryset.filter(gender=gender)
         if orientation:
-            profiles = profiles.filter(orientation=orientation)
+            queryset = queryset.filter(orientation=orientation)
         if location:
-            profiles = profiles.filter(location__icontains=location)
+            queryset = queryset.filter(location__icontains=location)
         if looking_for:
-            profiles = profiles.filter(looking_for=looking_for)
+            queryset = queryset.filter(looking_for=looking_for)
         if interests:
             for interest in [i.strip() for i in interests.split(",") if i.strip()]:
-                profiles = profiles.filter(interest__icontains=interest)
+                queryset = queryset.filter(interests__name__icontains=interest)
+
+    # construit la liste de tuples (profile, photo_url)
+    storage = SupabaseMediaStorage()
+    profiles = [(p, storage.url(p.photo.name) if p.photo else None) for p in queryset]
 
     return render(request, "profile_list.html", {"profiles": profiles, "form": form})
