@@ -32,6 +32,9 @@ Makefile
 
 poetry.toml
 
+media/
 photos/
+*.jpg
+*.jpeg
 
 migrations/

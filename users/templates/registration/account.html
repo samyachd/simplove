@@ -15,7 +15,7 @@
       <div class="mb-2"><strong>Adresse :</strong> {{ account.address|default:"Non renseigné" }}</div>
       <div class="mb-4"><strong>Date de naissance :</strong> {{ account.birth_date|date:"d/m/Y"|default:"Non renseignée" }}</div>
 
-      <a href="{% url 'users:account_edit' %}" class="simplove-btn simplove-btn--primary simplove-btn--block">
+      <a href="{% url 'users:account_edit' %}" class="simplove-btn simplove-btn--primary">
         Modifier mes informations
       </a>
     </div>
