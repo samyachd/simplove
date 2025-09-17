@@ -8,9 +8,13 @@
       <div class="row g-0 align-items-center">
         <!-- Colonne Photo -->
         <div class="col-lg-5 d-flex justify-content-center p-4">
-          <img src="{{ profile.photo.url|default:'/media/img/default-profile.png' }}"
-               alt="Photo de {{ profile.user.username }}"
-               class="simplove-img-profile">
+          {% if profile.photo %}
+            <img src="{{ profile.photo.url }}" alt="Photo de {{ user.username }}"
+                 class="simplove-img-profile">
+          {% else %}
+            <img src="/media/img/default-profile.png" alt="Photo par défaut"
+                 class="simplove-img-profile">
+          {% endif %}
         </div>
 
         <!-- Colonne Infos -->
@@ -41,10 +45,12 @@
           </div>
 
           <!-- Bouton Liker -->
-          <a href="{% url 'matches:like' profile.id %}"
-             class="simplove-btn simplove-btn--primary">
-            🤍 Liker
-          </a>
+          <form action="{% url 'matches:like' profile.user.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="simplove-btn simplove-btn--primary">
+              🤍 Liker
+            </button>
+          </form>
         </div>
       </div>
     </div>
