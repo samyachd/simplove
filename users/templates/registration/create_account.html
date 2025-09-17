@@ -36,54 +36,6 @@
   </div>
 </section>
 
-<<<<<<< HEAD
-  <form method="post" id="AccountForm" class="simplove-form">
-    {% csrf_token %}
-    {% for field in form %}
-      <div class="simplove-form-group mb-3 current-step">
-        {{ field.label_tag }}
-        {{ field }}
-        {% if field.errors %}
-          <div class="simplove-text-danger text-danger mt-1">{{ field.errors }}</div>
-        {% endif %}
-      </div>
-    {% endfor %}
-
-    <div class="simplove-form-buttons d-flex gap-2">
-      <button type="submit" class="btn btn-success w-100">Terminer</button>
-    </div>
-  </form>
-</div>
-<script>
-  
- document.addEventListener('DOMContentLoaded', function () {
-  const form = document.getElementById('AccountForm');
-
-  form.addEventListener('submit', function (e) {
-    let allFilled = true;
-    const fields = form.querySelectorAll('input, select, textarea');
-
-      // Vérifier si les champs requis sont remplis
-      fields.forEach(field => {
-      if (field.type !== 'hidden' && !field.value.trim()) {
-        allFilled = false;
-        field.classList.add('is-invalid'); // ajoute un style
-      } else {
-        field.classList.remove('is-invalid');
-      }
-    });
-
-      if (!allFilled) {
-        e.preventDefault(); // bloque l’envoi
-        alert("Veuillez remplir le(s) champ(s) avant de continuer");
-        return;
-      }
-    });
-  });
-  
-  </script>
-{% endblock %}
-=======
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('AccountForm');
@@ -106,4 +58,3 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 {% endblock %}
->>>>>>> maj_all_css
