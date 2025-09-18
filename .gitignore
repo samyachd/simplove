@@ -39,3 +39,5 @@ photos/
 migrations/
 
 staticfiles/
+
+fixtures/
