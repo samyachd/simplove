@@ -22,7 +22,6 @@ class SupabaseMediaStorage(Storage):
         if bucket:
             self.bucket_name = bucket
         self.client = get_supabase().storage
-        print(f"[SupabaseMediaStorage] INIT bucket = {self.bucket_name}")
 
         # URL publique de base pour le bucket
         self.public_url_base = getattr(settings, "SUPABASE_PUBLIC_URL", None)
@@ -43,9 +42,7 @@ class SupabaseMediaStorage(Storage):
                 file=data,
                 file_options={"upsert": "true"},
             )
-            print(f"[Supabase] upload OK: {name}")
         except StorageException as e:
-            print(f"[Supabase] upload ERROR: {e}")
             if "Duplicate" not in str(e):
                 raise
         return name

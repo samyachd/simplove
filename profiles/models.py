@@ -73,7 +73,7 @@ class MemberProfile(models.Model):
                 return self.photo.url  # Utilise la méthode url du storage backend
             except Exception as e:
                 print(f"[MemberProfile] Erreur récupération URL photo: {e}")
-        return "/media/img/default-profile.png"
+        return f"{settings.SUPABASE_PUBLIC_URL}/img/default-profile.png"
 
     @staticmethod
     def create_default_interests(sender, **kwargs):
