@@ -383,7 +383,7 @@ img {
   justify-content: center;
   text-align: center;
   background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
-              url('/media/img/accueil.jpg') no-repeat center center / cover;
+              url('{{ supabase_public_url }}/img/accueil.jpg') no-repeat center center / cover;
   color: #fff;
   position: relative;
 }

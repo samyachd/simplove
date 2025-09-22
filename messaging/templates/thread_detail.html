@@ -15,7 +15,7 @@
           <!-- Bulle : gauche (autre) / droite (moi) -->
           <div class="simplove-msg {% if m.sender == request.user %}simplove-msg--right{% else %}simplove-msg--left{% endif %}">
             <div class="simplove-msg-avatar">
-              <img src="{{ m.sender.profile.photo.url|default:'/media/img/default-profile.png' }}"
+              <img src="{{ m.sender.member_profile.photo_url|default:'/media/img/default-profile.png' }}"
                    alt="{{ m.sender.username }}" class="rounded-circle" width="40" height="40">
             </div>
             <div class="simplove-msg-body">

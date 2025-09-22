@@ -25,11 +25,11 @@
     <!-- Grille profils -->
     {% if profiles %}
       <div class="simplove-grid">
-        {% for profile in profiles %}
+        {% for item in profiles %}
+          {% with profile=item.0 photo_url=item.1 %}
           <div class="simplove-card text-center">
             <!-- Photo -->
-            <img src="{{ profile.photo_url }}" alt="{{ profile.user.username }}"
-                 class="simplove-img-profile">
+            <img src="{{ profile.photo_url }}" alt="Photo de {{ profile.user.username }}" class="simplove-img-profile">
 
             <!-- Infos -->
             <h5 class="mb-1">{{ profile.user.username }}</h5>
@@ -40,17 +40,17 @@
             {% endif %}
 
             <!-- Intérêts -->
-            {% if profile.interests_list %}
+            {% if profile.interests.all %}
               <div class="mb-3">
-                {% for interest in profile.interests_list %}
-                  <span class="simplove-badge badge bg-primary me-1 mb-1">{{ interest }}</span>
+                {% for interest in profile.interests.all %}
+                  <span class="simplove-badge badge bg-primary me-1 mb-1">{{ interest.name }}</span>
                 {% endfor %}
               </div>
             {% endif %}
 
             <!-- Actions -->
             <div class="d-flex gap-2 justify-content-center">
-              <a href="{% url 'profiles:detail' profile.id %}"
+              <a href="{% url 'profiles:detail' profile.pk %}"
                  class="simplove-btn simplove-btn--primary simplove-btn--sm">Voir le profil</a>
               <form action="{% url 'matches:like' profile.user.id %}" method="post" class="d-inline">
                 {% csrf_token %}
@@ -58,6 +58,7 @@
               </form>
             </div>
           </div>
+          {% endwith %}
         {% endfor %}
       </div>
     {% else %}

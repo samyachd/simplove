@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import RedirectView
+from core.views import media_proxy
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -30,6 +31,7 @@ urlpatterns = [
     path("profiles/", include("profiles.urls")),
     path("messaging/", include("messaging.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
+    path("media/<path:path>", media_proxy, name="media_proxy"),
 ]
 
 if settings.DEBUG:
