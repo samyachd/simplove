@@ -18,7 +18,9 @@ def core(request):
         and MemberProfile.objects.get(user=request.user).looking_for == ""
     ):
         return redirect("profiles:create_profile")
-    return render(request, "index.html")
+    return render(
+        request, "index.html", {"supabase_public_url": settings.SUPABASE_PUBLIC_URL}
+    )
 
 
 def media_proxy(request, path):
